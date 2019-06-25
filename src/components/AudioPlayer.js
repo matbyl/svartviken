@@ -16,13 +16,19 @@ const Container = styled.div`
   bottom: 0;
   display: grid;
   z-index: 1000;
-  grid-template-columns: 35px 35px 35px 10px 1fr;
-  grid-template-areas: 'backward play forward . seekBar';
+  grid-template-columns: 250px 35px 35px 35px 10px 1fr;
+  grid-template-areas: 'title backward play forward . seekBar';
 
   width: 100%;
   background: rgba(0, 0, 0, 0.9);
   height: 80px;
 `
+
+const Title = styled.h4`
+  color: white;
+  margin: auto 15px;
+`
+
 const SeekBar = styled.div`
   display: grid;
   grid-template-columns: 50px auto 70px;
@@ -311,6 +317,7 @@ class AudioPlayer extends React.Component {
   render() {
     return (
       <Container className="svartviken-audio-player">
+        <Title>{this.props.episode.title}</Title>
         <ControllButton
           style={{ gridArea: 'backward' }}
           icon={
