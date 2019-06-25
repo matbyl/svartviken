@@ -1,0 +1,27 @@
+// @import './reset.scss';
+@import './fonts.scss';
+@import './shadows.scss';
+
+h1 {
+  font-family: 'Colus', Arial, Helvetica, sans-serif;
+  font-size: 62px;
+}
+
+h2 {
+  font-family: 'Colus', Arial, Helvetica, sans-serif;
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 20px;
+  margin: 15px auto 5px auto;
+}
+
+html, body, p {
+  font-family: 'Jost', Arial, Helvetica, sans-serif;
+  font-size: 15px;
+}
+
+html, body {
+  background: #F5F8FB;
+}

@@ -1,0 +1,165 @@
+@font-face {
+  font-family: 'Colus';
+  src: url('../assets/fonts/Colus/Colus-Regular.eot');
+  src: url('../assets/fonts/Colus/Colus-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../assets/fonts/Colus/Colus-Regular.woff2') format('woff2'),
+       url('../assets/fonts/Colus/Colus-Regular.woff') format('woff'),
+      url('../assets/fonts/Colus/Colus-Regular.ttf')  format('truetype'),
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 100;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-100-Hairline.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-100-Hairline.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 100;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-100-HairlineItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-100-HairlineItalic.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 200;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-200-Thin.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-200-Thin.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 200;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-200-ThinItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-200-ThinItalic.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 300;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-300-Light.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-300-Light.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 300;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-300-LightItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-300-LightItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-400-Book.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-400-Book.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 400;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-400-BookItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-400-BookItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 500;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-500-Medium.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-500-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 500;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-500-MediumItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-500-MediumItalic.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 600;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-600-Semi.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-600-Semi.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 600;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-600-SemiItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-600-SemiItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 700;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-700-Bold.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-700-Bold.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 700;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-700-BoldItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-700-BoldItalic.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 800;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-800-Heavy.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-800-Heavy.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 800;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-800-HeavyItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-800-HeavyItalic.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 900;
+  font-style: normal;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-900-Black.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-900-Black.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Jost';
+  font-weight: 900;
+  font-style: italic;
+  src: url('../assets/fonts/Jost/Finished\ OpenType/Jost-900-BlackItalic.otf') format('opentype');
+  src: url('../assets/fonts/Jost/Finished\ TrueType/Jost-900-BlackItalic.ttf') format('truetype');
+}
