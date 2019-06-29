@@ -13,11 +13,11 @@ import CampaignCardList from '../components/CampaignCardList'
 import AudioPlayerButton from '../components/AudioPlayerButton'
 
 const HomeHeader = styled.header`
-  ${tw`bg-black text-white flex flex-row flex-wrap-reverse p-4`};
+  ${tw`bg-black text-white flex flex-row flex-wrap-reverse p-20`};
 `
 
 const LeftColumn = styled.div`
-  ${tw`sm:w-full lg:w-1/2 sm:text-lg flex sm:text-center lg:text-justify `};
+  ${tw`sm:w-full lg:w-1/2 sm:text-lg flex sm:text-center lg:text-justify pb-5 lg:pl-20`};
 `
 
 const CampaignTitle = styled.h1`
@@ -25,7 +25,7 @@ const CampaignTitle = styled.h1`
 `
 
 const CampaignDescription = styled.p`
-  ${tw`text-lg`}
+  ${tw`text-lg pb-5`}
 `
 const EpisodeTitle = styled.h1`
   ${tw`text-2xl`}
@@ -42,38 +42,10 @@ const RightColumn = styled.div`
   flex: 50%;
   display: flex;
   flex-direction: column;
+`
 
-  img {
-    width: 80%;
-    -webkit-filter: drop-shadow(5px 5px 5px #222);
-    filter: drop-shadow(5px 5px 5px #222);
-    margin: 60px auto;
-
-    animation-name: floatingAnimation;
-    animation-duration: 3s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-  }
-
-  @keyframes floatingAnimation {
-    0% {
-      transform: scale(0.99);
-      -webkit-filter: drop-shadow(5px 5px 5px #222);
-      filter: drop-shadow(5px 5px 5px #222);
-    }
-
-    50% {
-      transform: scale(1);
-      -webkit-filter: drop-shadow(10px 10px 10px #222);
-      filter: drop-shadow(10px 10px 10px #222);
-    }
-
-    100% {
-      transform: scale(0.99);
-      -webkit-filter: drop-shadow(5px 5px 5px #222);
-      filter: drop-shadow(5px 5px 5px #222);
-    }
-  }
+const Logo = styled.img`
+  ${tw`w-7/12 m-auto`}
 `
 
 const LatestEpisode = styled.div`
@@ -125,7 +97,7 @@ class BlogIndex extends React.Component {
           </LeftColumn>
 
           <RightColumn>
-            <img src={logo} />
+            <Logo src={logo} />
           </RightColumn>
         </HomeHeader>
         <div>
@@ -150,6 +122,7 @@ export const pageQuery = graphql`
     allContentfulCampaign {
       edges {
         node {
+          id
           title
           oneShot
           description {
