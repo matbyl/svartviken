@@ -2,14 +2,10 @@ import React from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
 import AudioPlayerButton from './AudioPlayerButton'
+import tw from 'tailwind.macro'
 
 const CardList = styled.div`
-  color: black;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: auto 75px;
+  ${tw`bg-color-black flex flex-row flex-wrap`}
 `
 
 const Card = styled.div`
@@ -45,8 +41,7 @@ const Header = styled.div`
 const Title = styled.h2``
 
 const Content = styled.div`
-  height: 200px;
-  margin: 20px 50px;
+  ${tw`p-5`}
 `
 
 const Footer = styled.div`
