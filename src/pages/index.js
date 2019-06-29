@@ -17,7 +17,7 @@ const HomeHeader = styled.header`
 `
 
 const LeftColumn = styled.div`
-  ${tw`sm:w-full sm:text-lg sm:text-center`};
+  ${tw`sm:w-full lg:w-1/2 sm:text-lg flex sm:text-center lg:text-justify `};
 `
 
 const CampaignTitle = styled.h1`
@@ -36,7 +36,7 @@ const EpisodeDescription = styled.p`
 `
 
 const RightColumn = styled.div`
-  ${tw`sm:w-full`};
+  ${tw`sm:w-full lg:w-1/2`};
 
   height: 100%;
   flex: 50%;
@@ -77,7 +77,7 @@ const RightColumn = styled.div`
 `
 
 const LatestEpisode = styled.div`
-  ${tw`sm:text-center`}
+  ${tw`sm:text-center m-auto`}
 `
 
 class BlogIndex extends React.Component {
