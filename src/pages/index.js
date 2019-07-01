@@ -59,9 +59,10 @@ class BlogIndex extends React.Component {
       this,
       'props.data.site.siteMetadata.description'
     )
-    const campaigns = this.props.data.allContentfulCampaign.edges
-      .map(e => e.node)
-      .filter(c => !c.oneShot)
+    const campaigns = this.props.data.allContentfulCampaign.edges.map(
+      e => e.node
+    )
+    // .filter(c => !c.oneShot)
     const latestCampaign = campaigns[0]
 
     return (
@@ -101,6 +102,7 @@ class BlogIndex extends React.Component {
           </RightColumn>
         </HomeHeader>
         <div>
+          SEARCHBAR
           <CampaignCardList campaigns={campaigns} />
         </div>
       </div>
