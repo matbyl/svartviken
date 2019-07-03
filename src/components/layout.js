@@ -114,11 +114,7 @@ class Template extends React.Component {
         <NavBarRow>
           <NavBarItem to={'/'}>Hem</NavBarItem> |{' '}
           <NavBarItem to={'/about'}>Om oss</NavBarItem> |{' '}
-          <NavBarItem to={'/campaigns'}>Kampanjer</NavBarItem> |{' '}
-          <NavBarItem to={'/one-shots'}>One shots</NavBarItem> |{' '}
-          <NavBarItem to={'/material'}>Material</NavBarItem>
-        </NavBarRow>
-        <NavBarRow>
+          <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
           <SocialIcon src={FacebookIcon} />
           <SocialIcon src={InstagramIcon} />
           <SocialIcon src={TwitterIcon} />

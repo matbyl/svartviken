@@ -35,6 +35,14 @@ const EpisodeDescription = styled.p`
   ${tw`sm:text-base`}
 `
 
+const ToggleButton = styled.button`
+  ${tw`bg-green-500 text-white py-2 px-4 rounded-full`}
+`
+
+const DisabledToggleButton = styled.button`
+  ${tw`bg-gray-300 text-gray-600 py-2 px-4 rounded-full`}
+`
+
 const RightColumn = styled.div`
   ${tw`sm:w-full lg:w-1/2`};
 
@@ -53,17 +61,46 @@ const LatestEpisode = styled.div`
 `
 
 class BlogIndex extends React.Component {
+  constructor(props) {
+    super(props)
+
+    const campaigns = this.props.data.allContentfulCampaign.edges.map(
+      e => e.node
+    )
+
+    this.state = {
+      campaigns,
+      campaignsActive: true,
+    }
+
+    this.toggleCampaigns = this.toggleCampaigns.bind(this)
+  }
+
+  toggleCampaigns() {
+    const campaigns = this.props.data.allContentfulCampaign.edges.map(
+      e => e.node
+    )
+
+    this.setState({
+      campaignsActive: !this.state.campaignsActive,
+      campaigns: campaigns.filter(c => {
+        if (this.state.campaignsActive) {
+          return c.oneShot
+        } else {
+          return !c.oneShot
+        }
+      }),
+    })
+  }
+
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const siteDescription = get(
       this,
       'props.data.site.siteMetadata.description'
     )
-    const campaigns = this.props.data.allContentfulCampaign.edges.map(
-      e => e.node
-    )
     // .filter(c => !c.oneShot)
-    const latestCampaign = campaigns[0]
+    const latestCampaign = this.state.campaigns[0]
 
     return (
       <div>
@@ -93,7 +130,10 @@ class BlogIndex extends React.Component {
                 {latestCampaign.episodes[0].description.description}
               </EpisodeDescription>
 
-              <AudioPlayerButton episode={latestCampaign.episodes[0]} />
+              <AudioPlayerButton
+                light={true}
+                episode={latestCampaign.episodes[0]}
+              />
             </LatestEpisode>
           </LeftColumn>
 
@@ -102,8 +142,16 @@ class BlogIndex extends React.Component {
           </RightColumn>
         </HomeHeader>
         <div>
-          SEARCHBAR
-          <CampaignCardList campaigns={campaigns} />
+          {this.state.campaignsActive ? (
+            <ToggleButton onClick={this.toggleCampaigns}>
+              Kampanjer
+            </ToggleButton>
+          ) : (
+            <DisabledToggleButton onClick={this.toggleCampaigns}>
+              Kampanjer
+            </DisabledToggleButton>
+          )}
+          <CampaignCardList campaigns={this.state.campaigns} />
         </div>
       </div>
     )

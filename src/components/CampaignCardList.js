@@ -13,9 +13,6 @@ const Card = styled.div`
 
   width: 800px;
   border-radius: 10px;
-  &:hover {
-    transform: scale(1.01);
-  }
 `
 
 const Header = styled.div`
