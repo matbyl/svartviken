@@ -13,16 +13,12 @@ const Description = styled.p`
   ${tw`text-white text-base xl:text-xl`};
 `
 
-const Content = styled.div`
-  ${tw`flex justify-center w-full bg-gray-200`};
-`
-
 const Episodes = styled.ul`
-  ${tw`shadow-2xl m-3 p-3 rounded-lg flex-shrink bg-white`};
+  ${tw`flex flex-wrap justify-center w-full m-auto `};
 `
 
 const Episode = styled.li`
-  ${tw`p-2 hover:bg-blue-400 cursor-pointer`};
+  ${tw` w-1/2 h-48 text-center bg-white shadow-lg rounded`};
 `
 
 const Info = styled.div`
@@ -44,27 +40,26 @@ export default ({ data }) => {
           <Description>
             {data.contentfulCampaign.description.description}
           </Description>
-        </HeaderContent>
-      </Header>
-      <Content>
-        <Episodes>
-          {data.contentfulCampaign.episodes
-            // .sort(
-            //   (a, b) => Date.parse(a.published_on) > Date.parse(b.published_on)
-            // )
-            .map(episode => (
-              <Episode>{episode.title}</Episode>
-            ))}
-        </Episodes>
-        <Info>
           {/* {data.contentfulCampaign.characters.map(character => (
             <Character>
               <h3>{character.name}</h3>
               <div>description...</div>
             </Character>
           ))} */}
-        </Info>
-      </Content>
+        </HeaderContent>
+      </Header>
+      <Episodes className="container">
+        {data.contentfulCampaign.episodes
+          // .sort(
+          //   (a, b) => Date.parse(a.published_on) > Date.parse(b.published_on)
+          // )
+          .map(episode => (
+            <Episode>
+              <h3>{episode.title}</h3>
+              <div>{episode.description.description}</div>
+            </Episode>
+          ))}
+      </Episodes>
     </div>
   )
 }

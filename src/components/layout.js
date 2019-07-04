@@ -71,6 +71,12 @@ const NavBarItem = styled(Link)`
 
 const SocialIcon = styled.img`
   ${tw`inline-block`};
+
+  opacity: 0.82;
+  cursor: pointer;
+  :hover {
+    opacity: 1;
+  }
 `
 
 let lastScrollY = 0
@@ -82,7 +88,6 @@ class Template extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('hereeee')
     window.removeEventListener('scroll', this.handleScroll)
   }
 
@@ -93,6 +98,7 @@ class Template extends React.Component {
 
     if (!ticking) {
       window.requestAnimationFrame(() => {
+        const shadowClassName = ' shadow-xl'
         if (lastScrollY > 100) {
           this.nav.current.style.background = 'rgba(0, 0, 0, 0.72)'
         } else {
@@ -144,6 +150,10 @@ class Template extends React.Component {
           <SocialIcon src={InstagramIcon} />
           <SocialIcon src={TwitterIcon} />
         </FooterSocialMedia>
+        <p className="text-white mt-5">Crafted with ♥</p>
+        <p className="text-white">
+          Copyright © 2019 Svartviken, All Rights Reserved.
+        </p>
       </Footer>
     )
 
