@@ -9,7 +9,7 @@ const CardList = styled.div`
 `
 
 const Card = styled.div`
-  ${tw`static m-5 relative`}
+  ${tw`static m-5 relative text-left`}
 
   width: 800px;
   border-radius: 10px;
@@ -57,7 +57,7 @@ const CampaignType = styled.div`
 `
 
 const FooterLink = styled(Link)`
-  ${tw``}
+  ${tw`absolute bottom-0 right-0 h-8 w-40`}
 `
 
 class CampaignCardList extends React.Component {

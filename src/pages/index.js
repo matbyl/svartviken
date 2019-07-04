@@ -35,12 +35,14 @@ const EpisodeDescription = styled.p`
   ${tw`sm:text-base`}
 `
 
-const ToggleButton = styled.button`
-  ${tw`bg-green-500 text-white py-2 px-4 rounded-full`}
+const EnabledToggleButton = styled.button`
+  ${tw`my-5 py-2 mx-2 px-4 rounded-full shadow-md`}
+  ${tw`bg-green-500 text-white`}
 `
 
 const DisabledToggleButton = styled.button`
-  ${tw`bg-gray-300 text-gray-600 py-2 px-4 rounded-full`}
+  ${tw`my-5 py-2 mx-2 px-4 rounded-full shadow-md`}
+  ${tw`bg-gray-300 text-gray-600`}
 `
 
 const RightColumn = styled.div`
@@ -60,6 +62,28 @@ const LatestEpisode = styled.div`
   ${tw`sm:text-center m-auto`}
 `
 
+const MainSection = styled.section`
+  ${tw`m-auto text-center`}
+`
+
+/*
+  {this.state.campaignsActive ? (
+            <ToggleButton onClick={this.toggleCampaigns}>
+              Kampanjer
+            </ToggleButton>
+          ) : (
+            <DisabledToggleButton onClick={this.toggleCampaigns}>
+              Kampanjer
+            </DisabledToggleButton>
+          )}
+*/
+const ToggleButton = ({ onClick, disabled, children }) =>
+  disabled ? (
+    <DisabledToggleButton onClick={onClick}>{children}</DisabledToggleButton>
+  ) : (
+    <EnabledToggleButton onClick={onClick}>{children}</EnabledToggleButton>
+  )
+
 class BlogIndex extends React.Component {
   constructor(props) {
     super(props)
@@ -71,25 +95,50 @@ class BlogIndex extends React.Component {
     this.state = {
       campaigns,
       campaignsActive: true,
+      oneShotsActive: true,
     }
 
     this.toggleCampaigns = this.toggleCampaigns.bind(this)
+    this.toggleOneShots = this.toggleOneShots.bind(this)
   }
 
   toggleCampaigns() {
-    const campaigns = this.props.data.allContentfulCampaign.edges.map(
-      e => e.node
-    )
-
+    const campaignsActive = !this.state.campaignsActive
     this.setState({
-      campaignsActive: !this.state.campaignsActive,
-      campaigns: campaigns.filter(c => {
-        if (this.state.campaignsActive) {
-          return c.oneShot
-        } else {
-          return !c.oneShot
-        }
-      }),
+      campaignsActive,
+      campaigns: this.filterCampaigns(
+        campaignsActive,
+        this.state.oneShotsActive
+      ),
+    })
+  }
+
+  toggleOneShots() {
+    const oneShotsActive = !this.state.oneShotsActive
+    this.setState({
+      oneShotsActive,
+      campaigns: this.filterCampaigns(
+        this.state.campaignsActive,
+        oneShotsActive
+      ),
+    })
+  }
+
+  getCampaigns() {
+    return this.props.data.allContentfulCampaign.edges.map(e => e.node)
+  }
+
+  filterCampaigns(campaignsActive, oneShotsActive) {
+    return this.getCampaigns().filter(c => {
+      if (campaignsActive && oneShotsActive) {
+        return true
+      } else if (oneShotsActive && !campaignsActive) {
+        return c.oneShot
+      } else if (campaignsActive && !oneShotsActive) {
+        return !c.oneShot
+      } else {
+        return false
+      }
     })
   }
 
@@ -100,7 +149,10 @@ class BlogIndex extends React.Component {
       'props.data.site.siteMetadata.description'
     )
     // .filter(c => !c.oneShot)
-    const latestCampaign = this.state.campaigns[0]
+    const latestCampaign =
+      this.state.campaigns.length > 0
+        ? this.state.campaigns[0]
+        : this.getCampaigns()[0]
 
     return (
       <div>
@@ -141,18 +193,22 @@ class BlogIndex extends React.Component {
             <Logo src={logo} />
           </RightColumn>
         </HomeHeader>
-        <div>
-          {this.state.campaignsActive ? (
-            <ToggleButton onClick={this.toggleCampaigns}>
-              Kampanjer
-            </ToggleButton>
-          ) : (
-            <DisabledToggleButton onClick={this.toggleCampaigns}>
-              Kampanjer
-            </DisabledToggleButton>
-          )}
+
+        <MainSection>
+          <ToggleButton
+            onClick={this.toggleCampaigns}
+            disabled={!this.state.campaignsActive}
+          >
+            Kampanjer
+          </ToggleButton>
+          <ToggleButton
+            onClick={this.toggleOneShots}
+            disabled={!this.state.oneShotsActive}
+          >
+            One shots
+          </ToggleButton>
           <CampaignCardList campaigns={this.state.campaigns} />
-        </div>
+        </MainSection>
       </div>
     )
   }
