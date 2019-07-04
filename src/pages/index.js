@@ -36,12 +36,12 @@ const EpisodeDescription = styled.p`
 `
 
 const EnabledToggleButton = styled.button`
-  ${tw`my-5 py-2 mx-2 px-4 rounded-full shadow-md`}
+  ${tw`py-2 mx-2 px-4 rounded-full shadow-md`}
   ${tw`bg-green-500 text-white`}
 `
 
 const DisabledToggleButton = styled.button`
-  ${tw`my-5 py-2 mx-2 px-4 rounded-full shadow-md`}
+  ${tw`py-2 mx-2 px-4 rounded-full shadow-md`}
   ${tw`bg-gray-300 text-gray-600`}
 `
 
@@ -84,6 +84,17 @@ const ToggleButton = ({ onClick, disabled, children }) =>
     <EnabledToggleButton onClick={onClick}>{children}</EnabledToggleButton>
   )
 
+const SearchBar = ({ onChange }) => (
+  <div className="w-1/6 my-4 mx-auto">
+    <input
+      onChange={onChange}
+      className="w-full h-16 px-3 rounded focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
+      type="search"
+      placeholder="Search..."
+    />
+  </div>
+)
+
 class BlogIndex extends React.Component {
   constructor(props) {
     super(props)
@@ -96,10 +107,12 @@ class BlogIndex extends React.Component {
       campaigns,
       campaignsActive: true,
       oneShotsActive: true,
+      searchFilter: '',
     }
 
     this.toggleCampaigns = this.toggleCampaigns.bind(this)
     this.toggleOneShots = this.toggleOneShots.bind(this)
+    this.handleSearchChange = this.handleSearchChange.bind(this)
   }
 
   toggleCampaigns() {
@@ -107,6 +120,7 @@ class BlogIndex extends React.Component {
     this.setState({
       campaignsActive,
       campaigns: this.filterCampaigns(
+        this.state.searchFilter,
         campaignsActive,
         this.state.oneShotsActive
       ),
@@ -118,6 +132,7 @@ class BlogIndex extends React.Component {
     this.setState({
       oneShotsActive,
       campaigns: this.filterCampaigns(
+        this.state.searchFilter,
         this.state.campaignsActive,
         oneShotsActive
       ),
@@ -128,18 +143,35 @@ class BlogIndex extends React.Component {
     return this.props.data.allContentfulCampaign.edges.map(e => e.node)
   }
 
-  filterCampaigns(campaignsActive, oneShotsActive) {
-    return this.getCampaigns().filter(c => {
-      if (campaignsActive && oneShotsActive) {
-        return true
-      } else if (oneShotsActive && !campaignsActive) {
-        return c.oneShot
-      } else if (campaignsActive && !oneShotsActive) {
-        return !c.oneShot
-      } else {
-        return false
-      }
+  handleSearchChange(event) {
+    const searchFilter = event.target.value
+    this.setState({
+      searchFilter,
+      campaigns: this.filterCampaigns(
+        searchFilter,
+        this.state.campaignsActive,
+        this.state.oneShotsActive
+      ),
     })
+  }
+  filterCampaigns(searchFilter, campaignsActive, oneShotsActive) {
+    return this.getCampaigns()
+      .filter(c =>
+        searchFilter === ''
+          ? true
+          : c.title.toLowerCase().indexOf(searchFilter.toLowerCase()) !== -1
+      )
+      .filter(c => {
+        if (campaignsActive && oneShotsActive) {
+          return true
+        } else if (oneShotsActive && !campaignsActive) {
+          return c.oneShot
+        } else if (campaignsActive && !oneShotsActive) {
+          return !c.oneShot
+        } else {
+          return false
+        }
+      })
   }
 
   render() {
@@ -195,6 +227,7 @@ class BlogIndex extends React.Component {
         </HomeHeader>
 
         <MainSection>
+          <SearchBar onChange={this.handleSearchChange} />
           <ToggleButton
             onClick={this.toggleCampaigns}
             disabled={!this.state.campaignsActive}
@@ -207,6 +240,7 @@ class BlogIndex extends React.Component {
           >
             One shots
           </ToggleButton>
+
           <CampaignCardList campaigns={this.state.campaigns} />
         </MainSection>
       </div>
