@@ -9,7 +9,7 @@ const CardList = styled.div`
 `
 
 const Card = styled.div`
-  ${tw`static m-5 relative text-left`}
+  ${tw`static m-5  text-left`}
 
   width: 800px;
   border-radius: 10px;
@@ -29,12 +29,28 @@ const Header = styled.div`
 
 const Title = styled.h2``
 
-const Content = styled.div`
-  ${tw`p-10 m-auto -mt-8 w-11/12 bg-white rounded`}
+const CampaignContent = styled.div`
+  ${tw`relative p-10 m-auto -mt-8 w-11/12 bg-white rounded`}
 
   box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
     1px 3px 8px rgba(39, 44, 49, 0.03);
   z-index: 1;
+`
+
+const Episode = styled.div`
+  ${tw`flex p-10 m-auto w-11/12 bg-white rounded`}
+
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+  z-index: 1;
+`
+
+const EpisodeDescription = styled.div`
+  ${tw`flex-1 pr-5`}
+`
+
+const EpisodePlayButtonWrapper = styled.div`
+  ${tw`w-1/12`}
 `
 
 const Footer = styled.div`
@@ -56,6 +72,10 @@ const CampaignType = styled.div`
   }};
 `
 
+const Divider = styled.div`
+  ${tw`w-full border border-gray-500`}
+`
+
 const FooterLink = styled(Link)`
   ${tw`absolute bottom-0 right-0 h-8 w-40`}
 `
@@ -74,31 +94,34 @@ class CampaignCardList extends React.Component {
               <Header src={'https:' + image.fluid.src} />
 
               {episodes.length > 0 ? (
-                <Content>
-                  {oneShot ? (
-                    <CampaignType type="one-shot">One Shot</CampaignType>
-                  ) : (
-                    <CampaignType type="campaign">Kampanj</CampaignType>
-                  )}
+                <div>
+                  <CampaignContent>
+                    {oneShot ? (
+                      <CampaignType type="one-shot">One Shot</CampaignType>
+                    ) : (
+                      <CampaignType type="campaign">Kampanj</CampaignType>
+                    )}
 
-                  <Title>{title}</Title>
+                    <Title>{title}</Title>
 
-                  <div>{description.description}</div>
+                    <div>{description.description}</div>
 
-                  <h3>{episodes[0].title}</h3>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: episodes[0].description.description,
-                    }}
-                  />
-                  <AudioPlayerButton episode={episodes[0]} />
-
-                  <Footer>
-                    <FooterLink to={'campaigns/' + id}>
-                      Gå till kampanj
-                    </FooterLink>
-                  </Footer>
-                </Content>
+                    <Footer>
+                      <FooterLink to={'campaigns/' + id}>
+                        Gå till kampanj
+                      </FooterLink>
+                    </Footer>
+                  </CampaignContent>
+                  <Episode>
+                    <EpisodeDescription>
+                      <h3>{episodes[0].title}</h3>
+                      <p>{episodes[0].description.description}</p>
+                    </EpisodeDescription>
+                    <EpisodePlayButtonWrapper>
+                      <AudioPlayerButton episode={episodes[0]} />
+                    </EpisodePlayButtonWrapper>
+                  </Episode>
+                </div>
               ) : (
                 ''
               )}

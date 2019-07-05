@@ -66,17 +66,6 @@ const MainSection = styled.section`
   ${tw`m-auto text-center`}
 `
 
-/*
-  {this.state.campaignsActive ? (
-            <ToggleButton onClick={this.toggleCampaigns}>
-              Kampanjer
-            </ToggleButton>
-          ) : (
-            <DisabledToggleButton onClick={this.toggleCampaigns}>
-              Kampanjer
-            </DisabledToggleButton>
-          )}
-*/
 const ToggleButton = ({ onClick, disabled, children }) =>
   disabled ? (
     <DisabledToggleButton onClick={onClick}>{children}</DisabledToggleButton>
