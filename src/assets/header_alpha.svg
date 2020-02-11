@@ -52,10 +52,10 @@
   </metadata>
   <g
      id="header-alpha"
-     transform="translate(0.2110117,-245.93218)">
+     transform="translate(0,-245.93218)">
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:23.59588051px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 11.798828,11.798828 0,73.7418 C 758.0364,-118.14328 1115.9455,347.45852 1911.7988,77.389799 l 0,-65.590971 z"
+       d="m 11.798828,11.798828 0,73.7418 C 758.0364,-118.14328 1115.9455,347.45852 2000.7988,77.389799 l 0,-65.590971 z"
        transform="matrix(0.26458334,0,0,0.26458334,-0.2110117,245.93218)"
        id="path817-3-7"
        inkscape:connector-curvature="0"
