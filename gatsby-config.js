@@ -9,7 +9,7 @@ module.exports = {
     description: 'En rollspelspodd.',
     siteUrl: 'https://svartviken.se',
     feedUrl: 'http://example.com/rss.xml',
-    imageUrl: 'src/assets/svartviken-podcast-cover.jpg',
+    imageUrl: 'svartviken-podcast-cover.jpg',
     docs: 'http://example.com/rss/docs.html',
     copyright: '2019 Svartviken',
     language: 'se',
