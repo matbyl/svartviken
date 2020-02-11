@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import tw from 'tailwind.macro'
+import HeaderAlpha from './../assets/header_alpha.svg'
 
 import styled from 'styled-components'
 import logo from './../assets/Svartviken_logo_genomskinlig.png'
@@ -13,7 +14,7 @@ import CampaignCardList from '../components/CampaignCardList'
 import AudioPlayerButton from '../components/AudioPlayerButton'
 
 const HomeHeader = styled.header`
-  ${tw`bg-black text-white flex flex-row flex-wrap-reverse p-20`};
+  ${tw`bg-black text-white flex flex-row flex-wrap-reverse p-10`};
 `
 
 const LeftColumn = styled.div`
@@ -70,8 +71,8 @@ const ToggleButton = ({ onClick, disabled, children }) =>
   disabled ? (
     <DisabledToggleButton onClick={onClick}>{children}</DisabledToggleButton>
   ) : (
-    <EnabledToggleButton onClick={onClick}>{children}</EnabledToggleButton>
-  )
+      <EnabledToggleButton onClick={onClick}>{children}</EnabledToggleButton>
+    )
 
 const SearchBar = ({ onChange }) => (
   <div className="w-1/6 my-4 mx-auto">
@@ -214,6 +215,7 @@ class BlogIndex extends React.Component {
             <Logo src={logo} />
           </RightColumn>
         </HomeHeader>
+        <img src={HeaderAlpha} className="header-bottom" />
 
         <MainSection>
           <SearchBar onChange={this.handleSearchChange} />
@@ -263,6 +265,7 @@ export const pageQuery = graphql`
             }
           }
           episodes {
+            id
             title
             description {
               description

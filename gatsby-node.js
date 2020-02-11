@@ -8,6 +8,7 @@ exports.createPages = ({ graphql, actions }) => {
 
   return new Promise((resolve, reject) => {
     const campaignTemplate = path.resolve('src/templates/campaign.js')
+    const episodeTemplate = path.resolve('src/templates/episode.js')
 
     resolve(
       graphql(
@@ -28,6 +29,7 @@ exports.createPages = ({ graphql, actions }) => {
                     }
                   }
                   episodes {
+                    id
                     title
                     description {
                       description
@@ -56,6 +58,17 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               id: node.id,
             },
+          })
+
+          node.episodes.forEach(episode => {
+            const path = '/episodes/' + episode.id
+            createPage({
+              path,
+              component: episodeTemplate,
+              context: {
+                id: episode.id,
+              },
+            })
           })
         })
       })

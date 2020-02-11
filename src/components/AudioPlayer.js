@@ -203,9 +203,12 @@ class AudioPlayer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.pause()
-
-    this.loadAudio(nextProps.episode.audio.file.url)
+    if (
+      this.props.episode.audio.file.url !== nextProps.episode.audio.file.url
+    ) {
+      this.pause()
+      this.loadAudio(nextProps.episode.audio.file.url)
+    }
   }
 
   componentWillMount() {

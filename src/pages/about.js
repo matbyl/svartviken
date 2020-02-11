@@ -9,6 +9,9 @@ import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 const AboutSection = styled.section`
   ${tw`flex flex-row flex-wrap justify-center w-full pt-24 pb-24 m-auto`};
 `
+const About = styled.section`
+  ${tw`w-full text-center text-xl m-auto`};
+`
 
 const PlayerSection = styled.div`
   ${tw`w-3/12 text-center justify-center p-12`};
@@ -37,13 +40,14 @@ const Avatar = styled.img`
 export default class AboutPage extends React.Component {
   render() {
     return (
-      <div>
+      <div className="min-w-full">
         <Header backgroundImage={banner}>
           <HeaderContent>
             <HeaderTitle>Om oss</HeaderTitle>
           </HeaderContent>
         </Header>
         <AboutSection className="container">
+          <About>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</About>
           {this.props.data.allContentfulPlayer.edges.map(({ node }) => (
             <PlayerSection>
               <Avatar src={node.avatar.fluid.src} />

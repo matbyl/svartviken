@@ -22,10 +22,32 @@ html, body, p {
   font-size: 15px;
 }
 
-html, body {
-  background: #F5F8FB;
+
+
+html, body,  #___gatsby  {
+  background:  #F5F8FB;
+  height: 100%;
+
 }
 
-@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+div[role="group"][tabindex] {
+  height: 100%;
+}
+
+@keyframes spin { 100% { transform:rotate(360deg); } }
+
+.header-bottom {
+  width: 100%;
+    filter: drop-shadow( 0px 4px 6px rgba(0, 0, 0, .2));
+    // animation: wave 5s infinite;
+  img {
+    width: 400%;
+  }
+}
+
+
+@keyframes wave {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+

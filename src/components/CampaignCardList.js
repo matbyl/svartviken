@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
-import AudioPlayerButton from './AudioPlayerButton'
 import tw from 'tailwind.macro'
+import { Episode } from './Episode'
 
 const CardList = styled.div`
   ${tw`flex flex-row flex-wrap justify-center`}
@@ -27,30 +27,19 @@ const Header = styled.div`
   z-index: 0;
 `
 
-const Title = styled.h2``
+const Title = styled(Link)`
+  font-family: 'Colus', Arial, Helvetica, sans-serif;
+  font-size: 28px;
+
+  :hover {
+    text-decoration: underline;
+  }
+`
 
 const CampaignContent = styled.div`
-  ${tw`relative p-10 m-auto -mt-8 w-11/12 bg-white rounded`}
+  ${tw`relative p-10 -mt-8 border-b`}
 
-  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
-    1px 3px 8px rgba(39, 44, 49, 0.03);
   z-index: 1;
-`
-
-const Episode = styled.div`
-  ${tw`flex p-10 m-auto w-11/12 bg-white rounded`}
-
-  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
-    1px 3px 8px rgba(39, 44, 49, 0.03);
-  z-index: 1;
-`
-
-const EpisodeDescription = styled.div`
-  ${tw`flex-1 pr-5`}
-`
-
-const EpisodePlayButtonWrapper = styled.div`
-  ${tw`w-1/12`}
 `
 
 const Footer = styled.div`
@@ -94,7 +83,7 @@ class CampaignCardList extends React.Component {
               <Header src={'https:' + image.fluid.src} />
 
               {episodes.length > 0 ? (
-                <div>
+                <div className="shadow-xl w-11/12 bg-white m-auto rounded">
                   <CampaignContent>
                     {oneShot ? (
                       <CampaignType type="one-shot">One Shot</CampaignType>
@@ -102,25 +91,11 @@ class CampaignCardList extends React.Component {
                       <CampaignType type="campaign">Kampanj</CampaignType>
                     )}
 
-                    <Title>{title}</Title>
+                    <Title to={'campaigns/' + id}>{title}</Title>
 
-                    <div>{description.description}</div>
-
-                    <Footer>
-                      <FooterLink to={'campaigns/' + id}>
-                        Gå till kampanj
-                      </FooterLink>
-                    </Footer>
+                    <div className="w-11/12">{description.description}</div>
                   </CampaignContent>
-                  <Episode>
-                    <EpisodeDescription>
-                      <h3>{episodes[0].title}</h3>
-                      <p>{episodes[0].description.description}</p>
-                    </EpisodeDescription>
-                    <EpisodePlayButtonWrapper>
-                      <AudioPlayerButton episode={episodes[0]} />
-                    </EpisodePlayButtonWrapper>
-                  </Episode>
+                  <Episode episode={episodes[0]} />
                 </div>
               ) : (
                 ''

@@ -9,8 +9,6 @@ import tw from 'tailwind.macro'
 import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'
 
-const Body = styled.div``
-
 const Footer = styled.section`
   min-height: 180px;
   text-align: center;
@@ -159,10 +157,12 @@ class Template extends React.Component {
 
     return (
       <ContextProviderComponent>
-        {header}
-        {audioPlayer}
-        {children}
-        {footer}
+        <div className="flex flex-col h-screen">
+          {header}
+          {audioPlayer}
+          <div className="flex flex-grow">{children}</div>
+          {footer}
+        </div>
       </ContextProviderComponent>
     )
   }

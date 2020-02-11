@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import tw from 'tailwind.macro'
 
 import { Header, HeaderContent } from '../components/Header'
+import { Episode } from '../components/Episode'
 
 const Title = styled.h1`
   ${tw`text-white text-lg xl:text-6xl`};
@@ -17,48 +18,36 @@ const Episodes = styled.ul`
   ${tw`flex flex-wrap justify-center w-full m-auto `};
 `
 
-const Episode = styled.li`
-  ${tw` w-1/2 h-48 text-center bg-white shadow-lg rounded`};
-`
-
-const Info = styled.div`
-  ${tw`flex-1`};
-`
-
-const HeaderImage = styled.img`
-  ${tw`object-cover w-full opacity-25`};
-`
-
-const Character = styled.div``
-
 export default ({ data }) => {
   return (
-    <div>
+    <div className="min-w-full">
       <Header backgroundImage={data.contentfulCampaign.image.fluid.src}>
         <HeaderContent className="container">
           <Title>{data.contentfulCampaign.title}</Title>
           <Description>
             {data.contentfulCampaign.description.description}
           </Description>
-          {/* {data.contentfulCampaign.characters.map(character => (
-            <Character>
-              <h3>{character.name}</h3>
-              <div>description...</div>
-            </Character>
-          ))} */}
+          {/* {data.contentfulCampaign.characters
+            ? data.contentfulCampaign.characters.map(character => (
+                <div className="w-1/2 m-auto">
+                  <h3 className="text-lg text-white">
+                    {character.name} ({character.playedBy.firstname}{' '}
+                    {character.playedBy.lastname})
+                  </h3>
+                  <p className="text-white">
+                    {character.description.description}
+                  </p>
+                </div>
+              ))
+            : ''} */}
         </HeaderContent>
       </Header>
-      <Episodes className="container">
-        {data.contentfulCampaign.episodes
-          // .sort(
-          //   (a, b) => Date.parse(a.published_on) > Date.parse(b.published_on)
-          // )
-          .map(episode => (
-            <Episode>
-              <h3>{episode.title}</h3>
-              <div>{episode.description.description}</div>
-            </Episode>
-          ))}
+      <Episodes>
+        {data.contentfulCampaign.episodes.map(episode => (
+          <div className="w-5/12 m-1 bg-white shadow-lg rounded">
+            <Episode episode={episode} />
+          </div>
+        ))}
       </Episodes>
     </div>
   )
@@ -79,6 +68,7 @@ export const query = graphql`
         }
       }
       episodes {
+        id
         title
         description {
           description
@@ -87,6 +77,16 @@ export const query = graphql`
           file {
             url
           }
+        }
+      }
+      characters {
+        name
+        description {
+          description
+        }
+        playedBy {
+          firstname
+          lastname
         }
       }
     }
