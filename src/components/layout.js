@@ -10,7 +10,7 @@ import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'
 
 const Footer = styled.section`
-  min-height: 180px;
+  min-height: 280px;
   text-align: center;
   font-size: 24px;
   padding: 15px;
@@ -118,6 +118,7 @@ class Template extends React.Component {
         <NavBarRow>
           <NavBarItem to={'/'}>Hem</NavBarItem> |{' '}
           <NavBarItem to={'/about'}>Om oss</NavBarItem> |{' '}
+          <NavBarItem to={'/collaborations'}>Våra samarbeten</NavBarItem> |{' '}
           <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
           <SocialIcon src={FacebookIcon} />
           <SocialIcon src={InstagramIcon} />

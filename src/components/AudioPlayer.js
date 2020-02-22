@@ -31,7 +31,7 @@ const Title = styled.h4`
 
 const SeekBar = styled.div`
   display: grid;
-  grid-template-columns: 50px auto 70px;
+  grid-template-columns: 70px auto 70px;
   grid-template-areas: 'start seek end';
 
   margin: auto;
@@ -91,19 +91,18 @@ const ProgressPointer = styled.div.attrs(({ progress }) => ({
 }))`
   z-index: 42;
   border-radius: 100%;
-  background: pink;
-  height: 10px;
-  width: 10px;
-  transform: translateY(-3.5px);
+  background: #F0F0F0;
+  height: 20px;
+  width: 20px;
+  transform: translateY(-6.5px) translateX(-10px);
   position: absolute;
   overflow: visible;
-  opacity: 0.72;
   -webkit-transition: opacity 0.2s, border 0.2s; /* Safari */
   transition: opacity 0.2s, border 0.2s;
   border: 2px solid black;
 
   &:hover {
-    opacity: 1;
+    background: #FEFEFE;
   }
 `
 
@@ -154,12 +153,12 @@ const PlayPauseButton = ({ color, playing, playAction, pauseAction }) =>
       size="45"
     />
   ) : (
-    <ControllButton
-      icon={color === 'white' ? playIconWhite : playIconBlack}
-      action={playAction}
-      size="45"
-    />
-  )
+      <ControllButton
+        icon={color === 'white' ? playIconWhite : playIconBlack}
+        action={playAction}
+        size="45"
+      />
+    )
 
 const minutes = time => Math.floor(time / 60)
 const seconds = (time, minutes) => Math.floor(time - minutes * 60)
@@ -214,6 +213,8 @@ class AudioPlayer extends React.Component {
   componentWillMount() {
     document.addEventListener('mousemove', this.handleMouseMove, false)
     document.addEventListener('mouseup', this.handleMouseUp, false)
+
+
   }
 
   componentWillUnmount() {
@@ -228,6 +229,7 @@ class AudioPlayer extends React.Component {
       html5: true,
       onload: () => {
         this.setState({ duration: formatTime(this.audio.duration()) })
+        this.play();
       },
     })
   }
@@ -278,7 +280,7 @@ class AudioPlayer extends React.Component {
       })
     }
 
-    if (this.state.playing) {
+    if (!this.state.seekBarMouseDown && this.state.playing) {
       window.requestAnimationFrame(this.step)
     }
   }
@@ -286,30 +288,43 @@ class AudioPlayer extends React.Component {
   getSeekValueFromMouseEvent(screenX) {
     const boundingClientRect = this.state.progressRect.getBoundingClientRect()
     const currentPos = screenX - boundingClientRect.x
-    const maxPos = boundingClientRect.right - boundingClientRect.x
-    const percentage = currentPos / maxPos
-    return this.audio.duration() * percentage
+    const maxPos = boundingClientRect.right - boundingClientRect.x;
+    if (currentPos > 0 && currentPos < maxPos) {
+      const percentage = currentPos / maxPos
+      return this.audio.duration() * percentage
+    } else if (currentPos < 0) {
+      return 0;
+    } else {
+      return this.audio.duration();
+    }
   }
 
   seekOnMouseDown(event) {
     event.persist()
-    console.log(event)
     this.setState(
       {
         seekBarMouseDown: true,
         progressRect: event.currentTarget,
-      },
-      () => this.seek(this.getSeekValueFromMouseEvent(event.clientX))
-    )
+      });
   }
 
   handleMouseMove(event) {
     if (this.state.seekBarMouseDown) {
-      this.seek(this.getSeekValueFromMouseEvent(event.clientX))
+      const seek = this.getSeekValueFromMouseEvent(event.clientX);
+      window.requestAnimationFrame(() => {
+        const time = formatTime(seek)
+        const progress = (seek / this.audio.duration()) * 100
+
+        this.setState({
+          time,
+          progress,
+        })
+      });
     }
   }
 
-  handleMouseUp() {
+  handleMouseUp(event) {
+    this.seek(this.getSeekValueFromMouseEvent(event.clientX));
     this.setState({ seekBarMouseDown: false })
   }
 
@@ -367,12 +382,12 @@ class AudioPlayer extends React.Component {
           </ProgressWrapper>
           <Time
             className={this.props.color ? 'white' : 'black'}
-            style={{ gridArea: 'end' }}
+            style={{ gridArea: 'end', textAlign: 'right', marginRight: '10px' }}
           >
             {this.state.duration}
           </Time>
         </SeekBar>
-      </Container>
+      </Container >
     )
   }
 }
