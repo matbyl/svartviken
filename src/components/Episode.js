@@ -12,7 +12,6 @@ import { Link } from 'gatsby'
 import AudioPlayerButton from './AudioPlayerButton'
 
 export const EpisodeTitleLink = styled(Link)`
-  ${tw`mt-8`}
   font-family: 'Jost', Arial, Helvetica, sans-serif;
   font-size: 20px;
 
@@ -21,12 +20,22 @@ export const EpisodeTitleLink = styled(Link)`
   }
 `
 
+export const EpisodeNumber = styled.h2`
+  font-family: 'Jost', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #2E2E2E;
+`
+
+
 export const Episode = props => {
   const { episode } = props
 
   return (
     <EpisodeContent>
       <EpisodeDescription>
+        <EpisodeNumber>
+          Avsnitt {episode.number}
+        </EpisodeNumber>
         <EpisodeTitleLink to={'episodes/' + episode.id}>
           {episode.title}
         </EpisodeTitleLink>

@@ -39,6 +39,7 @@ const Title = styled(Link)`
 const CampaignContent = styled.div`
   ${tw`relative p-10 -mt-8 border-b`}
 
+  height: 200px;
   z-index: 1;
 `
 
@@ -88,18 +89,18 @@ class CampaignCardList extends React.Component {
                     {oneShot ? (
                       <CampaignType type="one-shot">One Shot</CampaignType>
                     ) : (
-                      <CampaignType type="campaign">Kampanj</CampaignType>
-                    )}
+                        <CampaignType type="campaign">Kampanj</CampaignType>
+                      )}
 
                     <Title to={'campaigns/' + id}>{title}</Title>
 
                     <div className="w-11/12">{description.description}</div>
                   </CampaignContent>
-                  <Episode episode={episodes[0]} />
+                  <Episode episode={episodes.find(e => e.number === 1)} />
                 </div>
               ) : (
-                ''
-              )}
+                  ''
+                )}
             </Card>
           )
         )}

@@ -213,8 +213,6 @@ class AudioPlayer extends React.Component {
   componentWillMount() {
     document.addEventListener('mousemove', this.handleMouseMove, false)
     document.addEventListener('mouseup', this.handleMouseUp, false)
-
-
   }
 
   componentWillUnmount() {
@@ -324,8 +322,11 @@ class AudioPlayer extends React.Component {
   }
 
   handleMouseUp(event) {
-    this.seek(this.getSeekValueFromMouseEvent(event.clientX));
-    this.setState({ seekBarMouseDown: false })
+    if (this.state.seekBarMouseDown) {
+      this.seek(this.getSeekValueFromMouseEvent(event.clientX));
+      this.setState({ seekBarMouseDown: false })
+    }
+
   }
 
   openAudioPlayer() {
@@ -368,6 +369,7 @@ class AudioPlayer extends React.Component {
           </Time>
 
           <ProgressWrapper
+            id="progress-bar"
             className={this.props.color ? 'white' : 'black'}
             style={{ gridArea: 'seek' }}
             onMouseMoveCapture={this.handleMouseMove}

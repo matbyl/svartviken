@@ -15,7 +15,7 @@ const Description = styled.p`
 `
 
 const Episodes = styled.ul`
-  ${tw`flex flex-wrap justify-center w-full m-auto `};
+  ${tw`flex flex-wrap justify-center w-full my-12 mx-auto `};
 `
 
 export default ({ data }) => {
@@ -70,6 +70,7 @@ export const query = graphql`
       episodes {
         id
         title
+        number
         description {
           description
         }

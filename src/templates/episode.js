@@ -12,6 +12,10 @@ import {
   TwitterIcon,
 } from 'react-share'
 
+const EpisodeNumber = styled.h1`
+  ${tw`text-gray-500 text-lg xl:text-2xl`};
+`
+
 const Title = styled.h1`
   ${tw`text-white text-lg xl:text-6xl`};
 `
@@ -25,6 +29,7 @@ export default ({ data }) => {
     <div className="flex min-h-full min-w-full bg-black">
       <Header className="flex m-auto" backgroundImage={''}>
         <HeaderContent className="container">
+          <EpisodeNumber>Avsnitt {data.contentfulEpisode.number}</EpisodeNumber>
           <Title>{data.contentfulEpisode.title}</Title>
           <Description>
             {data.contentfulEpisode.description.description}
@@ -55,6 +60,7 @@ export const query = graphql`
     contentfulEpisode(id: { eq: $id }) {
       id
       title
+      number
       description {
         description
       }

@@ -64,7 +64,7 @@ const LatestEpisode = styled.div`
 `
 
 const MainSection = styled.section`
-  ${tw`m-auto text-center`}
+  ${tw`mx-auto my-12 text-center`}
 `
 
 const ToggleButton = ({ onClick, disabled, children }) =>
@@ -176,6 +176,7 @@ class BlogIndex extends React.Component {
         ? this.state.campaigns[0]
         : this.getCampaigns()[0]
 
+    const firstEpisodeOfLatestCampaign = latestCampaign.episodes.find(e => e.number === 1);
     return (
       <div>
         <Helmet
@@ -199,9 +200,9 @@ class BlogIndex extends React.Component {
               <CampaignDescription>
                 {latestCampaign.description.description}
               </CampaignDescription>
-              <EpisodeTitle>{latestCampaign.episodes[0].title}</EpisodeTitle>
+              <EpisodeTitle>{firstEpisodeOfLatestCampaign.title}</EpisodeTitle>
               <EpisodeDescription>
-                {latestCampaign.episodes[0].description.description}
+                {firstEpisodeOfLatestCampaign.description.description}
               </EpisodeDescription>
 
               <AudioPlayerButton
@@ -267,6 +268,7 @@ export const pageQuery = graphql`
           episodes {
             id
             title
+            number
             description {
               description
             }
