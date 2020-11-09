@@ -177,7 +177,7 @@ class AudioPlayer extends React.Component {
   constructor(props) {
     super(props)
 
-    this.loadAudio(props.episode.audio.file.url)
+    this.loadAudio(props.episode.filename)
 
     this.state = {
       playing: false,
@@ -202,27 +202,28 @@ class AudioPlayer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.episode.filename)
     if (
-      this.props.episode.audio.file.url !== nextProps.episode.audio.file.url
+      this.props.episode.filename !== nextProps.episode.filename
     ) {
       this.pause()
-      this.loadAudio(nextProps.episode.audio.file.url)
+      this.loadAudio(nextProps.episode.filename)
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('mousemove', this.handleMouseMove, false)
     document.addEventListener('mouseup', this.handleMouseUp, false)
   }
 
-  componentWillUnmount() {
+  componentDidUnmount() {
     document.addEventListener('mousemove', this.handleMouseMove, false)
     document.addEventListener('mouseup', this.handleMouseUp, false)
   }
 
   loadAudio(src) {
     this.audio = new Howl({
-      src: ['https:' + src],
+      src: ['https://www.svartvikenrp.se/media/' + src],
       audioPlayerOpen: false,
       html5: true,
       onload: () => {

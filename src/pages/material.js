@@ -2,7 +2,7 @@ import React from 'react'
 import banner from './../assets/images/svartviken_banner.jpg'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Header, HeaderContent, HeaderTitle } from '../components/Header'
-
+import {graphql} from 'gatsby'
 
 export default class MaterialPage extends React.Component {
     render() {

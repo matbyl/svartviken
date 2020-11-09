@@ -36,7 +36,7 @@ export const Episode = props => {
         <EpisodeNumber>
           Avsnitt {episode.number}
         </EpisodeNumber>
-        <EpisodeTitleLink to={'episodes/' + episode.id}>
+        <EpisodeTitleLink to={'/episodes/' + episode.id}>
           {episode.title}
         </EpisodeTitleLink>
         <p>{episode.description.description}</p>

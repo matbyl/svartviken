@@ -92,7 +92,7 @@ class CampaignCardList extends React.Component {
                         <CampaignType type="campaign">Kampanj</CampaignType>
                       )}
 
-                    <Title to={'campaigns/' + id}>{title}</Title>
+                    <Title to={'/campaigns/' + id}>{title}</Title>
 
                     <div className="w-11/12">{description.description}</div>
                   </CampaignContent>

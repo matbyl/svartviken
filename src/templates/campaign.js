@@ -58,7 +58,6 @@ export const query = graphql`
     contentfulCampaign(id: { eq: $id }) {
       id
       title
-      oneShot
       description {
         description
       }
@@ -74,17 +73,10 @@ export const query = graphql`
         description {
           description
         }
-        audio {
-          file {
-            url
-          }
-        }
+        filename
       }
       characters {
         name
-        description {
-          description
-        }
         playedBy {
           firstname
           lastname

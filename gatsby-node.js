@@ -19,7 +19,6 @@ exports.createPages = ({ graphql, actions }) => {
                 node {
                   id
                   title
-                  oneShot
                   description {
                     description
                   }
@@ -34,11 +33,7 @@ exports.createPages = ({ graphql, actions }) => {
                     description {
                       description
                     }
-                    audio {
-                      file {
-                        url
-                      }
-                    }
+                    filename
                   }
                 }
               }

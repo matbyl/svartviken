@@ -128,8 +128,8 @@ module.exports = {
                   url: site.siteMetadata.siteUrl + '/episode/' + edge.node.id,
                   guid: site.siteMetadata.siteUrl + '/episode/' + edge.node.id,
                   enclosure: {
-                    url: 'https:' + edge.node.audio.file.url,
-                    type: edge.node.audio.file.fileType,
+                    url: 'https://www.svartvikenrp.se/media/' + edge.node.filename,
+                    type: 'mp3',
                   },
                 })
               })
@@ -144,13 +144,7 @@ module.exports = {
                       description {
                         description
                       }
-                      audio {
-                        file {
-                          url
-                          fileName
-                          contentType
-                        }
-                      }
+                      filename
                     }
                   }
                 }

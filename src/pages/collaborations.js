@@ -1,11 +1,8 @@
 import React from 'react'
-import Layout from '../components/layout'
-import styled from 'styled-components'
-import tw from 'tailwind.macro'
 import banner from './../assets/images/svartviken_banner.jpg'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Header, HeaderContent, HeaderTitle } from '../components/Header'
-
+import {graphql} from 'gatsby'
 
 export default class CollaborationsPage extends React.Component {
     render() {

@@ -3,6 +3,7 @@ import Layout from '../components/layout'
 import styled from 'styled-components'
 import tw from 'tailwind.macro'
 import banner from './../assets/images/svartviken_banner.jpg'
+import {graphql} from 'gatsby'
 
 import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 

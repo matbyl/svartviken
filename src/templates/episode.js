@@ -39,7 +39,7 @@ export default ({ data }) => {
           <div className="flex justify-center">
             <FacebookShareButton
               className="m-1"
-              url={'https://asd.asd/test/' + data.contentfulEpisode.id}
+              url={'https://www.svartvikenrp.se/media/' + data.contentfulEpisode.filename}
               quote={'asd'}
             >
               <FacebookIcon size={32} round />
@@ -64,11 +64,7 @@ export const query = graphql`
       description {
         description
       }
-      audio {
-        file {
-          url
-        }
-      }
+      filename
     }
   }
 `

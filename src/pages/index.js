@@ -154,10 +154,6 @@ class BlogIndex extends React.Component {
       .filter(c => {
         if (campaignsActive && oneShotsActive) {
           return true
-        } else if (oneShotsActive && !campaignsActive) {
-          return c.oneShot
-        } else if (campaignsActive && !oneShotsActive) {
-          return !c.oneShot
         } else {
           return false
         }
@@ -256,7 +252,6 @@ export const pageQuery = graphql`
         node {
           id
           title
-          oneShot
           description {
             description
           }
@@ -272,11 +267,7 @@ export const pageQuery = graphql`
             description {
               description
             }
-            audio {
-              file {
-                url
-              }
-            }
+            filename
           }
         }
       }
