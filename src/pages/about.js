@@ -56,7 +56,7 @@ export default class AboutPage extends React.Component {
                 {node.firstname + ' ' + node.lastname}
               </CharacterName>
               <CharacterPersonality>Chaotic Neutral</CharacterPersonality>
-              <CharacterDescription>{node.about.about}</CharacterDescription>
+              { node.about ? <CharacterDescription>{node.about.about}</CharacterDescription> : null }
             </PlayerSection>
           ))}
         </AboutSection>
