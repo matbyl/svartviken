@@ -2,14 +2,14 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
-import tw from 'tailwind.macro'
+import tw from 'twin.macro'
 import HeaderAlpha from './../assets/header_alpha.svg'
 
 import styled from 'styled-components'
 import logo from './../assets/Svartviken_logo_genomskinlig.png'
 
-import '../styles/tailwind.css'
 import '../styles/main.scss'
+import "tailwindcss/dist/base.min.css"
 import CampaignCardList from '../components/CampaignCardList'
 import AudioPlayerButton from '../components/AudioPlayerButton'
 

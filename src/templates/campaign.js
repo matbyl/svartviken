@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
-import tw from 'tailwind.macro'
+import tw from 'twin.macro'
 
 import { Header, HeaderContent } from '../components/Header'
 import { Episode } from '../components/Episode'

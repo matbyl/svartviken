@@ -7,6 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby-starter-blog/issues"
   },
   "dependencies": {
+    "@contentful/rich-text-from-markdown": "^14.1.2",
     "@contentful/rich-text-react-renderer": "^13.4.0",
     "bootstrap": "^4.0.0-beta.2",
     "bulma": "^0.7.2",
@@ -56,14 +57,18 @@
     "typography-theme-wordpress-2016": "^0.15.10"
   },
   "devDependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.11.1",
+    "gatsby-plugin-emotion": "^4.4.0",
     "gatsby-plugin-purgecss": "^4.0.0",
     "gh-pages": "^1.2.0",
     "prettier": "^1.14.2",
     "tailwind": "^4.0.0",
     "tailwind.macro": "^1.0.0-alpha.10",
-    "tailwindcss": "^1.0.0-beta.10"
+    "tailwindcss": "^1.9.6",
+    "twin.macro": "^1.12.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [

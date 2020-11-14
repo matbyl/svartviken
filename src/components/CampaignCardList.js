@@ -1,17 +1,16 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
-import tw from 'tailwind.macro'
+import tw from 'twin.macro'
 import { Episode } from './Episode'
 
 const CardList = styled.div`
-  ${tw`flex flex-row flex-wrap my-20`}
+  ${tw`flex flex-row flex-wrap my-20 w-full lg:p-10 p-2`}
 `
 
 const Card = styled.div`
-  ${tw`static mx-5 my-auto text-left flex-col`}
+  ${tw`lg:w-1/2 w-full my-auto text-left flex-col lg:p-10`}
 
-  width: 800px;
   border-radius: 10px;
 `
 
@@ -76,7 +75,7 @@ class CampaignCardList extends React.Component {
       <CardList>
         {this.props.campaigns.map(
           ({ title, id, description, episodes, image, oneShot }) => (
-            <Card>
+            <Card key={id}>
               <Header src={'https:' + image.fluid.src} />
 
               {episodes.length > 0 ? (
