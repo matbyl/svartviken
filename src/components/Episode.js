@@ -41,7 +41,7 @@ export const Episode = props => {
         </EpisodeTitleLink>
         <p>{episode.description.description}</p>
 
-        <div className="flex absolute bottom-0">
+        <div className="flex mt-10 bottom-0">
           <FacebookShareButton
             url={'https://asd.asd/test/' + episode.id}
             quote={'asd'}
@@ -63,12 +63,12 @@ export const Episode = props => {
 }
 
 const EpisodeContent = styled.div`
-  ${tw`flex h-full px-10 pb-8`}
+  ${tw`flex h-full px-10`}
   z-index: 1;
 `
 
 const EpisodeDescription = styled.div`
-  ${tw`flex-1 py-10 pr-5 h-48 relative`}
+  ${tw`flex-1 py-10 pr-5 relative`}
 `
 
 const EpisodePlayButtonWrapper = styled.div`

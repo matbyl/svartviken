@@ -5,11 +5,11 @@ import tw from 'tailwind.macro'
 import { Episode } from './Episode'
 
 const CardList = styled.div`
-  ${tw`flex flex-row flex-wrap justify-center`}
+  ${tw`flex flex-row flex-wrap my-20`}
 `
 
 const Card = styled.div`
-  ${tw`static m-5  text-left`}
+  ${tw`static mx-5 my-auto text-left flex-col`}
 
   width: 800px;
   border-radius: 10px;
@@ -17,14 +17,11 @@ const Card = styled.div`
 
 const Header = styled.div`
   border-radius: 10px;
-  background: url(${props => props.src});
   height: 200px;
+  background: url(${props => props.src});
   overflow: hidden;
-
   box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
     1px 3px 8px rgba(39, 44, 49, 0.03);
-
-  z-index: 0;
 `
 
 const Title = styled(Link)`
@@ -39,7 +36,6 @@ const Title = styled(Link)`
 const CampaignContent = styled.div`
   ${tw`relative p-10 -mt-8 border-b`}
 
-  height: 200px;
   z-index: 1;
 `
 
