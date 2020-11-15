@@ -9,24 +9,27 @@ import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 import placeholder from './../assets/images/maximalfocus.jpg'
 
 const AboutSection = styled.section`
-  ${tw`flex flex-row flex-wrap justify-center w-full pt-24 pb-24 m-auto`};
+  ${tw`flex flex-row flex-wrap justify-center w-full m-auto bg-black`};
 `
 const About = styled.section`
   ${tw`w-full text-center text-xl m-auto`};
 `
 
 const PlayerSection = styled.div`
-  ${tw`w-full flex flex-row p-12 even:flex-row-reverse`};
+  ${tw`w-full flex flex-row p-12 even:flex-row-reverse even:bg-gray-200 bg-white`};
 `
 
 const PlayerAvatar = styled.div`
-${tw`w-1/2`};
+  ${tw`w-1/2`};
 `
 
-const PlayerDescription = styled.div``
+const PlayerDescription = styled.div`
+${tw`w-1/2 flex`};
+`
 
-const CharacterName = styled.h4`
-  ${tw`text-lg text-center font-bold`};
+const CharacterName = styled.h1`
+  ${tw`text-center font-bold`};
+  font-size: 72px;
 `
 
 const CharacterInformation = styled.div`
@@ -34,11 +37,12 @@ const CharacterInformation = styled.div`
 `
 
 const CharacterDescription = styled.div`
-  ${tw`flex-auto text-gray-600`};
+  ${tw`flex-auto text-gray-600 ml-4 my-auto`};
 `
 
-const CharacterPersonality = styled.div`
-  ${tw`flex-auto text-center font-semibold text-gray-700`};
+const CharacterPersonality = styled.h1`
+  ${tw`flex-auto text-center font-semibold text-gray-700 border-t-2 border-gray-700`};
+  font-size: 48px;
 `
 
 const Avatar = styled.img`
@@ -69,12 +73,13 @@ export default class AboutPage extends React.Component {
               <PlayerSection>
                 <PlayerAvatar>
                   {node.avatar ? <Avatar src={placeholder} /> : null}
-                </PlayerAvatar>
-                <PlayerDescription>
                   <CharacterName>
                     {node.firstname + ' ' + node.lastname}
                   </CharacterName>
                   <CharacterPersonality>Chaotic Neutral</CharacterPersonality>
+                </PlayerAvatar>
+                <PlayerDescription>
+                  
                   {node.about_richtext ? (
                     <CharacterDescription>
                       {documentToReactComponents(
