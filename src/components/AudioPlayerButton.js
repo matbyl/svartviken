@@ -1,6 +1,6 @@
 import React from 'react'
 import ContextConsumer from '../components/Context'
-import styled from 'styled-components'
+import tw,  {styled} from 'twin.macro'
 import WhiteIcon from './../assets/White_Play_Icon.svg'
 import BlackIcon from './../assets/Black_Play_Icon.svg'
 

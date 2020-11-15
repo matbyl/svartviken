@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import styled from 'styled-components'
-import tw from 'twin.macro'
+import tw,  {styled} from 'twin.macro'
+
 
 import AudioPlayerButton from '../components/AudioPlayerButton'
 import { Header, HeaderContent } from '../components/Header'

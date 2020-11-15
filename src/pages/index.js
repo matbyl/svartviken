@@ -2,10 +2,10 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
-import tw from 'twin.macro'
+
 import HeaderAlpha from './../assets/header_alpha.svg'
 
-import styled from 'styled-components'
+import tw,  {styled} from 'twin.macro'
 import logo from './../assets/Svartviken_logo_genomskinlig.png'
 
 import '../styles/main.scss'

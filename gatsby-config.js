@@ -82,7 +82,6 @@ module.exports = {
                 categories
               }
             }
-
           }
         `,
         setup: ({ query: { site } }) => ({
@@ -151,7 +150,7 @@ module.exports = {
               }
             `,
             output: '/rss.xml',
-            title: "Your Site's RSS Feed",
+            title: "Svartvikens Rollspelspodd",
           },
         ],
       },
@@ -159,8 +158,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Svartviken Rollspelspodd`,
+        short_name: `Svartviken`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,

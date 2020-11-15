@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import styled from 'styled-components'
 import FacebookIcon from './../assets/logo-facebook.svg'
 import InstagramIcon from './../assets/logo-instagram.svg'
 import TwitterIcon from './../assets/logo-twitter.svg'
-import tw from 'twin.macro'
+import tw, {styled} from 'twin.macro'
 
 import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'

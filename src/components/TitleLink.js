@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import styled from 'styled-components'
+import tw,  {styled} from 'twin.macro'
 
 export const TitleLink = styled(Link)`
   font-family: 'Colus', Arial, Helvetica, sans-serif;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Howl } from 'howler'
-import styled from 'styled-components'
+import tw,  {styled} from 'twin.macro'
 
 import playIconWhite from './../assets/White_Play_Icon.svg'
 import pauseIconWhite from './../assets/White_Pause_Icon.svg'
@@ -216,14 +216,14 @@ class AudioPlayer extends React.Component {
     document.addEventListener('mouseup', this.handleMouseUp, false)
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     document.addEventListener('mousemove', this.handleMouseMove, false)
     document.addEventListener('mouseup', this.handleMouseUp, false)
   }
 
   loadAudio(src) {
     this.audio = new Howl({
-      src: ['https://www.svartvikenrp.se/media/' + src],
+      src: [src],
       audioPlayerOpen: false,
       html5: true,
       onload: () => {

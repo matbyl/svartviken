@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import styled from 'styled-components'
-import tw from 'twin.macro'
+import tw,  {styled} from 'twin.macro'
 import { Episode } from './Episode'
 
 const CardList = styled.div`

@@ -22,11 +22,6 @@ exports.createPages = ({ graphql, actions }) => {
                   description {
                     description
                   }
-                  image {
-                    fluid(maxWidth: 800) {
-                      src
-                    }
-                  }
                   episodes {
                     id
                     title
