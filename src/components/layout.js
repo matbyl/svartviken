@@ -4,6 +4,7 @@ import FacebookIcon from './../assets/logo-facebook.svg'
 import InstagramIcon from './../assets/logo-instagram.svg'
 import TwitterIcon from './../assets/logo-twitter.svg'
 import tw, {styled} from 'twin.macro'
+import playIconWhite from './../assets/White_Play_Icon.svg'
 
 import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'
@@ -78,6 +79,8 @@ const SocialIcon = styled.img`
 
 let lastScrollY = 0
 let ticking = false
+const socialMediaIcon = (icon, url) => <a href={url} target="_blank"><SocialIcon src={icon} /></a>
+
 
 class Template extends React.Component {
   componentDidMount() {
@@ -119,9 +122,9 @@ class Template extends React.Component {
           <NavBarItem to={'/about'}>Om oss</NavBarItem> |{' '}
           <NavBarItem to={'/collaborations'}>Våra samarbeten</NavBarItem> |{' '}
           <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
-          <SocialIcon src={FacebookIcon} />
-          <SocialIcon src={InstagramIcon} />
-          <SocialIcon src={TwitterIcon} />
+          { socialMediaIcon(FacebookIcon, "https://www.facebook.com/SvartvikenRP") }
+          { socialMediaIcon(InstagramIcon, "https://www.instagram.com/svartviken_rollspelspodd/") }
+          { socialMediaIcon(TwitterIcon, "https://twitter.com/svartvikenrp") }
         </NavBarRow>
       </NavBar>
     )
@@ -144,11 +147,11 @@ class Template extends React.Component {
       <Footer>
         <FooterTitle>Följ oss</FooterTitle>
         <FooterSocialMedia>
-          <SocialIcon src={FacebookIcon} />
-          <SocialIcon src={InstagramIcon} />
-          <SocialIcon src={TwitterIcon} />
+          { socialMediaIcon(FacebookIcon, "https://www.facebook.com/SvartvikenRP") }
+          { socialMediaIcon(InstagramIcon, "https://www.instagram.com/svartviken_rollspelspodd/") }
+          { socialMediaIcon(TwitterIcon, "https://twitter.com/svartvikenrp") }
         </FooterSocialMedia>
-        <p className="text-white mt-5">Crafted with ♥</p>
+        <p className="text-white mt-5">Crafted with 🎲</p>
         <p className="text-white">
           Copyright © 2019 Svartviken, All Rights Reserved.
         </p>

@@ -180,7 +180,7 @@ class AudioPlayer extends React.Component {
     this.loadAudio(props.episode.filename)
 
     this.state = {
-      playing: false,
+      playing: true,
       time: '00:00',
       progress: 0,
       duration: formatTime(this.audio.duration()),
