@@ -8,7 +8,7 @@ const CardList = styled.div`
 `
 
 const Card = styled.div`
-  ${tw`lg:w-1/2 w-full my-auto text-left flex-col lg:p-10`}
+  ${tw`lg:w-1/2 w-full my-10 lg:my-auto text-left flex-col lg:p-10`}
 
   border-radius: 10px;
 `

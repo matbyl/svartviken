@@ -20,14 +20,14 @@ const LeftColumn = styled.div`
 `
 
 const CampaignTitle = styled.h1`
-  ${tw`text-6xl`}
+  ${tw`text-xl mt-5 lg:text-6xl`}
 `
 
 const CampaignDescription = styled.p`
   ${tw`text-lg pb-5`}
 `
 const EpisodeTitle = styled.h1`
-  ${tw`text-2xl`}
+  ${tw`text-lg lg:text-2xl`}
 `
 
 const EpisodeDescription = styled.p`
@@ -54,7 +54,7 @@ const RightColumn = styled.div`
 `
 
 const Logo = styled.img`
-  ${tw`w-7/12 m-auto`}
+  ${tw`w-11/12 lg:w-7/12 m-auto`}
 `
 
 const LatestEpisode = styled.div`

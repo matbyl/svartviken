@@ -34,6 +34,9 @@ const FooterSocialMedia = styled.div`
 `
 
 const NavBar = styled.div`
+
+  ${tw`text-xs lg:text-base`};
+
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
@@ -43,7 +46,6 @@ const NavBar = styled.div`
   z-index: 1000;
 
   flex: 100%;
-  font-size: 20px;
 
   img {
     width: 20px;
