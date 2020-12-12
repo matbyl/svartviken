@@ -4,19 +4,17 @@ import tw, { styled } from 'twin.macro'
 import { Episode } from './Episode'
 
 const CardList = styled.div`
-  ${tw`flex flex-row flex-wrap my-20 w-full lg:p-10 p-2`}
+  ${tw`flex flex-row flex-wrap md:my-20 w-full lg:p-10 md:pr-2`}
 `
 
 const Card = styled.div`
-  ${tw`lg:w-1/2 w-full my-10 lg:my-auto text-left flex-col lg:p-10`}
-
-  border-radius: 10px;
+  ${tw`lg:w-1/2 w-full md:my-10 lg:my-auto text-left flex-col lg:p-10 md:rounded`}
 `
 
 const Header = styled.div`
-  border-radius: 10px;
+  ${tw`bg-cover bg-center md:rounded`}
   height: 200px;
-  background: url(${props => props.src});
+  background-image: url(${props => props.src});
   overflow: hidden;
   box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
     1px 3px 8px rgba(39, 44, 49, 0.03);
@@ -32,7 +30,7 @@ const Title = styled(Link)`
 `
 
 const CampaignContent = styled.div`
-  ${tw`relative p-10 -mt-8 border-b`}
+  ${tw`relative p-6 md:p-10 md:-mt-8 border-b`}
 
   z-index: 1;
 `
@@ -78,7 +76,7 @@ class CampaignCardList extends React.Component {
               <Header src={'https:' + image.fluid.src} />
 
               {episodes.length > 0 ? (
-                <div className="shadow-xl w-11/12 bg-white m-auto rounded">
+                <div className="md:shadow-xl md:w-11/12  w-full bg-white m-auto rounded">
                   <CampaignContent>
                     {oneShot ? (
                       <CampaignType type="one-shot">One Shot</CampaignType>

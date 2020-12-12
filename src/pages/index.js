@@ -4,6 +4,7 @@ import get from 'lodash/get'
 import Helmet from 'react-helmet'
 
 import HeaderAlpha from './../assets/header_alpha.svg'
+import ChevronIcon from './../assets/icons/chevron.svg'
 
 import tw, { styled } from 'twin.macro'
 import logo from './../assets/Svartviken_logo_genomskinlig.png'
@@ -12,7 +13,7 @@ import CampaignCardList from '../components/CampaignCardList'
 import AudioPlayerButton from '../components/AudioPlayerButton'
 
 const HomeHeader = styled.header`
-  ${tw`bg-black text-white flex flex-row flex-wrap-reverse p-10`};
+  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:p-10`};
 `
 
 const LeftColumn = styled.div`
@@ -34,16 +35,6 @@ const EpisodeDescription = styled.p`
   ${tw`sm:text-base`}
 `
 
-const EnabledToggleButton = styled.button`
-  ${tw`py-2 mx-2 px-4 rounded-full shadow-md`}
-  ${tw`bg-green-500 text-white`}
-`
-
-const DisabledToggleButton = styled.button`
-  ${tw`py-2 mx-2 px-4 rounded-full shadow-md`}
-  ${tw`bg-gray-300 text-gray-600`}
-`
-
 const RightColumn = styled.div`
   ${tw`sm:w-full lg:w-1/2`};
 
@@ -54,7 +45,7 @@ const RightColumn = styled.div`
 `
 
 const Logo = styled.img`
-  ${tw`w-11/12 lg:w-7/12 m-auto`}
+  ${tw`w-64 py-5 lg:w-7/12 m-auto`}
 `
 
 const LatestEpisode = styled.div`
@@ -65,21 +56,26 @@ const MainSection = styled.section`
   ${tw`mx-auto my-12 text-center`}
 `
 
-const ToggleButton = ({ onClick, disabled, children }) =>
-  disabled ? (
-    <DisabledToggleButton onClick={onClick}>{children}</DisabledToggleButton>
-  ) : (
-    <EnabledToggleButton onClick={onClick}>{children}</EnabledToggleButton>
-  )
-
-const SearchBar = ({ onChange }) => (
-  <div className="w-1/6 my-4 mx-auto">
+const SearchBar = ({ onChange, onFilterChange }) => (
+  <div className="flex flex-row my-4 mx-auto w-full md:w-3/4 focus:shadow-outline shadow-lg bg-white">
     <input
       onChange={onChange}
-      className="w-full h-16 px-3 rounded focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
+      className="flex-1 h-16 bg-transparent focus:outline-none text-xl px-8"
       type="search"
       placeholder="Search..."
     />
+    <div className="flex flex-row">
+      <select
+        name="pod-category"
+        id="pod-category"
+        className="h-16 px-3 bg-transparent text-xl px-8 appearance-none"
+      >
+        <option value="one-shot">All</option>
+        <option value="one-shot">Campaign</option>
+        <option value="one-shot">One shot</option>
+      </select>
+      <img src={ChevronIcon} className="my-auto mx-4 w-8 h-8" />
+    </div>
   </div>
 )
 
@@ -93,38 +89,10 @@ class BlogIndex extends React.Component {
 
     this.state = {
       campaigns,
-      campaignsActive: true,
-      oneShotsActive: true,
       searchFilter: '',
     }
 
-    this.toggleCampaigns = this.toggleCampaigns.bind(this)
-    this.toggleOneShots = this.toggleOneShots.bind(this)
     this.handleSearchChange = this.handleSearchChange.bind(this)
-  }
-
-  toggleCampaigns() {
-    const campaignsActive = !this.state.campaignsActive
-    this.setState({
-      campaignsActive,
-      campaigns: this.filterCampaigns(
-        this.state.searchFilter,
-        campaignsActive,
-        this.state.oneShotsActive
-      ),
-    })
-  }
-
-  toggleOneShots() {
-    const oneShotsActive = !this.state.oneShotsActive
-    this.setState({
-      oneShotsActive,
-      campaigns: this.filterCampaigns(
-        this.state.searchFilter,
-        this.state.campaignsActive,
-        oneShotsActive
-      ),
-    })
   }
 
   getCampaigns() {
@@ -176,7 +144,7 @@ class BlogIndex extends React.Component {
       e => e.number === 1 || e.number === 0
     )
     return (
-      <div>
+      <div className="w-full">
         <HomeHeader className="z-depth-3">
           <LeftColumn>
             <LatestEpisode className="container text-center md:text-left">
@@ -206,23 +174,10 @@ class BlogIndex extends React.Component {
             <Logo src={logo} />
           </RightColumn>
         </HomeHeader>
-        <img src={HeaderAlpha} className="header-bottom" />
+        <img src={HeaderAlpha} className="header-bottom -my-1" />
 
         <MainSection>
           <SearchBar onChange={this.handleSearchChange} />
-          <ToggleButton
-            onClick={this.toggleCampaigns}
-            disabled={!this.state.campaignsActive}
-          >
-            Kampanjer
-          </ToggleButton>
-          <ToggleButton
-            onClick={this.toggleOneShots}
-            disabled={!this.state.oneShotsActive}
-          >
-            One shots
-          </ToggleButton>
-
           <CampaignCardList campaigns={this.state.campaigns} />
         </MainSection>
       </div>

@@ -64,7 +64,7 @@ export const Episode = props => {
 }
 
 const EpisodeContent = styled.div`
-  ${tw`flex h-full px-10`}
+  ${tw`flex h-full px-6 md:px-10`}
   z-index: 1;
 `
 
