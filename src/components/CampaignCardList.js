@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import tw,  {styled} from 'twin.macro'
+import tw, { styled } from 'twin.macro'
 import { Episode } from './Episode'
 
 const CardList = styled.div`
@@ -83,18 +83,27 @@ class CampaignCardList extends React.Component {
                     {oneShot ? (
                       <CampaignType type="one-shot">One Shot</CampaignType>
                     ) : (
-                        <CampaignType type="campaign">Kampanj</CampaignType>
-                      )}
+                      <CampaignType type="campaign">Kampanj</CampaignType>
+                    )}
 
                     <Title to={'/campaigns/' + id}>{title}</Title>
 
-                    <div className="w-11/12">{description.description}</div>
+                    <div
+                      className="w-11/12"
+                      dangerouslySetInnerHTML={{
+                        __html: description.childMarkdownRemark.html,
+                      }}
+                    />
                   </CampaignContent>
-                  <Episode episode={episodes.find(e => e.number === 1)} />
+                  <Episode
+                    episode={episodes.find(
+                      e => e.number === 1 || e.number === 0
+                    )}
+                  />
                 </div>
               ) : (
-                  ''
-                )}
+                ''
+              )}
             </Card>
           )
         )}

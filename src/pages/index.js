@@ -5,7 +5,7 @@ import Helmet from 'react-helmet'
 
 import HeaderAlpha from './../assets/header_alpha.svg'
 
-import tw,  {styled} from 'twin.macro'
+import tw, { styled } from 'twin.macro'
 import logo from './../assets/Svartviken_logo_genomskinlig.png'
 
 import CampaignCardList from '../components/CampaignCardList'
@@ -69,8 +69,8 @@ const ToggleButton = ({ onClick, disabled, children }) =>
   disabled ? (
     <DisabledToggleButton onClick={onClick}>{children}</DisabledToggleButton>
   ) : (
-      <EnabledToggleButton onClick={onClick}>{children}</EnabledToggleButton>
-    )
+    <EnabledToggleButton onClick={onClick}>{children}</EnabledToggleButton>
+  )
 
 const SearchBar = ({ onChange }) => (
   <div className="w-1/6 my-4 mx-auto">
@@ -142,6 +142,7 @@ class BlogIndex extends React.Component {
       ),
     })
   }
+
   filterCampaigns(searchFilter, campaignsActive, oneShotsActive) {
     return this.getCampaigns()
       .filter(c =>
@@ -164,26 +165,35 @@ class BlogIndex extends React.Component {
       this,
       'props.data.site.siteMetadata.description'
     )
-    // .filter(c => !c.oneShot)
+
     const latestCampaign =
       this.state.campaigns.length > 0
         ? this.state.campaigns[0]
         : this.getCampaigns()[0]
 
-    const firstEpisodeOfLatestCampaign = latestCampaign.episodes.find(e => e.number === 1);
+    console.log(latestCampaign)
+    const firstEpisodeOfLatestCampaign = latestCampaign.episodes.find(
+      e => e.number === 1 || e.number === 0
+    )
     return (
       <div>
         <HomeHeader className="z-depth-3">
           <LeftColumn>
             <LatestEpisode className="container text-center md:text-left">
               <CampaignTitle>{latestCampaign.title}</CampaignTitle>
-              <CampaignDescription>
-                {latestCampaign.description.description}
-              </CampaignDescription>
+              <CampaignDescription
+                dangerouslySetInnerHTML={{
+                  __html: latestCampaign.description.childMarkdownRemark.html,
+                }}
+              ></CampaignDescription>
               <EpisodeTitle>{firstEpisodeOfLatestCampaign.title}</EpisodeTitle>
-              <EpisodeDescription>
-                {firstEpisodeOfLatestCampaign.description.description}
-              </EpisodeDescription>
+              <EpisodeDescription
+                dangerouslySetInnerHTML={{
+                  __html:
+                    firstEpisodeOfLatestCampaign.description.childMarkdownRemark
+                      .html,
+                }}
+              ></EpisodeDescription>
 
               <AudioPlayerButton
                 light={true}
@@ -237,7 +247,9 @@ export const pageQuery = graphql`
           id
           title
           description {
-            description
+            childMarkdownRemark {
+              html
+            }
           }
           image {
             fluid(maxWidth: 800) {
@@ -249,7 +261,9 @@ export const pageQuery = graphql`
             title
             number
             description {
-              description
+              childMarkdownRemark {
+                html
+              }
             }
             filename
           }

@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import tw,  {styled} from 'twin.macro'
-
+import tw, { styled } from 'twin.macro'
 
 import AudioPlayerButton from '../components/AudioPlayerButton'
 import { Header, HeaderContent } from '../components/Header'
@@ -39,7 +38,10 @@ export default ({ data }) => {
           <div className="flex justify-center">
             <FacebookShareButton
               className="m-1"
-              url={'https://www.svartvikenrp.se/media/' + data.contentfulEpisode.filename}
+              url={
+                'https://www.svartvikenrp.se/media/' +
+                data.contentfulEpisode.filename
+              }
               quote={'asd'}
             >
               <FacebookIcon size={32} round />
@@ -62,7 +64,9 @@ export const query = graphql`
       title
       number
       description {
-        description
+        childMarkdownRemark {
+          html
+        }
       }
       filename
     }

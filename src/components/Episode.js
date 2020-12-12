@@ -1,5 +1,5 @@
 import React from 'react'
-import tw,  {styled} from 'twin.macro'
+import tw, { styled } from 'twin.macro'
 
 import {
   FacebookShareButton,
@@ -23,9 +23,8 @@ export const EpisodeTitleLink = styled(Link)`
 export const EpisodeNumber = styled.h2`
   font-family: 'Jost', Arial, Helvetica, sans-serif;
   font-size: 14px;
-  color: #2E2E2E;
+  color: #2e2e2e;
 `
-
 
 export const Episode = props => {
   const { episode } = props
@@ -33,13 +32,15 @@ export const Episode = props => {
   return (
     <EpisodeContent>
       <EpisodeDescription>
-        <EpisodeNumber>
-          Avsnitt {episode.number}
-        </EpisodeNumber>
+        <EpisodeNumber>Avsnitt {episode.number}</EpisodeNumber>
         <EpisodeTitleLink to={'/episodes/' + episode.id}>
           {episode.title}
         </EpisodeTitleLink>
-        <p>{episode.description.description}</p>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: episode.description.childMarkdownRemark.html,
+          }}
+        ></div>
 
         <div className="flex mt-10 bottom-0">
           <FacebookShareButton

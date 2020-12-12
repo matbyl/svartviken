@@ -35,6 +35,14 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
+        // CommonMark mode (default: true)
+        commonmark: true,
+        // Footnotes mode (default: true)
+        footnotes: true,
+        // Pedantic mode (default: true)
+        pedantic: true,
+        // GitHub Flavored Markdown mode (default: true)
+        gfm: true,
         plugins: [
           {
             resolve: `gatsby-remark-images`,
@@ -127,7 +135,8 @@ module.exports = {
                   url: site.siteMetadata.siteUrl + '/episode/' + edge.node.id,
                   guid: site.siteMetadata.siteUrl + '/episode/' + edge.node.id,
                   enclosure: {
-                    url: 'https://www.svartvikenrp.se/media/' + edge.node.filename,
+                    url:
+                      'https://www.svartvikenrp.se/media/' + edge.node.filename,
                     type: 'mp3',
                   },
                 })
@@ -150,7 +159,7 @@ module.exports = {
               }
             `,
             output: '/rss.xml',
-            title: "Svartvikens Rollspelspodd",
+            title: 'Svartvikens Rollspelspodd',
           },
         ],
       },

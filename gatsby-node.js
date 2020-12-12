@@ -20,13 +20,17 @@ exports.createPages = ({ graphql, actions }) => {
                   id
                   title
                   description {
-                    description
+                    childMarkdownRemark {
+                      html
+                    }
                   }
                   episodes {
                     id
                     title
                     description {
-                      description
+                      childMarkdownRemark {
+                        html
+                      }
                     }
                     filename
                   }

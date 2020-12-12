@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import tw,  {styled} from 'twin.macro'
-
+import tw, { styled } from 'twin.macro'
 
 import { Header, HeaderContent } from '../components/Header'
 import { Episode } from '../components/Episode'
@@ -59,7 +58,9 @@ export const query = graphql`
       id
       title
       description {
-        description
+        childMarkdownRemark {
+          html
+        }
       }
       image {
         fluid(maxWidth: 800) {
@@ -71,7 +72,9 @@ export const query = graphql`
         title
         number
         description {
-          description
+          childMarkdownRemark {
+            html
+          }
         }
         filename
       }
