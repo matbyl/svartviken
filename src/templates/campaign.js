@@ -1,6 +1,8 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import tw, { styled } from 'twin.macro'
+import Head from '../components/head'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import { Header, HeaderContent } from '../components/Header'
 import { Episode } from '../components/Episode'
@@ -20,12 +22,17 @@ const Episodes = styled.ul`
 export default ({ data }) => {
   return (
     <div className="min-w-full">
+      <Head title={data.contentfulCampaign.title + ' | Campaign'} />
       <Header backgroundImage={data.contentfulCampaign.image.fluid.src}>
         <HeaderContent className="container">
           <Title>{data.contentfulCampaign.title}</Title>
-          <Description>
-            {data.contentfulCampaign.description.description}
-          </Description>
+          {data.contentfulCampaign.description ? (
+            <Description>
+              {documentToReactComponents(
+                data.contentfulCampaign.description.json
+              )}
+            </Description>
+          ) : null}
           {/* {data.contentfulCampaign.characters
             ? data.contentfulCampaign.characters.map(character => (
                 <div className="w-1/2 m-auto">
@@ -58,9 +65,7 @@ export const query = graphql`
       id
       title
       description {
-        childMarkdownRemark {
-          html
-        }
+        json
       }
       image {
         fluid(maxWidth: 800) {

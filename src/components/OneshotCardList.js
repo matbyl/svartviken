@@ -63,7 +63,7 @@ const FooterLink = styled(Link)`
   ${tw`absolute bottom-0 right-0 h-8 w-40`}
 `
 
-class CampaignCardList extends React.Component {
+class OneshotCardList extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -71,21 +71,17 @@ class CampaignCardList extends React.Component {
   render() {
     return (
       <CardList>
-        {this.props.campaigns.map(
-          ({ title, id, description, episodes, image, oneShot }) => (
+        {this.props.oneshots.map(
+          ({ title, id, description, episodes, image }) => (
             <Card key={id}>
               <Header src={'https:' + image.fluid.src} />
 
               {episodes.length > 0 ? (
                 <div className="md:shadow-xl md:w-11/12  w-full bg-white m-auto rounded">
                   <CampaignContent>
-                    {oneShot ? (
-                      <CampaignType type="one-shot">One Shot</CampaignType>
-                    ) : (
-                      <CampaignType type="campaign">Kampanj</CampaignType>
-                    )}
+                    <CampaignType type="one-shot">Oneshot</CampaignType>
 
-                    <Title to={'/campaigns/' + id}>{title}</Title>
+                    <Title to={'/oneshots/' + id}>{title}</Title>
 
                     {description ? (
                       <div className="w-11/12">
@@ -110,4 +106,4 @@ class CampaignCardList extends React.Component {
   }
 }
 
-export default CampaignCardList
+export default OneshotCardList

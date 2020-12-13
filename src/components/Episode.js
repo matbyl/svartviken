@@ -34,7 +34,7 @@ export const Episode = props => {
       <EpisodeDescription>
         <EpisodeNumber>Avsnitt {episode.number}</EpisodeNumber>
         <EpisodeTitleLink to={'/episodes/' + episode.id}>
-          {episode.title}
+          {episode.title || ''}
         </EpisodeTitleLink>
         <div
           dangerouslySetInnerHTML={{

@@ -2,10 +2,7 @@
   "name": "svartviken-rp",
   "description": "Svartvikens Rollspelspodd",
   "version": "1.0.0",
-  "author": "Mathias Frithifsson Bylund <mathias@kreativet.org>",
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby-starter-blog/issues"
-  },
+  "author": "Mathias Frithifsson <mathias@kreativet.org>",
   "dependencies": {
     "@contentful/rich-text-from-markdown": "^14.1.2",
     "@contentful/rich-text-react-renderer": "^13.4.0",

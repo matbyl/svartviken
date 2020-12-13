@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import tw, { styled } from 'twin.macro'
+import Head from '../components/head'
 
 import AudioPlayerButton from '../components/AudioPlayerButton'
 import { Header, HeaderContent } from '../components/Header'
@@ -26,6 +27,14 @@ const Description = styled.p`
 export default ({ data }) => {
   return (
     <div className="flex min-h-full min-w-full bg-black">
+      <Head
+        title={
+          'Avsnitt  ' +
+          data.contentfulEpisode.title +
+          ' | Kampanj ' +
+          data.contentfulEpisode.campaign[0].title
+        }
+      />
       <Header className="flex m-auto" backgroundImage={''}>
         <HeaderContent className="container">
           <EpisodeNumber>Avsnitt {data.contentfulEpisode.number}</EpisodeNumber>
@@ -69,6 +78,9 @@ export const query = graphql`
         }
       }
       filename
+      campaign {
+        title
+      }
     }
   }
 `

@@ -173,7 +173,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/assets/gatsby-icon.png`,
+        icon: `src/assets/favicon-32x32.png`,
       },
     },
     `gatsby-plugin-emotion`,

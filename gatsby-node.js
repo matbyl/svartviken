@@ -20,9 +20,28 @@ exports.createPages = ({ graphql, actions }) => {
                   id
                   title
                   description {
-                    childMarkdownRemark {
-                      html
+                    json
+                  }
+                  episodes {
+                    id
+                    title
+                    description {
+                      childMarkdownRemark {
+                        html
+                      }
                     }
+                    filename
+                  }
+                }
+              }
+            }
+            allContentfulOneshot {
+              edges {
+                node {
+                  id
+                  title
+                  description {
+                    json
                   }
                   episodes {
                     id
@@ -46,6 +65,27 @@ exports.createPages = ({ graphql, actions }) => {
 
         result.data.allContentfulCampaign.edges.forEach(({ node }) => {
           const path = '/campaigns/' + node.id
+          createPage({
+            path,
+            component: campaignTemplate,
+            context: {
+              id: node.id,
+            },
+          })
+
+          node.episodes.forEach(episode => {
+            const path = '/episodes/' + episode.id
+            createPage({
+              path,
+              component: episodeTemplate,
+              context: {
+                id: episode.id,
+              },
+            })
+          })
+        })
+        result.data.allContentfulOneshot.edges.forEach(({ node }) => {
+          const path = '/oneshots/' + node.id
           createPage({
             path,
             component: campaignTemplate,

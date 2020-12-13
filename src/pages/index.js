@@ -4,13 +4,15 @@ import get from 'lodash/get'
 import Helmet from 'react-helmet'
 
 import HeaderAlpha from './../assets/header_alpha.svg'
-import ChevronIcon from './../assets/icons/chevron.svg'
-
 import tw, { styled } from 'twin.macro'
 import logo from './../assets/Svartviken_logo_genomskinlig.png'
 
 import CampaignCardList from '../components/CampaignCardList'
+import OneshotCardList from '../components/OneshotCardList'
 import AudioPlayerButton from '../components/AudioPlayerButton'
+import SearchBox from '../components/SearchBox'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { filter } from 'lodash'
 
 const HomeHeader = styled.header`
   ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:p-10`};
@@ -56,30 +58,7 @@ const MainSection = styled.section`
   ${tw`mx-auto my-12 text-center`}
 `
 
-const SearchBar = ({ onChange, onFilterChange }) => (
-  <div className="flex flex-row my-4 mx-auto w-full md:w-3/4 focus:shadow-outline shadow-lg bg-white">
-    <input
-      onChange={onChange}
-      className="flex-1 h-16 bg-transparent focus:outline-none text-xl px-8"
-      type="search"
-      placeholder="Search..."
-    />
-    <div className="flex flex-row">
-      <select
-        name="pod-category"
-        id="pod-category"
-        className="h-16 px-3 bg-transparent text-xl px-8 appearance-none"
-      >
-        <option value="one-shot">All</option>
-        <option value="one-shot">Campaign</option>
-        <option value="one-shot">One shot</option>
-      </select>
-      <img src={ChevronIcon} className="my-auto mx-4 w-8 h-8" />
-    </div>
-  </div>
-)
-
-class BlogIndex extends React.Component {
+class SvartvikenIndex extends React.Component {
   constructor(props) {
     super(props)
 
@@ -87,12 +66,17 @@ class BlogIndex extends React.Component {
       e => e.node
     )
 
+    const oneshots = this.props.data.allContentfulOneshot.edges.map(e => e.node)
+
     this.state = {
       campaigns,
-      searchFilter: '',
+      oneshots,
+      searchFilter: 'all',
+      searchTerm: '',
     }
 
     this.handleSearchChange = this.handleSearchChange.bind(this)
+    this.handleFilterChange = this.handleFilterChange.bind(this)
   }
 
   getCampaigns() {
@@ -100,31 +84,26 @@ class BlogIndex extends React.Component {
   }
 
   handleSearchChange(event) {
-    const searchFilter = event.target.value
+    const searchTerm = event.target.value
     this.setState({
-      searchFilter,
-      campaigns: this.filterCampaigns(
-        searchFilter,
-        this.state.campaignsActive,
-        this.state.oneShotsActive
-      ),
+      searchTerm,
+      campaigns: this.filterCampaigns(searchTerm),
     })
   }
 
-  filterCampaigns(searchFilter, campaignsActive, oneShotsActive) {
-    return this.getCampaigns()
-      .filter(c =>
-        searchFilter === ''
-          ? true
-          : c.title.toLowerCase().indexOf(searchFilter.toLowerCase()) !== -1
-      )
-      .filter(c => {
-        if (campaignsActive && oneShotsActive) {
-          return true
-        } else {
-          return false
-        }
-      })
+  handleFilterChange(event) {
+    const searchFilter = event.target.value
+    this.setState({
+      searchFilter,
+    })
+  }
+
+  filterCampaigns(searchFilter) {
+    return this.getCampaigns().filter(c =>
+      searchFilter === ''
+        ? true
+        : c.title.toLowerCase().indexOf(searchFilter.toLowerCase()) !== -1
+    )
   }
 
   render() {
@@ -149,11 +128,11 @@ class BlogIndex extends React.Component {
           <LeftColumn>
             <LatestEpisode className="container text-center md:text-left">
               <CampaignTitle>{latestCampaign.title}</CampaignTitle>
-              <CampaignDescription
-                dangerouslySetInnerHTML={{
-                  __html: latestCampaign.description.childMarkdownRemark.html,
-                }}
-              ></CampaignDescription>
+              {latestCampaign.description ? (
+                <CampaignDescription>
+                  {documentToReactComponents(latestCampaign.description.json)}
+                </CampaignDescription>
+              ) : null}
               <EpisodeTitle>{firstEpisodeOfLatestCampaign.title}</EpisodeTitle>
               <EpisodeDescription
                 dangerouslySetInnerHTML={{
@@ -177,15 +156,31 @@ class BlogIndex extends React.Component {
         <img src={HeaderAlpha} className="header-bottom -my-1" />
 
         <MainSection>
-          <SearchBar onChange={this.handleSearchChange} />
-          <CampaignCardList campaigns={this.state.campaigns} />
+          <SearchBox
+            searchTerm={this.state.searchTerm}
+            filter={this.state.searchFilter}
+            onSearchChange={this.handleSearchChange}
+            onFilterChange={this.handleFilterChange}
+          />
+          {
+            {
+              all: (
+                <div className="w-full">
+                  <CampaignCardList campaigns={this.state.campaigns} />
+                  <OneshotCardList oneshots={this.state.oneshots} />)
+                </div>
+              ),
+              campaign: <CampaignCardList campaigns={this.state.campaigns} />,
+              oneShot: <OneshotCardList oneshots={this.state.oneshots} />,
+            }[this.state.searchFilter]
+          }
         </MainSection>
       </div>
     )
   }
 }
 
-export default BlogIndex
+export default SvartvikenIndex
 
 export const pageQuery = graphql`
   query {
@@ -202,9 +197,7 @@ export const pageQuery = graphql`
           id
           title
           description {
-            childMarkdownRemark {
-              html
-            }
+            json
           }
           image {
             fluid(maxWidth: 800) {
@@ -214,6 +207,33 @@ export const pageQuery = graphql`
           episodes {
             id
             title
+            number
+            description {
+              childMarkdownRemark {
+                html
+              }
+            }
+            filename
+          }
+        }
+      }
+    }
+
+    allContentfulOneshot {
+      edges {
+        node {
+          id
+          title
+          description {
+            json
+          }
+          image {
+            fluid(maxWidth: 800) {
+              src
+            }
+          }
+          episodes {
+            id
             number
             description {
               childMarkdownRemark {
