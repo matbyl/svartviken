@@ -42,17 +42,6 @@ const Footer = styled.div`
 
 const CampaignType = styled.div`
   ${tw`bg-blue-600 font-bold text-white rounded-full py-1 px-2 float-right`}
-
-  background: ${props => {
-    switch (props.type) {
-      case 'campaign':
-        return 'rgb(255,0,0)'
-      case 'one-shot':
-        return 'rgb(0, 255, 0)'
-      default:
-        return '#000'
-    }
-  }};
 `
 
 const Divider = styled.div`
@@ -96,8 +85,8 @@ class OneshotCardList extends React.Component {
                   />
                 </div>
               ) : (
-                ''
-              )}
+                  ''
+                )}
             </Card>
           )
         )}

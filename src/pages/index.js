@@ -167,7 +167,7 @@ class SvartvikenIndex extends React.Component {
               all: (
                 <div className="w-full">
                   <CampaignCardList campaigns={this.state.campaigns} />
-                  <OneshotCardList oneshots={this.state.oneshots} />)
+                  <OneshotCardList oneshots={this.state.oneshots} />
                 </div>
               ),
               campaign: <CampaignCardList campaigns={this.state.campaigns} />,
