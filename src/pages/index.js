@@ -26,7 +26,7 @@ const CampaignTitle = styled.h1`
   ${tw`text-xl mt-5 lg:text-6xl`}
 `
 
-const CampaignDescription = styled.p`
+const CampaignDescription = styled.div`
   ${tw`text-lg pb-5`}
 `
 const EpisodeTitle = styled.h1`

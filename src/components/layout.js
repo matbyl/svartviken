@@ -44,7 +44,7 @@ const NavBar = styled.div`
   position: fixed;
   color: white;
   background: rgba(0, 0, 0, 0);
-  z-index: 1000;
+  z-index: 49;
 
   flex: 100%;
 `
@@ -183,12 +183,12 @@ class Template extends React.Component {
               onClick={this.toggleMenu}
             />
           ) : (
-            <img
-              src={MenuIcon}
-              className="align-self-end cursor-pointer m-4 w-8 h-8"
-              onClick={this.toggleMenu}
-            />
-          )}
+              <img
+                src={MenuIcon}
+                className="align-self-end cursor-pointer m-4 w-8 h-8"
+                onClick={this.toggleMenu}
+              />
+            )}
         </div>
 
         <NavBarRow className="hidden md:flex">
@@ -215,12 +215,17 @@ class Template extends React.Component {
 
     const audioPlayer = (
       <ContextConsumer>
-        {({ data }) =>
+        {({ data, set }) =>
           data.episode ? (
             <AudioPlayer
               episode={data.episode}
               color="white"
               style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
+              close={() => {
+                set({
+                  episode: null,
+                })
+              }}
             />
           ) : null
         }

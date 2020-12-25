@@ -10,15 +10,15 @@ import playIconBlack from './../assets/circled-play-50-black.png'
 import pauseIconBlack from './../assets/pause-button-50-black.png'
 import replay30IconBlack from './../assets/replay-30-50-black.png'
 import forward30IconBlack from './../assets/forward-30-50-black.png'
+import CloseIcon from './../assets/icons/close-white.svg'
+
 
 const Container = styled.div`
-  display: grid;
   grid-template-columns: 250px 35px 35px 35px 10px 1fr;
   grid-template-areas: 'title backward play forward . seekBar';
 
-  width: 100%;
   background: rgba(0, 0, 0, 1);
-  ${tw`h-full md:h-16`}
+  ${tw`h-full w-full hidden md:grid md:h-16`}
 `
 
 const Title = styled.h4`
@@ -53,7 +53,7 @@ const MediaButton = styled.button`
   border: none;
   opacity: 0.82;
   padding: 0;
-  margin: 15px auto;
+  margin: 15px 10px;
 
   img {
     margin: auto;
@@ -183,9 +183,10 @@ class AudioPlayer extends React.Component {
       duration: formatTime(this.audio.duration()),
       seeking: false,
       seekBarMouseDown: false,
+      audioPlayerOpen: true
     }
 
-    this.openAudioPlayer = this.openAudioPlayer.bind(this)
+    this.toggleAudioPlayer = this.toggleAudioPlayer.bind(this)
     this.play = this.play.bind(this)
     this.pause = this.pause.bind(this)
     this.forward = this.forward.bind(this)
@@ -199,7 +200,6 @@ class AudioPlayer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.episode.filename)
     if (
       this.props.episode.filename !== nextProps.episode.filename
     ) {
@@ -327,79 +327,138 @@ class AudioPlayer extends React.Component {
 
   }
 
-  openAudioPlayer() {
-    this.setState({ audioPlayerOpen: true })
+  toggleAudioPlayer() {
+    this.setState({ audioPlayerOpen: !this.state.audioPlayerOpen, playing: !this.state.audioPlayerOpen })
   }
 
   render() {
     return (
-      <div className="fixed bottom-0 h-full md:h-16 w-full z-50">
-        <div className="visible md:hidden">
-          <PlayPauseButton
-            className="w-18"
-            playing={this.state.playing}
-            playAction={this.play}
-            pauseAction={this.pause}
-            color={this.props.color}
-          />
-        </div>
-        <Container className="svartviken-audio-player invisble md:visible">
-          <Title>{this.props.episode.title ? this.props.episode.title : 'Kampanj - Avsnitt ' + this.props.episode.number}</Title>
-          <ControllButton
-            style={{ gridArea: 'backward' }}
-            icon={
-              this.props.color === 'white' ? replay30IconWhite : replay30IconBlack
-            }
-            action={this.backward}
-          />
-          <PlayPauseButton
-            style={{ gridArea: 'play' }}
-            playing={this.state.playing}
-            playAction={this.play}
-            pauseAction={this.pause}
-            color={this.props.color}
-          />
-          <ControllButton
-            style={{ gridArea: 'forward' }}
-            icon={
-              this.props.color === 'white'
-                ? forward30IconWhite
-                : forward30IconBlack
-            }
-            action={this.forward}
-          />
-          <SeekBar style={{ gridArea: 'seekBar' }}>
-            <Time
-              className={this.props.color ? 'white' : 'black'}
-              style={{ gridArea: 'start' }}
-            >
-              {this.state.time}{' '}
-            </Time>
+      this.state.audioPlayerOpen ?
+        <div className="fixed bottom-0 h-full md:h-16 bg-black w-full z-50">
+          <div className="flex flex-col h-full w-3/4 m-auto  md:hidden justify-center">
 
-            <ProgressWrapper
-              id="progress-bar"
-              className={this.props.color ? 'white' : 'black'}
-              style={{ gridArea: 'seek' }}
-              onMouseMoveCapture={this.handleMouseMove}
-              onMouseDownCapture={this.seekOnMouseDown}
-              onMouseUp={this.handleMouseUp}
-            >
-              <Progress progress={this.state.progress}>&nbsp;</Progress>
+            <img
+              src={CloseIcon}
+              className="align-self-end cursor-pointer m-4 w-8 h-8"
+              onClick={this.props.close}
+            />
+            <div className="flex justify-center">
+              <ControllButton
+                className="flex-initial"
+                style={{ gridArea: 'backward' }}
+                icon={
+                  this.props.color === 'white' ? replay30IconWhite : replay30IconBlack
+                }
+                action={this.backward}
+              />
+              <PlayPauseButton
+                className="flex-initial w-32"
+                playing={this.state.playing}
+                playAction={this.play}
+                pauseAction={this.pause}
+                color={this.props.color}
+              />
+              <ControllButton
+                className="flex-initial"
+                style={{ gridArea: 'forward' }}
+                icon={
+                  this.props.color === 'white'
+                    ? forward30IconWhite
+                    : forward30IconBlack
+                }
+                action={this.forward}
+              />
+            </div>
+            <div className="flex">
+              <SeekBar style={{ gridArea: 'seekBar' }}>
+                <Time
+                  className={this.props.color ? 'white' : 'black'}
+                  style={{ gridArea: 'start' }}
+                >
+                  {this.state.time}{' '}
+                </Time>
 
-              <ProgressPointer progress={this.state.progress}>
-                &nbsp;
+                <ProgressWrapper
+                  id="progress-bar"
+                  className={this.props.color ? 'white' : 'black'}
+                  style={{ gridArea: 'seek' }}
+                  onMouseMoveCapture={this.handleMouseMove}
+                  onMouseDownCapture={this.seekOnMouseDown}
+                  onMouseUp={this.handleMouseUp}
+                >
+                  <Progress progress={this.state.progress}>&nbsp;</Progress>
+
+                  <ProgressPointer progress={this.state.progress}>
+                    &nbsp;
             </ProgressPointer>
-            </ProgressWrapper>
-            <Time
-              className={this.props.color ? 'white' : 'black'}
-              style={{ gridArea: 'end', textAlign: 'right', marginRight: '10px' }}
-            >
-              {this.state.duration}
-            </Time>
-          </SeekBar>
-        </Container >
+                </ProgressWrapper>
+                <Time
+                  className={this.props.color ? 'white' : 'black'}
+                  style={{ gridArea: 'end', textAlign: 'right', marginRight: '10px' }}
+                >
+                  {this.state.duration}
+                </Time>
+              </SeekBar>
+            </div>
 
-      </div>
+          </div>
+          <Container className="invisble md:visible">
+            <Title>{this.props.episode.title ? this.props.episode.title : 'Kampanj - Avsnitt ' + this.props.episode.number}</Title>
+            <ControllButton
+              style={{ gridArea: 'backward' }}
+              icon={
+                this.props.color === 'white' ? replay30IconWhite : replay30IconBlack
+              }
+              action={this.backward}
+            />
+            <PlayPauseButton
+              style={{ gridArea: 'play' }}
+              playing={this.state.playing}
+              playAction={this.play}
+              pauseAction={this.pause}
+              color={this.props.color}
+            />
+            <ControllButton
+              style={{ gridArea: 'forward' }}
+              icon={
+                this.props.color === 'white'
+                  ? forward30IconWhite
+                  : forward30IconBlack
+              }
+              action={this.forward}
+            />
+            <SeekBar style={{ gridArea: 'seekBar' }}>
+              <Time
+                className={this.props.color ? 'white' : 'black'}
+                style={{ gridArea: 'start' }}
+              >
+                {this.state.time}{' '}
+              </Time>
+
+              <ProgressWrapper
+                id="progress-bar"
+                className={this.props.color ? 'white' : 'black'}
+                style={{ gridArea: 'seek' }}
+                onMouseMoveCapture={this.handleMouseMove}
+                onMouseDownCapture={this.seekOnMouseDown}
+                onMouseUp={this.handleMouseUp}
+              >
+                <Progress progress={this.state.progress}>&nbsp;</Progress>
+
+                <ProgressPointer progress={this.state.progress}>
+                  &nbsp;
+            </ProgressPointer>
+              </ProgressWrapper>
+              <Time
+                className={this.props.color ? 'white' : 'black'}
+                style={{ gridArea: 'end', textAlign: 'right', marginRight: '10px' }}
+              >
+                {this.state.duration}
+              </Time>
+            </SeekBar>
+          </Container >
+
+        </div> : null
     )
   }
 }

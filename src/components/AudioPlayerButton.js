@@ -1,6 +1,6 @@
 import React from 'react'
 import ContextConsumer from '../components/Context'
-import tw,  {styled} from 'twin.macro'
+import { styled } from 'twin.macro'
 import WhiteIcon from './../assets/White_Play_Icon.svg'
 import BlackIcon from './../assets/Black_Play_Icon.svg'
 
@@ -60,16 +60,16 @@ class AudioPlayerButton extends React.Component {
               <img src={this.props.light ? WhiteIcon : BlackIcon} />
             </DisabledMediaButton>
           ) : (
-            <EnabledMediaButton
-              onClick={() => {
-                set({
-                  episode: this.props.episode,
-                })
-              }}
-            >
-              <img src={this.props.light ? WhiteIcon : BlackIcon} />
-            </EnabledMediaButton>
-          )
+              <EnabledMediaButton
+                onClick={() => {
+                  set({
+                    episode: this.props.episode,
+                  })
+                }}
+              >
+                <img src={this.props.light ? WhiteIcon : BlackIcon} />
+              </EnabledMediaButton>
+            )
         }}
       </ContextConsumer>
     )
