@@ -33,19 +33,6 @@ export default ({ data }) => {
               )}
             </Description>
           ) : null}
-          {/* {data.contentfulCampaign.characters
-            ? data.contentfulCampaign.characters.map(character => (
-                <div className="w-1/2 m-auto">
-                  <h3 className="text-lg text-white">
-                    {character.name} ({character.playedBy.firstname}{' '}
-                    {character.playedBy.lastname})
-                  </h3>
-                  <p className="text-white">
-                    {character.description.description}
-                  </p>
-                </div>
-              ))
-            : ''} */}
         </HeaderContent>
       </Header>
       <Episodes>
@@ -82,14 +69,7 @@ export const query = graphql`
           }
         }
         filename
-      }
-      characters {
-        name
-        playedBy {
-          firstname
-          lastname
-        }
-      }
+      } 
     }
   }
 `

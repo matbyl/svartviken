@@ -8,6 +8,7 @@ exports.createPages = ({ graphql, actions }) => {
 
   return new Promise((resolve, reject) => {
     const campaignTemplate = path.resolve('src/templates/campaign.js')
+    const oneshotTemplate = path.resolve('src/templates/oneshot.js')
     const episodeTemplate = path.resolve('src/templates/episode.js')
 
     resolve(
@@ -88,7 +89,7 @@ exports.createPages = ({ graphql, actions }) => {
           const path = '/oneshots/' + node.id
           createPage({
             path,
-            component: campaignTemplate,
+            component: oneshotTemplate,
             context: {
               id: node.id,
             },
