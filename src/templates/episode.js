@@ -31,8 +31,8 @@ export default ({ data }) => {
         title={
           'Avsnitt  ' +
           data.contentfulEpisode.title +
-          ' | Kampanj ' +
-          data.contentfulEpisode.campaign[0].title
+          (data.contentfulEpisode.length > 0 ? ' | Kampanj ' +
+            data.contentfulEpisode.campaign[0].title : '')
         }
       />
       <Header className="flex m-auto" backgroundImage={''}>

@@ -218,7 +218,8 @@ class Template extends React.Component {
         {({ data, set }) =>
           data.episode ? (
             <AudioPlayer
-              episode={data.episode}
+              title={data.episode.title ? data.episode.title : 'Kampanj - Avsnitt ' + data.episode.number}
+              url={data.episode.filename}
               color="white"
               style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
               close={() => {

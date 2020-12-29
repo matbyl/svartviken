@@ -2,6 +2,7 @@ import React from 'react'
 import { Howl } from 'howler'
 import tw, { styled } from 'twin.macro'
 
+import PropTypes from 'prop-types'
 import playIconWhite from './../assets/White_Play_Icon.svg'
 import pauseIconWhite from './../assets/White_Pause_Icon.svg'
 import replay30IconWhite from './../assets/White_Reverse_30s_Icon.svg'
@@ -48,12 +49,11 @@ const SeekBar = styled.div`
 const MediaButton = styled.button`
   cursor: pointer;
   background: transparent;
-     text-decoration: none;
+  text-decoration: none;
   outline: none;
   border: none;
   opacity: 0.82;
   padding: 0;
-  margin: 15px 10px;
 
   img {
     margin: auto;
@@ -160,21 +160,22 @@ const PlayPauseButton = ({ color, playing, playAction, pauseAction }) =>
 const minutes = time => Math.floor(time / 60)
 const seconds = (time, minutes) => Math.floor(time - minutes * 60)
 
-const str_pad_left = (string, pad, length) =>
-  (new Array(length + 1).join(pad) + string).slice(-length)
-
 const formatTime = time => {
   const m = minutes(time)
   const s = seconds(time, m)
 
-  return str_pad_left(m, '0', 2) + ':' + str_pad_left(s, '0', 2)
+
+  const padLeft = (string, pad, length) =>
+    (new Array(length + 1).join(pad) + string).slice(-length)
+
+  return padLeft(m, '0', 2) + ':' + padLeft(s, '0', 2)
 }
 
 class AudioPlayer extends React.Component {
   constructor(props) {
     super(props)
 
-    this.loadAudio(props.episode.filename)
+    this.loadAudio(props.url)
 
     this.state = {
       playing: true,
@@ -201,10 +202,10 @@ class AudioPlayer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      this.props.episode.filename !== nextProps.episode.filename
+      this.props.url !== nextProps.url
     ) {
       this.pause()
-      this.loadAudio(nextProps.episode.filename)
+      this.loadAudio(nextProps.url)
     }
   }
 
@@ -218,9 +219,9 @@ class AudioPlayer extends React.Component {
     document.addEventListener('mouseup', this.handleMouseUp, false)
   }
 
-  loadAudio(src) {
+  loadAudio(url) {
     this.audio = new Howl({
-      src: [src],
+      src: [url],
       audioPlayerOpen: false,
       html5: true,
       onload: () => {
@@ -229,13 +230,14 @@ class AudioPlayer extends React.Component {
       },
     })
   }
+
   play() {
     this.audio.play()
     window.requestAnimationFrame(this.step)
-    this.setState((state, props) => ({
+    this.setState({
       playing: true,
       duration: formatTime(this.audio.duration()),
-    }))
+    })
   }
 
   pause() {
@@ -243,17 +245,17 @@ class AudioPlayer extends React.Component {
     this.audio.pause()
   }
 
-  forward() {
+  forward(sec) {
     const seek = this.audio.seek() || 0
     const value =
-      seek + 30 < this.audio.duration() ? seek + 30 : this.audio.duration()
+      seek + sec < this.audio.duration() ? seek + sec : this.audio.duration()
 
     this.seek(value)
   }
 
-  backward() {
+  backward(sec) {
     const seek = this.audio.seek() || 0
-    const value = seek - 30 > 0 ? seek - 30 : 0
+    const value = seek - sec > 0 ? seek - sec : 0
 
     this.seek(value)
   }
@@ -342,7 +344,7 @@ class AudioPlayer extends React.Component {
               className="align-self-end cursor-pointer m-4 w-8 h-8"
               onClick={this.props.close}
             />
-            <div className="flex justify-center">
+            <div className="flex justify-center space-x-4">
               <ControllButton
                 className="flex-initial"
                 style={{ gridArea: 'backward' }}
@@ -352,7 +354,7 @@ class AudioPlayer extends React.Component {
                 action={this.backward}
               />
               <PlayPauseButton
-                className="flex-initial w-32"
+                className="flex-initial w-32 mx-16"
                 playing={this.state.playing}
                 playAction={this.play}
                 pauseAction={this.pause}
@@ -366,7 +368,7 @@ class AudioPlayer extends React.Component {
                     ? forward30IconWhite
                     : forward30IconBlack
                 }
-                action={this.forward}
+                action={() => this.forward(30)}
               />
             </div>
             <div className="flex">
@@ -403,16 +405,17 @@ class AudioPlayer extends React.Component {
 
           </div>
           <Container className="invisble md:visible">
-            <Title>{this.props.episode.title ? this.props.episode.title : 'Kampanj - Avsnitt ' + this.props.episode.number}</Title>
+            <Title>{this.props.title}</Title>
             <ControllButton
               style={{ gridArea: 'backward' }}
               icon={
                 this.props.color === 'white' ? replay30IconWhite : replay30IconBlack
               }
-              action={this.backward}
+              action={() => this.backward(30)}
             />
             <PlayPauseButton
               style={{ gridArea: 'play' }}
+              className="w-32"
               playing={this.state.playing}
               playAction={this.play}
               pauseAction={this.pause}
@@ -461,6 +464,16 @@ class AudioPlayer extends React.Component {
         </div> : null
     )
   }
+}
+
+AudioPlayer.defaultProps = {
+  color: 'white'
+}
+
+AudioPlayer.propTypes = {
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  color: PropTypes.string
 }
 
 export default AudioPlayer
