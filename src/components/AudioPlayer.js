@@ -404,7 +404,7 @@ class AudioPlayer extends React.Component {
             </div>
 
           </div>
-          <Container className="invisble md:visible">
+          <Container className="invisible md:visible">
             <Title>{this.props.title}</Title>
             <ControllButton
               style={{ gridArea: 'backward' }}

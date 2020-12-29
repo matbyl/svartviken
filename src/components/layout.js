@@ -51,7 +51,6 @@ const NavBar = styled.div`
 
 const NavBarRow = styled.div`
   margin: 10px 15px;
-  display: block;
 `
 
 const NavBarItem = styled(Link)`
