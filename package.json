@@ -6,7 +6,7 @@
   "dependencies": {
     "@contentful/rich-text-from-markdown": "^14.1.2",
     "@contentful/rich-text-react-renderer": "^13.4.0",
-    "autoprefixer": "^10.1.0",
+    "autoprefixer": "^9.0.0",
     "bootstrap": "^4.0.0-beta.2",
     "bulma": "^0.7.2",
     "dotenv": "^8.0.0",
@@ -17,7 +17,7 @@
     "gatsby-plugin-layout": "^1.0.15",
     "gatsby-plugin-manifest": "^2.0.5",
     "gatsby-plugin-offline": "^2.0.5",
-    "gatsby-plugin-postcss": "^2.0.7",
+    "gatsby-plugin-postcss": "^3.4.0",
     "gatsby-plugin-react-helmet": "^3.0.0",
     "gatsby-plugin-sass": "^2.0.11",
     "gatsby-plugin-sharp": "^2.8.0",
