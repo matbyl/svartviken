@@ -259,7 +259,7 @@ class Template extends React.Component {
           {header}
           {audioPlayer}
           <div className="flex flex-grow">{children}</div>
-          {footer}
+          <div className="flex-grow">{footer}</div>
         </div>
       </ContextProviderComponent>
     )
