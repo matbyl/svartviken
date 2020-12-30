@@ -13,6 +13,7 @@ import AudioPlayerButton from '../components/AudioPlayerButton'
 import SearchBox from '../components/SearchBox'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { filter } from 'lodash'
+import { Link } from 'gatsby'
 
 const HomeHeader = styled.header`
   ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:p-10`};
@@ -22,7 +23,13 @@ const LeftColumn = styled.div`
   ${tw`sm:w-full lg:w-1/2 sm:text-lg flex sm:text-center lg:text-justify pb-5 lg:pl-20`};
 `
 
-const CampaignTitle = styled.h1`
+const CampaignTitle = styled(Link)`
+  font-family: 'Colus', Arial, Helvetica, sans-serif;
+  font-size: 28px;
+
+  :hover {
+    text-decoration: underline;
+  }
   ${tw`text-xl mt-5 lg:text-6xl`}
 `
 
@@ -118,7 +125,6 @@ class SvartvikenIndex extends React.Component {
         ? this.state.campaigns[0]
         : this.getCampaigns()[0]
 
-    console.log(latestCampaign)
     const firstEpisodeOfLatestCampaign = latestCampaign.episodes.find(
       e => e.number === 1 || e.number === 0
     )
@@ -127,7 +133,7 @@ class SvartvikenIndex extends React.Component {
         <HomeHeader className="z-depth-3">
           <LeftColumn>
             <LatestEpisode className="container text-center md:text-left">
-              <CampaignTitle>{latestCampaign.title}</CampaignTitle>
+              <CampaignTitle to={'/campaign/' + latestCampaign.id}>{latestCampaign.title}</CampaignTitle>
               {latestCampaign.description ? (
                 <CampaignDescription>
                   {documentToReactComponents(latestCampaign.description.json)}
