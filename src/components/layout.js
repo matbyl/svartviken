@@ -5,6 +5,7 @@ import InstagramIcon from './../assets/logo-instagram.svg'
 import TwitterIcon from './../assets/logo-twitter.svg'
 import CloseIcon from './../assets/icons/close-white.svg'
 import MenuIcon from './../assets/icons/menu-white.svg'
+import RssIcon from './../assets/icons/rss-feed.svg'
 import tw, { styled } from 'twin.macro'
 import playIconWhite from './../assets/White_Play_Icon.svg'
 
@@ -171,6 +172,7 @@ class Template extends React.Component {
                 'https://www.instagram.com/svartviken_rollspelspodd/'
               )}
               {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp')}
+              {socialMediaIcon(RssIcon, '/rss.xml')}
             </li>
           </ul>
 
@@ -207,6 +209,7 @@ class Template extends React.Component {
             'https://www.instagram.com/svartviken_rollspelspodd/'
           )}
           {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp')}
+          {socialMediaIcon(RssIcon, '/rss.xml')}
         </NavBarRow>
       </NavBar>
     )
@@ -244,6 +247,7 @@ class Template extends React.Component {
             'https://www.instagram.com/svartviken_rollspelspodd/'
           )}
           {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp')}
+          {socialMediaIcon(RssIcon, '/rss.xml')}
         </FooterSocialMedia>
         <p className="text-white mt-5">Crafted with 🎲</p>
         <p className="text-white">
