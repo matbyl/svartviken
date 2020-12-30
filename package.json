@@ -6,6 +6,7 @@
   "dependencies": {
     "@contentful/rich-text-from-markdown": "^14.1.2",
     "@contentful/rich-text-react-renderer": "^13.4.0",
+    "autoprefixer": "^10.1.0",
     "bootstrap": "^4.0.0-beta.2",
     "bulma": "^0.7.2",
     "dotenv": "^8.0.0",
