@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from '../components/layout'
-import tw,  {styled} from 'twin.macro'
+import tw, { styled } from 'twin.macro'
 import banner from './../assets/images/svartviken_banner.jpg'
 import { graphql } from 'gatsby'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
@@ -15,20 +15,20 @@ const About = styled.section`
 `
 
 const PlayerSection = styled.div`
-  ${tw`w-full flex flex-row p-12 even:flex-row-reverse even:bg-gray-200 bg-white`};
+  ${tw`w-full flex flex-col md:flex-row p-12 md:even:flex-row-reverse even:bg-gray-200 bg-white`};
 `
 
 const PlayerAvatar = styled.div`
-  ${tw`w-1/2`};
+  ${tw`w-full md:w-1/2`};
 `
 
 const PlayerDescription = styled.div`
-${tw`w-1/2 flex`};
+${tw`w-full md:w-1/2 flex`};
 `
 
 const CharacterName = styled.h1`
-  ${tw`text-center font-bold`};
-  font-size: 72px;
+  ${tw`text-center text-2xl md:text-6xl font-bold`};
+
 `
 
 const CharacterInformation = styled.div`
@@ -40,8 +40,7 @@ const CharacterDescription = styled.div`
 `
 
 const CharacterPersonality = styled.h1`
-  ${tw`flex-auto text-center font-semibold text-gray-700 border-t-2 border-gray-700`};
-  font-size: 48px;
+  ${tw`flex-auto text-center font-semibold text-gray-700 border-t-2 border-gray-700 text-lg md:text-5xl`};
 `
 
 const Avatar = styled.img`
@@ -78,7 +77,7 @@ export default class AboutPage extends React.Component {
                   <CharacterPersonality>Chaotic Neutral</CharacterPersonality>
                 </PlayerAvatar>
                 <PlayerDescription>
-                  
+
                   {node.about_richtext ? (
                     <CharacterDescription>
                       {documentToReactComponents(
