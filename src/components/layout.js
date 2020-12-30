@@ -11,7 +11,7 @@ import playIconWhite from './../assets/White_Play_Icon.svg'
 import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'
 
-const Footer = styled.section`
+const Footer = styled.div`
   flex: 1;
   min-height: 280px;
   text-align: center;
