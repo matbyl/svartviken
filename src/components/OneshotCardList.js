@@ -9,7 +9,7 @@ const CardList = styled.div`
 `
 
 const Card = styled.div`
-  ${tw`lg:w-1/2 w-full md:my-10 lg:my-auto text-left flex-col lg:p-10 md:rounded`}
+  ${tw`w-full lg:w-1/2  md:my-10 lg:my-auto text-left flex-col lg:p-10 md:rounded`}
 `
 
 const Header = styled.div`

@@ -11,7 +11,7 @@ const Title = styled.h1`
   ${tw`text-white text-lg xl:text-6xl`};
 `
 
-const Description = styled.p`
+const Description = styled.div`
   ${tw`text-white text-base xl:text-xl`};
 `
 
@@ -37,7 +37,7 @@ export default ({ data }) => {
       </Header>
       <Episodes>
         {data.contentfulCampaign.episodes.map(episode => (
-          <div className="w-5/12 m-1 bg-white shadow-lg rounded">
+          <div className="w-full md:w-5/12 my-1 md:m-1 bg-white shadow-lg rounded">
             <Episode episode={episode} />
           </div>
         ))}

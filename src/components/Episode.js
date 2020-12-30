@@ -36,11 +36,20 @@ export const Episode = props => {
         <EpisodeTitleLink to={'/episodes/' + episode.id}>
           {episode.title || ''}
         </EpisodeTitleLink>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: episode.description.childMarkdownRemark.html,
-          }}
-        ></div>
+        <div className="flex flex-col md:flex-row w-full">
+          <div
+            className="flex-1"
+            dangerouslySetInnerHTML={{
+              __html: episode.description.childMarkdownRemark.html,
+            }}
+          ></div>
+
+
+          <EpisodePlayButtonWrapper>
+            <AudioPlayerButton episode={episode} />
+          </EpisodePlayButtonWrapper>
+
+        </div>
 
         <div className="flex mt-10 bottom-0">
           <FacebookShareButton
@@ -56,9 +65,6 @@ export const Episode = props => {
           </TwitterShareButton>
         </div>
       </EpisodeDescription>
-      <EpisodePlayButtonWrapper>
-        <AudioPlayerButton episode={episode} />
-      </EpisodePlayButtonWrapper>
     </EpisodeContent>
   )
 }
@@ -73,5 +79,5 @@ const EpisodeDescription = styled.div`
 `
 
 const EpisodePlayButtonWrapper = styled.div`
-  ${tw`w-16 m-auto`}
+  ${tw`w-16 md:m-auto`}
 `

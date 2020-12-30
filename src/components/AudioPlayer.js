@@ -342,7 +342,7 @@ class AudioPlayer extends React.Component {
             <img
               src={CloseIcon}
               className="align-self-end cursor-pointer m-4 w-8 h-8"
-              onClick={this.props.close}
+              onClick={() => { this.pause(); this.props.close(); }}
             />
             <div className="flex justify-center space-x-4">
               <ControllButton
