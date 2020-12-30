@@ -3,6 +3,11 @@
   "description": "Svartvikens Rollspelspodd",
   "version": "1.0.0",
   "author": "Mathias Frithifsson <mathias@kreativet.org>",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 11"
+  ],
   "dependencies": {
     "@contentful/rich-text-from-markdown": "^14.1.2",
     "@contentful/rich-text-react-renderer": "^13.4.0",
@@ -87,10 +92,5 @@
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"
-  },
-  "browserslist": [
-    "last 2 versions",
-    "> 1%",
-    "IE 10"
-  ]
+  }
 }

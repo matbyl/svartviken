@@ -12,8 +12,7 @@ import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'
 
 const Footer = styled.div`
-  flex: 1;
-  min-height: 280px;
+  flex-shrink: 0;
   text-align: center;
   font-size: 24px;
   padding: 15px;
@@ -119,7 +118,7 @@ class Template extends React.Component {
   handleScroll = () => {
     lastScrollY = window.scrollY
 
-    if (!ticking) {
+    if (!ticking && this.nav && this.nav.current) {
       window.requestAnimationFrame(() => {
         if (lastScrollY > 100) {
           this.nav.current.style.background = 'rgba(0, 0, 0, 0.72)'
@@ -255,11 +254,11 @@ class Template extends React.Component {
 
     return (
       <ContextProviderComponent>
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col">
           {header}
           {audioPlayer}
-          <div className="flex flex-grow">{children}</div>
-          <div className="flex-grow">{footer}</div>
+          <div className="flex flex-shrink">{children}</div>
+          {footer}
         </div>
       </ContextProviderComponent>
     )
