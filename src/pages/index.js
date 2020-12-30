@@ -133,7 +133,7 @@ class SvartvikenIndex extends React.Component {
         <HomeHeader className="z-depth-3">
           <LeftColumn>
             <LatestEpisode className="container text-center md:text-left">
-              <CampaignTitle to={'/campaign/' + latestCampaign.id}>{latestCampaign.title}</CampaignTitle>
+              <CampaignTitle to={'/campaigns/' + latestCampaign.id}>{latestCampaign.title}</CampaignTitle>
               {latestCampaign.description ? (
                 <CampaignDescription>
                   {documentToReactComponents(latestCampaign.description.json)}
