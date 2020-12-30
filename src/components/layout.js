@@ -12,6 +12,7 @@ import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'
 
 const Footer = styled.section`
+  flex: 1;
   min-height: 280px;
   text-align: center;
   font-size: 24px;
@@ -120,7 +121,6 @@ class Template extends React.Component {
 
     if (!ticking) {
       window.requestAnimationFrame(() => {
-        const shadowClassName = ' shadow-xl'
         if (lastScrollY > 100) {
           this.nav.current.style.background = 'rgba(0, 0, 0, 0.72)'
         } else {
