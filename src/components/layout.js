@@ -86,9 +86,9 @@ const socialMediaIcon = (icon, url) => (
   </a>
 )
 
-const menuItem = (url, name, onClick) => (
+const menuItem = (url, name, onClick, inNewTab = false) => (
   <li className="py-2 pl-5">
-    <Link to={url} onClick={onClick} className="hover:text-white">
+    <Link to={url} onClick={onClick} className="hover:text-white" target={inNewTab ? "_blank" : ""}>
       {name}
     </Link>
   </li>
@@ -160,7 +160,8 @@ class Template extends React.Component {
             {menuItem(
               'https://shop.spreadshirt.se/svartvikenrp/all',
               'Poddshop',
-              this.toggleMenu
+              this.toggleMenu,
+              true
             )}
             <li className="pl-5">
               {socialMediaIcon(
