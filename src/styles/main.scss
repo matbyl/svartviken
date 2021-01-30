@@ -24,7 +24,7 @@ html, body, p {
 
 
 
-html, body,  #___gatsby  {
+html, body,  #___gatsby, #gatsby-focus-wrapper  {
   background:  #F5F8FB;
   height: 100%;
 
@@ -50,4 +50,3 @@ div[role="group"][tabindex] {
   from { transform: translateX(0); }
   to { transform: translateX(100%); }
 }
-

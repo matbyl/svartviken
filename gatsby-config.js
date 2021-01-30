@@ -135,8 +135,7 @@ module.exports = {
                   url: site.siteMetadata.siteUrl + '/episode/' + edge.node.id,
                   guid: site.siteMetadata.siteUrl + '/episode/' + edge.node.id,
                   enclosure: {
-                    url:
-                      'https://www.svartvikenrp.se/media/' + edge.node.filename,
+                    url: edge.node.filename,
                     type: 'mp3',
                   },
                 })

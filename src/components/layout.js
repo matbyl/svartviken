@@ -36,8 +36,8 @@ const FooterSocialMedia = styled.div`
   }
 `
 
-const NavBar = styled.div`
-  ${tw`text-base`};
+const NavBar = styled.nav`
+  ${tw`text-lg`};
 
   width: 100%;
   flex-direction: row;
@@ -88,7 +88,12 @@ const socialMediaIcon = (icon, url) => (
 
 const menuItem = (url, name, onClick, inNewTab = false) => (
   <li className="py-2 pl-5">
-    <Link to={url} onClick={onClick} className="hover:text-white" target={inNewTab ? "_blank" : ""}>
+    <Link
+      to={url}
+      onClick={onClick}
+      className="hover:text-white"
+      target={inNewTab ? '_blank' : ''}
+    >
       {name}
     </Link>
   </li>
@@ -184,12 +189,12 @@ class Template extends React.Component {
               onClick={this.toggleMenu}
             />
           ) : (
-              <img
-                src={MenuIcon}
-                className="align-self-end cursor-pointer m-4 w-8 h-8"
-                onClick={this.toggleMenu}
-              />
-            )}
+            <img
+              src={MenuIcon}
+              className="align-self-end cursor-pointer m-4 w-8 h-8"
+              onClick={this.toggleMenu}
+            />
+          )}
         </div>
 
         <NavBarRow className="hidden md:flex">
@@ -197,7 +202,10 @@ class Template extends React.Component {
           <NavBarItem to={'/about'}>Om oss</NavBarItem> |{' '}
           <NavBarItem to={'/collaborations'}>Våra samarbeten</NavBarItem> |{' '}
           <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
-          <NavBarItem to={'https://shop.spreadshirt.se/svartvikenrp/all'}>
+          <NavBarItem
+            to={'https://shop.spreadshirt.se/svartvikenrp/all'}
+            target="_blank"
+          >
             Poddshop
           </NavBarItem>{' '}
           |{' '}
@@ -220,7 +228,11 @@ class Template extends React.Component {
         {({ data, set }) =>
           data.episode ? (
             <AudioPlayer
-              title={data.episode.title ? data.episode.title : 'Kampanj - Avsnitt ' + data.episode.number}
+              title={
+                data.episode.title
+                  ? data.episode.title
+                  : 'Kampanj - Avsnitt ' + data.episode.number
+              }
               url={data.episode.filename}
               color="white"
               style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
@@ -259,10 +271,10 @@ class Template extends React.Component {
 
     return (
       <ContextProviderComponent>
-        <div className="flex flex-col">
+        <div className="flex flex-col min-h-full">
           {header}
           {audioPlayer}
-          <div className="flex flex-shrink">{children}</div>
+          <div className="flex flex-grow">{children}</div>
           {footer}
         </div>
       </ContextProviderComponent>

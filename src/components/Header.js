@@ -17,5 +17,5 @@ export const HeaderContent = styled.div`
 `
 
 export const HeaderTitle = styled.h1`
-  ${tw`text-white text-lg xl:text-6xl`};
+  ${tw`text-white text-lg md:text-xl lg:text-3xl xl:text-6xl`};
 `
