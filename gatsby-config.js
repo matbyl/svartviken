@@ -126,32 +126,87 @@ module.exports = {
         }),
         feeds: [
           {
-            serialize: ({ query: { site, allContentfulEpisode } }) => {
-              return allContentfulEpisode.edges.map(edge => {
-                return Object.assign({}, edge.node.frontmatter, {
-                  title: edge.node.title,
-                  description: edge.node.description.description,
-                  date: edge.node.pubDate,
-                  url: site.siteMetadata.siteUrl + '/episode/' + edge.node.id,
-                  guid: site.siteMetadata.siteUrl + '/episode/' + edge.node.id,
-                  enclosure: {
-                    url: edge.node.filename,
-                    type: 'mp3',
-                  },
-                })
-              })
+            serialize: ({
+              query: { site, allContentfulCampaign, allContentfulOneshot },
+            }) => {
+              const campaignEpisodes = allContentfulCampaign.edges.reduce(
+                (acc, edge) =>
+                  acc.concat(
+                    edge.node.episodes.map(episode =>
+                      Object.assign({}, edge.node.frontmatter, {
+                        title: `${edge.node.title} - Avsnitt ${episode.number} - ${episode.title}`,
+                        description: episode.description.description,
+                        date: episode.pubDate,
+                        url:
+                          site.siteMetadata.siteUrl + '/episodes/' + episode.id,
+                        guid:
+                          site.siteMetadata.siteUrl + '/episodes/' + episode.id,
+                        enclosure: {
+                          url: episode.filename,
+                          type: 'mp3',
+                        },
+                      })
+                    )
+                  ),
+                []
+              )
+              const oneshotEpisodes = allContentfulOneshot.edges.reduce(
+                (acc, edge) =>
+                  acc.concat(
+                    edge.node.episodes.map(episode =>
+                      Object.assign({}, edge.node.frontmatter, {
+                        title: `${edge.node.title} - Avsnitt ${episode.number}`,
+                        description: episode.description.description,
+                        date: episode.pubDate,
+                        url:
+                          site.siteMetadata.siteUrl + '/episodes/' + episode.id,
+                        guid:
+                          site.siteMetadata.siteUrl + '/episodes/' + episode.id,
+                        enclosure: {
+                          url: episode.filename,
+                          type: 'mp3',
+                        },
+                      })
+                    )
+                  ),
+                []
+              )
+              return campaignEpisodes.concat(oneshotEpisodes)
             },
             query: `
               {
-                allContentfulEpisode {
+                allContentfulCampaign {
                   edges{
                     node{
                       id
                       title
-                      description {
-                        description
+                      episodes {
+                        id
+                        title
+                        number
+                        pubDate
+                        description {
+                          description
+                        }
+                        filename
                       }
-                      filename
+                    }
+                  }
+                }
+                allContentfulOneshot {
+                  edges{
+                    node{
+                      id
+                      title
+                      episodes {
+                        id
+                        number
+                        pubDate
+                        description {
+                          description
+                        }
+                        filename
+                      }
                     }
                   }
                 }
