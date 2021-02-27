@@ -1,7 +1,5 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import get from 'lodash/get'
-import Helmet from 'react-helmet'
 
 import HeaderAlpha from './../assets/header_alpha.svg'
 import tw, { styled } from 'twin.macro'
@@ -12,7 +10,6 @@ import OneshotCardList from '../components/OneshotCardList'
 import AudioPlayerButton from '../components/AudioPlayerButton'
 import SearchBox from '../components/SearchBox'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { filter } from 'lodash'
 import { Link } from 'gatsby'
 import Head from '../components/head'
 
