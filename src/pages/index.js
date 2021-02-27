@@ -70,11 +70,9 @@ class SvartvikenIndex extends React.Component {
   constructor(props) {
     super(props)
 
-    const campaigns = this.props.data.allContentfulCampaign.edges.map(
-      e => e.node
-    )
+    const campaigns = this.getCampaigns();
 
-    const oneshots = this.props.data.allContentfulOneshot.edges.map(e => e.node)
+    const oneshots = this.getOneshots();
 
     this.state = {
       campaigns,
@@ -88,11 +86,27 @@ class SvartvikenIndex extends React.Component {
   }
 
   getCampaigns() {
-    return this.props.data.allContentfulCampaign.edges.map(e => e.node)
+    return this.props.data.allContentfulCampaign.edges.map(e => e.node).sort((a, b) =>  {
+        if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
+          return 0;
+        } else if (new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)) {
+          return -1;
+        } else {
+          return 1;
+        }
+    });
   }
 
   getOneshots() {
-    return this.props.data.allContentfulOneshot.edges.map(e => e.node)
+    return this.props.data.allContentfulOneshot.edges.map(e => e.node).sort((a, b) =>  {
+      if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
+        return 0;
+      } else if (new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)) {
+        return -1;
+      } else {
+        return 1;
+      }
+  });
   }
 
   handleSearchChange(event) {
@@ -120,12 +134,6 @@ class SvartvikenIndex extends React.Component {
   }
 
   render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const siteDescription = get(
-      this,
-      'props.data.site.siteMetadata.description'
-    )
-
     const latestCampaign =
       this.state.campaigns.length > 0
         ? this.state.campaigns[0]
@@ -221,6 +229,7 @@ export const pageQuery = graphql`
             id
             title
             number
+            pubDate
             description {
               childMarkdownRemark {
                 html
@@ -248,6 +257,7 @@ export const pageQuery = graphql`
           episodes {
             id
             number
+            pubDate
             description {
               childMarkdownRemark {
                 html
