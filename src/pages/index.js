@@ -91,11 +91,16 @@ class SvartvikenIndex extends React.Component {
     return this.props.data.allContentfulCampaign.edges.map(e => e.node)
   }
 
+  getOneshots() {
+    return this.props.data.allContentfulOneshot.edges.map(e => e.node)
+  }
+
   handleSearchChange(event) {
     const searchTerm = event.target.value
     this.setState({
       searchTerm,
-      campaigns: this.filterCampaigns(searchTerm),
+      campaigns: this.search(this.getCampaigns(), searchTerm),
+      oneshots: this.search(this.getOneshots(), searchTerm),
     })
   }
 
@@ -106,8 +111,8 @@ class SvartvikenIndex extends React.Component {
     })
   }
 
-  filterCampaigns(searchFilter) {
-    return this.getCampaigns().filter(c =>
+  search(items, searchFilter) {
+    return items.filter(c =>
       searchFilter === ''
         ? true
         : c.title.toLowerCase().indexOf(searchFilter.toLowerCase()) !== -1
@@ -131,7 +136,7 @@ class SvartvikenIndex extends React.Component {
     )
     return (
       <div className="w-full">
-        <Head />
+        <Head title=''/>
         <HomeHeader className="z-depth-3">
           <LeftColumn>
             <LatestEpisode className="container text-center md:text-left">

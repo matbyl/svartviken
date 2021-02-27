@@ -66,6 +66,18 @@ const NavBarItem = styled(Link)`
   }
 `
 
+const ExternalNavBarItem = styled.a`
+  display: inline-block;
+  text-shadow: none;
+  color: white;
+  text-decoration: none;
+  margin: auto 15px;
+
+  :hover {
+    text-decoration: underline;
+  }
+`
+
 const SocialIcon = styled.img`
   ${tw`inline-block`};
 
@@ -97,6 +109,19 @@ const menuItem = (url, name, onClick, inNewTab = false) => (
       {name}
     </Link>
   </li>
+)
+
+const externalMenuItem = (url, name) => (
+  
+  <li className="py-2 pl-5">
+  <a
+    href={url}
+    className="hover:text-white"
+    target='_blank'
+  >
+    {name}
+  </a>
+</li>
 )
 
 class Template extends React.Component {
@@ -162,11 +187,10 @@ class Template extends React.Component {
             {menuItem('/about', 'Om oss', this.toggleMenu)}
             {menuItem('/collaborations', 'Våra samarbeten', this.toggleMenu)}
             {menuItem('/material', 'Material', this.toggleMenu)}
-            {menuItem(
+            {externalMenuItem(
               'https://shop.spreadshirt.se/svartvikenrp/all',
               'Poddshop',
-              this.toggleMenu,
-              true
+              this.toggleMenu
             )}
             <li className="pl-5">
               {socialMediaIcon(
@@ -202,12 +226,12 @@ class Template extends React.Component {
           <NavBarItem to={'/about'}>Om oss</NavBarItem> |{' '}
           <NavBarItem to={'/collaborations'}>Våra samarbeten</NavBarItem> |{' '}
           <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
-          <NavBarItem
-            to={'https://shop.spreadshirt.se/svartvikenrp/all'}
+          <ExternalNavBarItem
+            href='https://shop.spreadshirt.se/svartvikenrp/all'
             target="_blank"
           >
             Poddshop
-          </NavBarItem>{' '}
+          </ExternalNavBarItem>{' '}
           |{' '}
           {socialMediaIcon(
             FacebookIcon,
