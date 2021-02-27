@@ -3,6 +3,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 import { graphql } from 'gatsby'
 import tw, { styled } from 'twin.macro'
+import Head from '../components/head'
 
 const CardList = styled.div`
   ${tw`flex flex-row flex-wrap w-full lg:p-10 md:pr-2`}
@@ -20,6 +21,7 @@ export default class CollaborationsPage extends React.Component {
   render() {
     return (
       <div className="min-w-full">
+        <Head title='Våra samarbeten' />
         <Header>
           <HeaderContent>
             <HeaderTitle>Våra Samarbeten</HeaderTitle>

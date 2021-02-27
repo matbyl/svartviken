@@ -22,7 +22,7 @@ const Episodes = styled.ul`
 export default ({ data }) => {
   return (
     <div className="min-w-full">
-      <Head title={data.contentfulOneshot.title + ' | Oneshot'} />
+      <Head title={data.contentfulOneshot.title + ' | Oneshot | Svartviken Rollspelspodd'} />
       <Header backgroundImage={data.contentfulOneshot.image.fluid.src}>
         <HeaderContent className="container">
           <Title>{data.contentfulOneshot.title}</Title>

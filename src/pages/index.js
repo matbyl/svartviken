@@ -14,6 +14,7 @@ import SearchBox from '../components/SearchBox'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { filter } from 'lodash'
 import { Link } from 'gatsby'
+import Head from '../components/head'
 
 const HomeHeader = styled.header`
   ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:p-10`};
@@ -130,6 +131,7 @@ class SvartvikenIndex extends React.Component {
     )
     return (
       <div className="w-full">
+        <Head />
         <HomeHeader className="z-depth-3">
           <LeftColumn>
             <LatestEpisode className="container text-center md:text-left">

@@ -6,6 +6,7 @@ import { graphql } from 'gatsby'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 import placeholder from './../assets/images/maximalfocus.jpg'
+import Head from '../components/head'
 
 const AboutSection = styled.section`
   ${tw`flex flex-row flex-wrap justify-center w-full m-auto bg-black`};
@@ -59,6 +60,7 @@ export default class AboutPage extends React.Component {
   render() {
     return (
       <div className="min-w-full">
+        <Head title='Om oss' />
         <Header backgroundImage={banner}>
           <HeaderContent>
             <HeaderTitle>Om oss</HeaderTitle>

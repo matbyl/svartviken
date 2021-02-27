@@ -29,7 +29,6 @@ export default ({ data }) => {
     <div className="flex min-h-full min-w-full bg-black">
       <Head
         title={
-          'Avsnitt  ' +
           data.contentfulEpisode.title +
           (data.contentfulEpisode.length > 0 ? ' | Kampanj ' +
             data.contentfulEpisode.campaign[0].title : '')

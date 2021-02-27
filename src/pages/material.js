@@ -3,11 +3,13 @@ import banner from './../assets/images/svartviken_banner.jpg'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 import {graphql} from 'gatsby'
+import Head from '../components/head';
 
 export default class MaterialPage extends React.Component {
     render() {
         return (
             <div className="min-w-full" backgroundImage={banner}>
+                <Head title='Material' />
                 <Header>
                     <HeaderContent>
                         <HeaderTitle>Material</HeaderTitle>

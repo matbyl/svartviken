@@ -1,3 +1,5 @@
+const { Howl } = require('howler')
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -145,6 +147,13 @@ module.exports = {
                           url: episode.filename,
                           type: 'mp3',
                         },
+                        custom_elements: [
+                          {
+                            'itunes:duration': new Howl({
+                              src: [episode.filename],
+                            }).duration(),
+                          },
+                        ],
                       })
                     )
                   ),
