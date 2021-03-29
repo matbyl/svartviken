@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 
 import HeaderAlpha from './../assets/header_alpha.svg'
 import tw, { styled } from 'twin.macro'
-import logo from './../assets/Svartviken_logo_genomskinlig.png'
+import logo from './../assets/Svartviken_logo.jpg'
 
 import CampaignCardList from '../components/CampaignCardList'
 import OneshotCardList from '../components/OneshotCardList'
