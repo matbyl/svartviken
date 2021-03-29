@@ -118,6 +118,7 @@ const externalMenuItem = (url, name) => (
     href={url}
     className="hover:text-white"
     target='_blank'
+    rel="noopener"
   >
     {name}
   </a>

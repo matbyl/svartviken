@@ -5,12 +5,6 @@ import Head from '../components/head'
 
 import AudioPlayerButton from '../components/AudioPlayerButton'
 import { Header, HeaderContent } from '../components/Header'
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-} from 'react-share'
 
 const EpisodeNumber = styled.h1`
   ${tw`text-gray-500 text-lg xl:text-2xl`};
@@ -44,7 +38,7 @@ export default ({ data }) => {
           <AudioPlayerButton episode={data.contentfulEpisode} light={true} />
 
           <div className="flex justify-center">
-            <FacebookShareButton
+            {/* <FacebookShareButton
               className="m-1"
               url={
                 'https://www.svartvikenrp.se/media/' +
@@ -57,7 +51,7 @@ export default ({ data }) => {
 
             <TwitterShareButton url={'as'} title={'as'} className="m-1">
               <TwitterIcon size={32} round />
-            </TwitterShareButton>
+            </TwitterShareButton> */}
           </div>
         </HeaderContent>
       </Header>

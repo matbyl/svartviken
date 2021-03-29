@@ -63,7 +63,7 @@ class OneshotCardList extends React.Component {
         {this.props.oneshots.map(
           ({ title, id, description, episodes, image }) => (
             <Card key={id}>
-              <Header src={'https:' + image.fluid.src} />
+              <Header src={'https:' + image.fluid.src} rel="noopener" />
 
               {episodes.length > 0 ? (
                 <div className="md:shadow-xl md:w-11/12  w-full bg-white m-auto rounded">

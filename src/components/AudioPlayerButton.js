@@ -31,7 +31,8 @@ const EnabledMediaButton = styled.button`
 `
 const DisabledMediaButton = styled.button`
   cursor: default;
-    text-decoration: none;
+  text-decoration: none;
+  user-select: none;
   outline: none;
   border: none;
   opacity: 0.42;
@@ -48,6 +49,11 @@ const DisabledMediaButton = styled.button`
     width: 64px;
     outline: none;
   }
+
+  :focus {
+    outline: none;
+  }
+
 `
 
 class AudioPlayerButton extends React.Component {

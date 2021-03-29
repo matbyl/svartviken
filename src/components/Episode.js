@@ -1,12 +1,5 @@
 import React from 'react'
 import tw, { styled } from 'twin.macro'
-
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-} from 'react-share'
 import { Link } from 'gatsby'
 
 import AudioPlayerButton from './AudioPlayerButton'
@@ -50,7 +43,7 @@ export const Episode = props => {
           </EpisodePlayButtonWrapper>
 
         </div>
-
+{/* 
         <div className="flex mt-10 bottom-0">
           <FacebookShareButton
             url={'https://asd.asd/test/' + episode.id}
@@ -63,7 +56,7 @@ export const Episode = props => {
           <TwitterShareButton url={'as'} title={'as'} className="m-1  ">
             <TwitterIcon size={32} round />
           </TwitterShareButton>
-        </div>
+        </div> */}
       </EpisodeDescription>
     </EpisodeContent>
   )
