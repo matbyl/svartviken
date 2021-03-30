@@ -9,7 +9,7 @@ const SearchBox = ({ searchTerm, filter, onSearchChange, onFilterChange }) => (
       onChange={onSearchChange}
       className="flex-1 h-16 bg-transparent pl-3 focus:outline-none text-xl hover:bg-gray-200"
       type="search"
-      placeholder="Search..."
+      placeholder="Sök..."
     />
     <div className="w-64 flex-row hover:bg-gray-200 cursor-pointer relative h-16 text-left">
       <select
@@ -25,6 +25,7 @@ const SearchBox = ({ searchTerm, filter, onSearchChange, onFilterChange }) => (
       </select>
       <img
         src={ChevronIcon}
+        alt="chevron-icon"
         className="my-auto mx-4 w-8 h-8 absolute right-0 inset-y-0 pointer-events-none"
       />
     </div>
