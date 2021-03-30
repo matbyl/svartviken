@@ -25,7 +25,8 @@ const Footer = styled.div`
   );
 `
 
-const FooterTitle = styled.h4`
+const FooterTitle = styled.h1`
+  font-size: 1em;
   margin: 15px auto;
   color: whitesmoke;
 `
@@ -92,9 +93,9 @@ const SocialIcon = styled.img`
 
 let lastScrollY = 0
 let ticking = false
-const socialMediaIcon = (icon, url) => (
+const socialMediaIcon = (icon, url, alt) => (
   <a className="px-1" href={url} target="_blank">
-    <SocialIcon src={icon} width="20" height="20"/>
+    <SocialIcon src={icon} alt={alt} width="20" height="20"/>
   </a>
 )
 
@@ -196,14 +197,16 @@ class Template extends React.Component {
             <li className="pl-5">
               {socialMediaIcon(
                 FacebookIcon,
-                'https://www.facebook.com/SvartvikenRP'
+                'https://www.facebook.com/SvartvikenRP',
+                'facebook'
               )}
               {socialMediaIcon(
                 InstagramIcon,
-                'https://www.instagram.com/svartviken_rollspelspodd/'
+                'https://www.instagram.com/svartviken_rollspelspodd/',
+                'instagram'
               )}
-              {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp')}
-              {socialMediaIcon(RssIcon, '/rss.xml')}
+              {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
+              {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
             </li>
           </ul>
 

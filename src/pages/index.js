@@ -170,7 +170,7 @@ class SvartvikenIndex extends React.Component {
           </LeftColumn>
 
           <RightColumn>
-            <Logo src={logo} />
+            <Logo src={logo} alt="svartviken-logo"/>
           </RightColumn>
         </HomeHeader>
         <img src={HeaderAlpha} className="header-bottom -my-1" />

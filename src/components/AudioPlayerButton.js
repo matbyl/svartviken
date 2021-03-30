@@ -64,7 +64,10 @@ class AudioPlayerButton extends React.Component {
         {({ data, set }) => {
           return data.episode === this.props.episode ? (
             <DisabledMediaButton aria-label="disabled-play-episode-button">
-              <img src={this.props.light ? WhiteIcon : BlackIcon} />
+              <img
+                src={this.props.light ? WhiteIcon : BlackIcon}
+                alt="play-icon"
+              />
             </DisabledMediaButton>
           ) : (
             <EnabledMediaButton
@@ -75,7 +78,10 @@ class AudioPlayerButton extends React.Component {
                 })
               }}
             >
-              <img src={this.props.light ? WhiteIcon : BlackIcon} />
+              <img
+                src={this.props.light ? WhiteIcon : BlackIcon}
+                alt="play-icon"
+              />
             </EnabledMediaButton>
           )
         }}

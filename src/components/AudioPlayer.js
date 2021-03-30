@@ -144,7 +144,7 @@ const Progress = styled.div.attrs(({ progress }) => ({
 
 const ControllButton = ({ icon, action, size, ariaLabel }) => (
   <MediaButton onClick={action} size={size} aria-label={ariaLabel}>
-    <img src={icon} />
+    <img src={icon} alt="control-button-image" />
   </MediaButton>
 )
 
