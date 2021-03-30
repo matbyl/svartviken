@@ -285,18 +285,20 @@ class Template extends React.Component {
         <FooterSocialMedia>
           {socialMediaIcon(
             FacebookIcon,
-            'https://www.facebook.com/SvartvikenRP'
+            'https://www.facebook.com/SvartvikenRP',
+            'facebook'
           )}
           {socialMediaIcon(
             InstagramIcon,
-            'https://www.instagram.com/svartviken_rollspelspodd/'
+            'https://www.instagram.com/svartviken_rollspelspodd/',
+            'instagram'
           )}
-          {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp')}
-          {socialMediaIcon(RssIcon, '/rss.xml')}
+          {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
+          {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
         </FooterSocialMedia>
         <p className="text-white mt-5">Crafted with 🎲</p>
         <p className="text-white">
-          Copyright © 2019 Svartviken, All Rights Reserved.
+          Copyright © 2021 Svartviken, All Rights Reserved.
         </p>
       </Footer>
     )
