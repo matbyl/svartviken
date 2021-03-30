@@ -45,7 +45,7 @@ const CharacterPersonality = styled.h1`
 `
 
 const Avatar = styled.img`
-  ${tw``};
+  ${tw`m-auto`};
 `
 
 const options = {
@@ -68,29 +68,60 @@ export default class AboutPage extends React.Component {
         </Header>
         <AboutSection>
           {/* <About>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</About> */}
-          {this.props.data.allContentfulPlayer.edges.map(({ node }) =>
-            node.svartvikenMember ? (
+          {this.props.data.allContentfulSvartvikenMember.edges.map(({ node }) =>
+
               <PlayerSection key={node.id}>
                 <PlayerAvatar>
-                  {node.avatar ? <Avatar src={placeholder} /> : null}
+                  <Avatar src={node.profilePicture.fluid.src} />
                   <CharacterName>
-                    {node.firstname + ' ' + node.lastname}
+                    {node.name}
                   </CharacterName>
                   <CharacterPersonality>Chaotic Neutral</CharacterPersonality>
                 </PlayerAvatar>
                 <PlayerDescription>
 
-                  {node.about_richtext ? (
-                    <CharacterDescription>
-                      {documentToReactComponents(
-                        node.about_richtext.json,
-                        options
-                      )}
-                    </CharacterDescription>
-                  ) : null}
+                  <ul>
+                    <li>
+                      {node.arketyp}
+                    </li>
+                    <li>
+                      <ul>
+                      {node.attributes.map(atr => <li>{atr}</li>)}
+                      </ul>
+                    </li>
+                    <li>
+                      {node.bigNoNos.bigNoNos}
+                    </li>
+                    <li>
+                      {node.birthyear}
+                    </li>
+                    <li>
+                      {node.birthplace}
+                    </li>
+                    <li>
+                      {node.debut}
+                    </li>
+                    <li>
+                      {node.favoriteRpg}
+                    </li>
+                    <li>
+                      {node.iceBreakers.iceBreakers}
+                    </li>
+                    <li>
+                      {node.rpgHabit.rpgHabit}
+                    </li>
+                    <li>
+                      {node.skills}
+                    </li>
+                    <li>
+                      {node.team}
+                    </li>
+                    <li>
+                      {node.weaknesses.weaknesses}
+                    </li>
+                  </ul>
                 </PlayerDescription>
               </PlayerSection>
-            ) : null
           )}
         </AboutSection>
       </div>
@@ -100,20 +131,35 @@ export default class AboutPage extends React.Component {
 
 export const pageQuery = graphql`
   query {
-    allContentfulPlayer {
+    allContentfulSvartvikenMember {
       edges {
         node {
           id
-          firstname
-          lastname
-          svartvikenMember
-          about_richtext {
-            json
+          name
+          arketyp
+          attributes
+          bigNoNos {
+            bigNoNos
           }
-          avatar {
+          birthyear
+          birthplace
+          debut
+          favoriteRpg
+          iceBreakers {
+            iceBreakers
+          }
+          profilePicture {
             fluid(maxWidth: 90) {
               src
             }
+          }
+          rpgHabit {
+            rpgHabit
+          }
+          skills
+          team
+          weaknesses {
+            weaknesses
           }
         }
       }
