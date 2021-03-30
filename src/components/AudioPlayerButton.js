@@ -5,7 +5,7 @@ import WhiteIcon from './../assets/White_Play_Icon.svg'
 import BlackIcon from './../assets/Black_Play_Icon.svg'
 
 const EnabledMediaButton = styled.button`
-     text-decoration: none;
+  text-decoration: none;
   outline: none;
   border: none;
   opacity: 0.72;
@@ -63,11 +63,12 @@ class AudioPlayerButton extends React.Component {
       <ContextConsumer>
         {({ data, set }) => {
           return data.episode === this.props.episode ? (
-            <DisabledMediaButton>
+            <DisabledMediaButton aria-label="disabled-play-episode-button">
               <img src={this.props.light ? WhiteIcon : BlackIcon} />
             </DisabledMediaButton>
           ) : (
             <EnabledMediaButton
+              aria-label="enabled-play-episode-button"
               onClick={() => {
                 set({
                   episode: this.props.episode,

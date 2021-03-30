@@ -142,8 +142,8 @@ const Progress = styled.div.attrs(({ progress }) => ({
   height: 7px;
 `
 
-const ControllButton = ({ icon, action, size }) => (
-  <MediaButton onClick={action} size={size}>
+const ControllButton = ({ icon, action, size, ariaLabel }) => (
+  <MediaButton onClick={action} size={size} aria-label={ariaLabel}>
     <img src={icon} />
   </MediaButton>
 )
@@ -151,12 +151,14 @@ const ControllButton = ({ icon, action, size }) => (
 const PlayPauseButton = ({ color, playing, playAction, pauseAction }) =>
   playing ? (
     <ControllButton
+      ariaLabel="media-player-pause-button"
       icon={color === 'white' ? pauseIconWhite : pauseIconBlack}
       action={pauseAction}
       size="45"
     />
   ) : (
     <ControllButton
+      ariaLabel="media-player-play-button"
       icon={color === 'white' ? playIconWhite : playIconBlack}
       action={playAction}
       size="45"
@@ -352,6 +354,7 @@ class AudioPlayer extends React.Component {
           <div className="flex justify-center space-x-4">
             <ControllButton
               className="flex-initial"
+              ariaLabel="media-player-backward-button"
               style={{ gridArea: 'backward' }}
               icon={
                 this.props.color === 'white'
@@ -369,6 +372,7 @@ class AudioPlayer extends React.Component {
             />
             <ControllButton
               className="flex-initial"
+              ariaLabel="media-player-forward-button"
               style={{ gridArea: 'forward' }}
               icon={
                 this.props.color === 'white'
