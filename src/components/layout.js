@@ -94,7 +94,7 @@ let lastScrollY = 0
 let ticking = false
 const socialMediaIcon = (icon, url) => (
   <a className="px-1" href={url} target="_blank">
-    <SocialIcon src={icon} />
+    <SocialIcon src={icon} width="20" height="20"/>
   </a>
 )
 

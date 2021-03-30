@@ -11,6 +11,8 @@ const EnabledMediaButton = styled.button`
   opacity: 0.72;
   padding: 0;
   margin: 15px auto;
+  transition: transform 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+  -webkit-transition: transform 0.25s cubic-bezier(0.5, 0, 0.1, 1);
 
   img {
     margin: auto;
@@ -53,7 +55,6 @@ const DisabledMediaButton = styled.button`
   :focus {
     outline: none;
   }
-
 `
 
 class AudioPlayerButton extends React.Component {
@@ -66,16 +67,16 @@ class AudioPlayerButton extends React.Component {
               <img src={this.props.light ? WhiteIcon : BlackIcon} />
             </DisabledMediaButton>
           ) : (
-              <EnabledMediaButton
-                onClick={() => {
-                  set({
-                    episode: this.props.episode,
-                  })
-                }}
-              >
-                <img src={this.props.light ? WhiteIcon : BlackIcon} />
-              </EnabledMediaButton>
-            )
+            <EnabledMediaButton
+              onClick={() => {
+                set({
+                  episode: this.props.episode,
+                })
+              }}
+            >
+              <img src={this.props.light ? WhiteIcon : BlackIcon} />
+            </EnabledMediaButton>
+          )
         }}
       </ContextConsumer>
     )

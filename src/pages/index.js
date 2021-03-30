@@ -53,6 +53,8 @@ const RightColumn = styled.div`
 
 const Logo = styled.img`
   ${tw`w-64 py-5 lg:w-7/12 m-auto`}
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 `
 
 const LatestEpisode = styled.div`
