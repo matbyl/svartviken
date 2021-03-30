@@ -215,12 +215,14 @@ class Template extends React.Component {
               src={CloseIcon}
               className="align-self-end cursor-pointer m-4 w-8 h-8"
               onClick={this.toggleMenu}
+              alt="close-icon"
             />
           ) : (
             <img
               src={MenuIcon}
               className="align-self-end cursor-pointer m-4 w-8 h-8"
               onClick={this.toggleMenu}
+              alt="menu-icon"
             />
           )}
         </div>
@@ -239,14 +241,16 @@ class Template extends React.Component {
           |{' '}
           {socialMediaIcon(
             FacebookIcon,
-            'https://www.facebook.com/SvartvikenRP'
+            'https://www.facebook.com/SvartvikenRP',
+            'facebook'
           )}
           {socialMediaIcon(
             InstagramIcon,
-            'https://www.instagram.com/svartviken_rollspelspodd/'
+            'https://www.instagram.com/svartviken_rollspelspodd/',
+            'instagram'
           )}
-          {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp')}
-          {socialMediaIcon(RssIcon, '/rss.xml')}
+          {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
+          {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
         </NavBarRow>
       </NavBar>
     )
