@@ -293,6 +293,7 @@ class Template extends React.Component {
           )}
           {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
           {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
+          <iframe className="mx-auto my-4" src="https://discord.com/widget?id=786559320951226368&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </FooterSocialMedia>
         <p className="text-white mt-5">Crafted with 🎲</p>
         <p className="text-white">
