@@ -1,9 +1,9 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import HeaderAlpha from './../assets/header_alpha.svg'
+import HeaderAlpha from './../assets/images/header-alpha.svg'
 import tw, { styled } from 'twin.macro'
-import logo from './../assets/Svartviken_logo.jpg'
+import logo from './../assets/images/svartviken-logo.jpg'
 
 import CampaignCardList from '../components/CampaignCardList'
 import OneshotCardList from '../components/OneshotCardList'
@@ -69,9 +69,9 @@ class SvartvikenIndex extends React.Component {
   constructor(props) {
     super(props)
 
-    const campaigns = this.getCampaigns();
+    const campaigns = this.getCampaigns()
 
-    const oneshots = this.getOneshots();
+    const oneshots = this.getOneshots()
 
     this.state = {
       campaigns,
@@ -85,27 +85,35 @@ class SvartvikenIndex extends React.Component {
   }
 
   getCampaigns() {
-    return this.props.data.allContentfulCampaign.edges.map(e => e.node).sort((a, b) =>  {
+    return this.props.data.allContentfulCampaign.edges
+      .map(e => e.node)
+      .sort((a, b) => {
         if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
-          return 0;
-        } else if (new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)) {
-          return -1;
+          return 0
+        } else if (
+          new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)
+        ) {
+          return -1
         } else {
-          return 1;
+          return 1
         }
-    });
+      })
   }
 
   getOneshots() {
-    return this.props.data.allContentfulOneshot.edges.map(e => e.node).sort((a, b) =>  {
-      if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
-        return 0;
-      } else if (new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)) {
-        return -1;
-      } else {
-        return 1;
-      }
-  });
+    return this.props.data.allContentfulOneshot.edges
+      .map(e => e.node)
+      .sort((a, b) => {
+        if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
+          return 0
+        } else if (
+          new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)
+        ) {
+          return -1
+        } else {
+          return 1
+        }
+      })
   }
 
   handleSearchChange(event) {
@@ -143,11 +151,13 @@ class SvartvikenIndex extends React.Component {
     )
     return (
       <div className="w-full">
-        <Head title=''/>
+        <Head title="" />
         <HomeHeader className="z-depth-3">
           <LeftColumn>
             <LatestEpisode className="container text-center md:text-left">
-              <CampaignTitle to={'/campaigns/' + latestCampaign.id}>{latestCampaign.title}</CampaignTitle>
+              <CampaignTitle to={'/campaigns/' + latestCampaign.id}>
+                {latestCampaign.title}
+              </CampaignTitle>
               {latestCampaign.description ? (
                 <CampaignDescription>
                   {documentToReactComponents(latestCampaign.description.json)}
@@ -170,10 +180,14 @@ class SvartvikenIndex extends React.Component {
           </LeftColumn>
 
           <RightColumn>
-            <Logo src={logo} alt="svartviken-logo"/>
+            <Logo src={logo} alt="svartviken-logo" />
           </RightColumn>
         </HomeHeader>
-        <img src={HeaderAlpha} alt="hero-banner-bottom-alpha" className="header-bottom -my-1" />
+        <img
+          src={HeaderAlpha}
+          alt="hero-banner-bottom-alpha"
+          className="header-bottom -my-1"
+        />
 
         <MainSection>
           <SearchBox

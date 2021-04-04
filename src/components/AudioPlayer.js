@@ -3,15 +3,11 @@ import { Howl } from 'howler'
 import tw, { styled } from 'twin.macro'
 
 import PropTypes from 'prop-types'
-import playIconWhite from './../assets/White_Play_Icon.svg'
-import pauseIconWhite from './../assets/White_Pause_Icon.svg'
-import replay30IconWhite from './../assets/White_Reverse_30s_Icon.svg'
-import forward30IconWhite from './../assets/White_Forward_30s_Icon.svg'
-import playIconBlack from './../assets/circled-play-50-black.png'
-import pauseIconBlack from './../assets/pause-button-50-black.png'
-import replay30IconBlack from './../assets/replay-30-50-black.png'
-import forward30IconBlack from './../assets/forward-30-50-black.png'
-import CloseIcon from './../assets/icons/close-white.svg'
+import playIconWhite from './../assets/icons/white-play.svg'
+import pauseIconWhite from './../assets/icons/white-pause.svg'
+import replay30IconWhite from './../assets/icons/white-backward.svg'
+import forward30IconWhite from './../assets/icons/white-forward.svg'
+import CloseIcon from './../assets/icons/white-close.svg'
 
 const Container = styled.div`
   grid-template-columns: 250px 35px 35px 35px 10px 1fr;
@@ -148,18 +144,18 @@ const ControllButton = ({ icon, action, size, ariaLabel }) => (
   </MediaButton>
 )
 
-const PlayPauseButton = ({ color, playing, playAction, pauseAction }) =>
+const PlayPauseButton = ({ playing, playAction, pauseAction }) =>
   playing ? (
     <ControllButton
       ariaLabel="media-player-pause-button"
-      icon={color === 'white' ? pauseIconWhite : pauseIconBlack}
+      icon={pauseIconWhite}
       action={pauseAction}
       size="45"
     />
   ) : (
     <ControllButton
       ariaLabel="media-player-play-button"
-      icon={color === 'white' ? playIconWhite : playIconBlack}
+      icon={playIconWhite}
       action={playAction}
       size="45"
     />
@@ -356,11 +352,7 @@ class AudioPlayer extends React.Component {
               className="flex-initial"
               ariaLabel="media-player-backward-button"
               style={{ gridArea: 'backward' }}
-              icon={
-                this.props.color === 'white'
-                  ? replay30IconWhite
-                  : replay30IconBlack
-              }
+              icon={replay30IconWhite}
               action={this.backward}
             />
             <PlayPauseButton
@@ -368,24 +360,19 @@ class AudioPlayer extends React.Component {
               playing={this.state.playing}
               playAction={this.play}
               pauseAction={this.pause}
-              color={this.props.color}
             />
             <ControllButton
               className="flex-initial"
               ariaLabel="media-player-forward-button"
               style={{ gridArea: 'forward' }}
-              icon={
-                this.props.color === 'white'
-                  ? forward30IconWhite
-                  : forward30IconBlack
-              }
+              icon={forward30IconWhite}
               action={() => this.forward(30)}
             />
           </div>
           <div className="flex">
             <SeekBar style={{ gridArea: 'seekBar' }}>
               <Time
-                className={this.props.color ? 'white' : 'black'}
+                className="white"
                 style={{ gridArea: 'start' }}
               >
                 {this.state.time}{' '}
@@ -393,7 +380,7 @@ class AudioPlayer extends React.Component {
 
               <ProgressWrapper
                 id="progress-bar"
-                className={this.props.color ? 'white' : 'black'}
+                className="white"
                 style={{ gridArea: 'seek' }}
                 onMouseMoveCapture={this.handleMouseMove}
                 onMouseDownCapture={this.seekOnMouseDown}
@@ -406,7 +393,7 @@ class AudioPlayer extends React.Component {
                 </ProgressPointer>
               </ProgressWrapper>
               <Time
-                className={this.props.color ? 'white' : 'black'}
+                className="white"
                 style={{
                   gridArea: 'end',
                   textAlign: 'right',
@@ -422,11 +409,7 @@ class AudioPlayer extends React.Component {
           <Title>{this.props.title}</Title>
           <ControllButton
             style={{ gridArea: 'backward' }}
-            icon={
-              this.props.color === 'white'
-                ? replay30IconWhite
-                : replay30IconBlack
-            }
+            icon={replay30IconWhite}
             action={() => this.backward(30)}
           />
           <PlayPauseButton
@@ -435,20 +418,15 @@ class AudioPlayer extends React.Component {
             playing={this.state.playing}
             playAction={this.play}
             pauseAction={this.pause}
-            color={this.props.color}
           />
           <ControllButton
             style={{ gridArea: 'forward' }}
-            icon={
-              this.props.color === 'white'
-                ? forward30IconWhite
-                : forward30IconBlack
-            }
+            icon={forward30IconWhite}
             action={this.forward}
           />
           <SeekBar style={{ gridArea: 'seekBar' }}>
             <Time
-              className={this.props.color ? 'white' : 'black'}
+              className="white"
               style={{ gridArea: 'start' }}
             >
               {this.state.time}{' '}
@@ -456,7 +434,7 @@ class AudioPlayer extends React.Component {
 
             <ProgressWrapper
               id="progress-bar"
-              className={this.props.color ? 'white' : 'black'}
+              className="white"
               style={{ gridArea: 'seek' }}
               onMouseMoveCapture={this.handleMouseMove}
               onMouseDownCapture={this.seekOnMouseDown}
@@ -469,7 +447,7 @@ class AudioPlayer extends React.Component {
               </ProgressPointer>
             </ProgressWrapper>
             <Time
-              className={this.props.color ? 'white' : 'black'}
+              className="white"
               style={{
                 gridArea: 'end',
                 textAlign: 'right',
@@ -485,14 +463,9 @@ class AudioPlayer extends React.Component {
   }
 }
 
-AudioPlayer.defaultProps = {
-  color: 'white',
-}
-
 AudioPlayer.propTypes = {
   title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  color: PropTypes.string,
+  url: PropTypes.string.isRequired
 }
 
 export default AudioPlayer

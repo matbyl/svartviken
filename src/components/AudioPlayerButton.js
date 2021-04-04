@@ -1,8 +1,8 @@
 import React from 'react'
 import ContextConsumer from '../components/Context'
 import { styled } from 'twin.macro'
-import WhiteIcon from './../assets/White_Play_Icon.svg'
-import BlackIcon from './../assets/Black_Play_Icon.svg'
+import WhiteIcon from './../assets/icons/white-play.svg'
+import BlackIcon from './../assets/icons/black-play.svg'
 
 const EnabledMediaButton = styled.button`
   text-decoration: none;

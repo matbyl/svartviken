@@ -1,13 +1,12 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import FacebookIcon from './../assets/logo-facebook.svg'
-import InstagramIcon from './../assets/logo-instagram.svg'
-import TwitterIcon from './../assets/logo-twitter.svg'
-import CloseIcon from './../assets/icons/close-white.svg'
-import MenuIcon from './../assets/icons/menu-white.svg'
+import FacebookIcon from './../assets/icons/facebook.svg'
+import InstagramIcon from './../assets/icons/instagram.svg'
+import TwitterIcon from './../assets/icons/twitter.svg'
+import CloseIcon from './../assets/icons/white-close.svg'
+import MenuIcon from './../assets/icons/white-menu.svg'
 import RssIcon from './../assets/icons/rss-feed.svg'
 import tw, { styled } from 'twin.macro'
-import playIconWhite from './../assets/White_Play_Icon.svg'
 
 import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'
@@ -266,7 +265,6 @@ class Template extends React.Component {
                   : 'Kampanj - Avsnitt ' + data.episode.number
               }
               url={data.episode.filename}
-              color="white"
               style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
               close={() => {
                 set({
