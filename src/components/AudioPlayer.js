@@ -353,7 +353,7 @@ class AudioPlayer extends React.Component {
               ariaLabel="media-player-backward-button"
               style={{ gridArea: 'backward' }}
               icon={replay30IconWhite}
-              action={this.backward}
+              action={() => this.backward(30)}
             />
             <PlayPauseButton
               className="flex-initial w-32 mx-16"
@@ -422,7 +422,7 @@ class AudioPlayer extends React.Component {
           <ControllButton
             style={{ gridArea: 'forward' }}
             icon={forward30IconWhite}
-            action={this.forward}
+            action={() => this.forward(30)}
           />
           <SeekBar style={{ gridArea: 'seekBar' }}>
             <Time
