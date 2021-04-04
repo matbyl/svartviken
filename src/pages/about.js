@@ -9,26 +9,26 @@ import placeholder from './../assets/images/maximalfocus.jpg'
 import Head from '../components/head'
 
 const AboutSection = styled.section`
-  ${tw`flex flex-row flex-wrap justify-center w-full m-auto bg-black`};
+  ${tw`flex flex-row flex-wrap justify-center w-full m-auto bg-white`};
 `
 const About = styled.section`
   ${tw`w-full text-center text-xl m-auto`};
 `
 
 const PlayerSection = styled.div`
-  ${tw`w-full flex flex-col md:flex-row p-12 md:even:flex-row-reverse even:bg-gray-200 bg-white`};
+  ${tw`w-full flex flex-col md:flex-row p-12 md:even:flex-row-reverse even:bg-gray-200 justify-center`};
 `
 
 const PlayerAvatar = styled.div`
-  ${tw`w-full md:w-1/2`};
+  ${tw`w-full md:w-4/12 px-8 my-auto`};
 `
 
 const PlayerDescription = styled.div`
-${tw`w-full md:w-1/2 flex`};
+${tw`w-full md:w-4/12 flex`};
 `
 
 const CharacterName = styled.h1`
-  ${tw`text-center text-2xl md:text-6xl font-bold`};
+  ${tw`text-center text-2xl md:text-3xl font-bold`};
 
 `
 
@@ -41,7 +41,11 @@ const CharacterDescription = styled.div`
 `
 
 const CharacterPersonality = styled.h1`
-  ${tw`flex-auto text-center font-semibold text-gray-700 border-t-2 border-gray-700 text-lg md:text-5xl`};
+    ${tw`flex-auto text-center font-semibold text-gray-700 border-t-2 border-gray-700 text-lg md:text-3xl`};
+`
+
+const CharacterAttributes = styled.div`
+  ${tw`flex-auto text-center`};
 `
 
 const Avatar = styled.img`
@@ -56,6 +60,7 @@ const options = {
   },
 }
 
+const commaSeperate = (arr) => arr.flatMap(e => [', ', e]).slice(1).join('')
 export default class AboutPage extends React.Component {
   render() {
     return (
@@ -76,48 +81,43 @@ export default class AboutPage extends React.Component {
                   <CharacterName>
                     {node.name}
                   </CharacterName>
-                  <CharacterPersonality>Chaotic Neutral</CharacterPersonality>
+                  <CharacterPersonality>{node.alignment}</CharacterPersonality>
+                  <CharacterAttributes>{commaSeperate(node.attributes)}</CharacterAttributes>
                 </PlayerAvatar>
                 <PlayerDescription>
-
                   <ul>
                     <li>
-                      {node.arketyp}
+                      <b>Arketyp: </b> {node.arketyp}
                     </li>
                     <li>
-                      <ul>
-                      {node.attributes.map(atr => <li>{atr}</li>)}
-                      </ul>
+                      <b>Big NoNos: </b>{node.bigNoNos.bigNoNos}
                     </li>
                     <li>
-                      {node.bigNoNos.bigNoNos}
+                      <b>Debut: </b> {node.debut}
                     </li>
                     <li>
-                      {node.birthyear}
+                      <b>Favorit rollspel: </b>{node.favoriteRpg}
                     </li>
                     <li>
-                      {node.birthplace}
+                      <b>Ice breakers: </b>{node.iceBreakers.iceBreakers}
                     </li>
                     <li>
-                      {node.debut}
+                      <b>Rollspelsvana: </b>{node.rpgHabit.rpgHabit}
                     </li>
                     <li>
-                      {node.favoriteRpg}
+                      <b>Skills: </b>{commaSeperate(node.skills)}
                     </li>
                     <li>
-                      {node.iceBreakers.iceBreakers}
+                      <b>Team: </b>{node.team}
                     </li>
                     <li>
-                      {node.rpgHabit.rpgHabit}
+                      <b>Svagheter: </b>{node.weaknesses.weaknesses}
                     </li>
                     <li>
-                      {node.skills}
+                      <b>Födelseår: </b>{node.birthyear}
                     </li>
                     <li>
-                      {node.team}
-                    </li>
-                    <li>
-                      {node.weaknesses.weaknesses}
+                      <b>Födelseort: </b>{node.birthplace}
                     </li>
                   </ul>
                 </PlayerDescription>
@@ -136,6 +136,7 @@ export const pageQuery = graphql`
         node {
           id
           name
+          alignment
           arketyp
           attributes
           bigNoNos {
