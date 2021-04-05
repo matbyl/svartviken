@@ -20,7 +20,7 @@ const Description = styled.p`
 
 export default ({ data }) => {
   return (
-    <div className="flex min-h-full min-w-full bg-black">
+    <div className="flex min-h-a min-w-full bg-black">
       <Head
         title={
           data.contentfulEpisode.title +

@@ -16,12 +16,7 @@ const Footer = styled.div`
   text-align: center;
   font-size: 24px;
   padding: 15px;
-  background: linear-gradient(
-    119.36deg,
-    #0a0a0a 0%,
-    #1d1d1d 99.99%,
-    #1d1d1d 100%
-  );
+  background: #0c0c0c;
 `
 
 const FooterTitle = styled.h1`

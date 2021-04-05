@@ -6,15 +6,17 @@ import tw, { styled } from 'twin.macro'
 import Head from '../components/head'
 
 const CardList = styled.div`
-  ${tw`flex flex-row flex-wrap w-full lg:p-10 md:pr-2`}
+  ${tw`flex flex-row flex-wrap w-full lg:p-10 md:pr-2 justify-center`}
 `
 
 const Card = styled.div`
-  ${tw`lg:w-1/2 w-full my-4 md:my-0 md:p-8 max-w-2xl mx-auto`}
+  ${tw`lg:w-1/2 w-full my-4 md:my-0 md:p-8 max-w-2xl`}
 `
 
 const CardContent = styled.div`
   ${tw`md:shadow-xl bg-white rounded p-4`}
+
+  min-height: 400px;
 `
 
 export default class CollaborationsPage extends React.Component {

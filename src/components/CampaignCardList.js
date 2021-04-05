@@ -5,11 +5,13 @@ import { Episode } from './Episode'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 const CardList = styled.div`
-  ${tw`flex flex-row flex-wrap md:my-20 w-full lg:p-10 md:pr-2`}
+  ${tw`flex flex-row flex-wrap w-full lg:px-10 md:pr-2`}
 `
 
 const Card = styled.div`
   ${tw`lg:w-1/2 w-full md:my-10 lg:my-auto text-left flex-col lg:p-10 md:rounded`}
+
+
 `
 
 const Header = styled.div`
@@ -35,21 +37,8 @@ const CampaignContent = styled.div`
 
   z-index: 1;
 `
-
-const Footer = styled.div`
-  ${tw`float-right font-bold text-orange-600`}
-`
-
 const CampaignType = styled.div`
   ${tw`bg-green-600 font-bold text-white rounded-full py-1 px-2 float-right`}
-`
-
-const Divider = styled.div`
-  ${tw`w-full border border-gray-500`}
-`
-
-const FooterLink = styled(Link)`
-  ${tw`absolute bottom-0 right-0 h-8 w-40`}
 `
 
 class CampaignCardList extends React.Component {
@@ -84,8 +73,12 @@ class CampaignCardList extends React.Component {
                   </CampaignContent>
                   <Episode
                     episode={episodes.find(
-                      e => e.number === 1 || e.number === 0
-                    )}
+                      e => e.number === 1
+                    ) ? episodes.find(
+                      e => e.number === 1
+                    ) : episodes.find(
+                      e => e.number === 0
+                    ) }
                   />
                 </div>
               ) : (

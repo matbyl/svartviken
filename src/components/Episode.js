@@ -25,10 +25,17 @@ export const Episode = props => {
   return (
     <EpisodeContent>
       <EpisodeDescription>
-        <EpisodeNumber>Avsnitt {episode.number}</EpisodeNumber>
-        <EpisodeTitleLink to={'/episodes/' + episode.id}>
-          {episode.title || ''}
-        </EpisodeTitleLink>
+        
+        {!episode.title ?
+          (<div>
+          <EpisodeTitleLink to={'/episodes/' + episode.id}>
+            Avsnitt {episode.number}
+          </EpisodeTitleLink></div>) : (<div><EpisodeNumber>Avsnitt {episode.number}</EpisodeNumber>
+          <EpisodeTitleLink to={'/episodes/' + episode.id}>
+            {episode.title || ''}
+          </EpisodeTitleLink></div>)
+        }
+        
         <div className="flex flex-col md:flex-row w-full">
           <div
             className="flex-1"
