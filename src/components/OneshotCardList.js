@@ -54,7 +54,7 @@ class OneshotCardList extends React.Component {
             <Card key={id}>
               <Header src={'https:' + image.fluid.src} rel="noopener" />
 
-              {episodes.length > 0 ? (
+              {episodes && episodes.length > 0 ? (
                 <div className="md:shadow-xl md:w-11/12  w-full bg-white m-auto rounded">
                   <CampaignContent>
                     <CampaignType type="one-shot">Oneshot</CampaignType>
@@ -74,8 +74,8 @@ class OneshotCardList extends React.Component {
                   />
                 </div>
               ) : (
-                  ''
-                )}
+                ''
+              )}
             </Card>
           )
         )}

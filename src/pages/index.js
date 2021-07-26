@@ -65,6 +65,20 @@ const MainSection = styled.section`
   ${tw`mx-auto my-12 text-center`}
 `
 
+const orderEpisodes = (a, b) => {
+  if (!a.episodes) {
+    return -1
+  } else if (!b.episodes) {
+    return 1
+  } else if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
+    return 0
+  } else if (new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)) {
+    return -1
+  } else {
+    return 1
+  }
+}
+
 class SvartvikenIndex extends React.Component {
   constructor(props) {
     super(props)
@@ -87,33 +101,13 @@ class SvartvikenIndex extends React.Component {
   getCampaigns() {
     return this.props.data.allContentfulCampaign.edges
       .map(e => e.node)
-      .sort((a, b) => {
-        if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
-          return 0
-        } else if (
-          new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)
-        ) {
-          return -1
-        } else {
-          return 1
-        }
-      })
+      .sort(orderEpisodes)
   }
 
   getOneshots() {
     return this.props.data.allContentfulOneshot.edges
       .map(e => e.node)
-      .sort((a, b) => {
-        if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
-          return 0
-        } else if (
-          new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)
-        ) {
-          return -1
-        } else {
-          return 1
-        }
-      })
+      .sort(orderEpisodes)
   }
 
   handleSearchChange(event) {
