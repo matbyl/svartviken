@@ -8,6 +8,8 @@ import pauseIconWhite from './../assets/icons/white-pause.svg'
 import replay30IconWhite from './../assets/icons/white-backward.svg'
 import forward30IconWhite from './../assets/icons/white-forward.svg'
 import CloseIcon from './../assets/icons/white-close.svg'
+import { useStorageRoot } from '../hooks/use-storage-root'
+import makeStorageUrl from '../utils/makeStorageUrl'
 
 const Container = styled.div`
   grid-template-columns: 250px 35px 35px 35px 10px 1fr;
@@ -172,6 +174,21 @@ const formatTime = time => {
     (new Array(length + 1).join(pad) + string).slice(-length)
 
   return padLeft(m, '0', 2) + ':' + padLeft(s, '0', 2)
+}
+
+/// Couldn't figure out how to do graphql queries in class components so
+/// this just wraps [AudioPlayer] in a function component that can
+/// translate the filename (that can be an URL) into actually an URL.
+const AudioPlayerX = ({ title, filename, style, close }) => {
+  const { storageRoot } = useStorageRoot()
+  const url = makeStorageUrl(storageRoot, filename)
+
+  return <AudioPlayer
+    title={title}
+    url={url}
+    style={style}
+    close={close}
+  />
 }
 
 class AudioPlayer extends React.Component {
@@ -468,4 +485,4 @@ AudioPlayer.propTypes = {
   url: PropTypes.string.isRequired
 }
 
-export default AudioPlayer
+export default AudioPlayerX

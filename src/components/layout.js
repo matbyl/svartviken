@@ -259,7 +259,7 @@ class Template extends React.Component {
                   ? data.episode.title
                   : 'Kampanj - Avsnitt ' + data.episode.number
               }
-              url={data.episode.filename}
+              filename={data.episode.filename}
               style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
               close={() => {
                 set({
