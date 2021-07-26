@@ -10,6 +10,8 @@ import tw, { styled } from 'twin.macro'
 
 import ContextConsumer, { ContextProviderComponent } from './Context'
 import AudioPlayer from './AudioPlayer'
+import { socialMediaIcon } from './SocialIcon'
+import DiscordLink from './DiscordLink'
 
 const Footer = styled.div`
   flex-shrink: 0;
@@ -72,26 +74,8 @@ const ExternalNavBarItem = styled.a`
     text-decoration: underline;
   }
 `
-
-const SocialIcon = styled.img`
-  ${tw`inline-block`};
-
-  opacity: 0.82;
-  cursor: pointer;
-  :hover {
-    opacity: 1;
-  }
-  width: 20px;
-  margin: auto 5px;
-`
-
 let lastScrollY = 0
 let ticking = false
-const socialMediaIcon = (icon, url, alt) => (
-  <a className="px-1" href={url} target="_blank">
-    <SocialIcon src={icon} alt={alt} width="20" height="20"/>
-  </a>
-)
 
 const menuItem = (url, name, onClick, inNewTab = false) => (
   <li className="py-2 pl-5">
@@ -107,17 +91,17 @@ const menuItem = (url, name, onClick, inNewTab = false) => (
 )
 
 const externalMenuItem = (url, name) => (
-  
+
   <li className="py-2 pl-5">
-  <a
-    href={url}
-    className="hover:text-white"
-    target='_blank'
-    rel="noopener"
-  >
-    {name}
-  </a>
-</li>
+    <a
+      href={url}
+      className="hover:text-white"
+      target='_blank'
+      rel="noopener"
+    >
+      {name}
+    </a>
+  </li>
 )
 
 class Template extends React.Component {
@@ -200,6 +184,7 @@ class Template extends React.Component {
                 'instagram'
               )}
               {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
+              <DiscordLink/>
               {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
             </li>
           </ul>
@@ -244,6 +229,7 @@ class Template extends React.Component {
             'instagram'
           )}
           {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
+          <DiscordLink/>
           {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
         </NavBarRow>
       </NavBar>
@@ -287,8 +273,8 @@ class Template extends React.Component {
             'instagram'
           )}
           {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
+          { <DiscordLink/> } 
           {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
-          <iframe className="mx-auto my-4" src="https://discord.com/widget?id=786559320951226368&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </FooterSocialMedia>
         <p className="text-white mt-5">Crafted with 🎲</p>
         <p className="text-white">

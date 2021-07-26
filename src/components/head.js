@@ -13,13 +13,16 @@ const Head = ({ description, lang, meta, title }) => {
             description
           }
         }
+
+        discordInvite: contentfulSocialMediaLink(name: {eq: "Discord invite"}) {
+          lnkinfo { link }
+        }
       }
     `
   )
 
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
-
   return (
     <Helmet
       htmlAttributes={{
