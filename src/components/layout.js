@@ -273,7 +273,7 @@ class Template extends React.Component {
             'instagram'
           )}
           {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
-          { <DiscordLink/> } 
+          <DiscordLink/>
           {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
         </FooterSocialMedia>
         <p className="text-white mt-5">Crafted with 🎲</p>
