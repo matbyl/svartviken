@@ -1,5 +1,7 @@
 const { Howl } = require('howler')
 
+const makeStorageUrl = require('./src/utils/makeStorageUrl')
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -129,12 +131,13 @@ module.exports = {
         feeds: [
           {
             serialize: ({
-              query: { site, allContentfulCampaign, allContentfulOneshot },
+              query: { site, storageRootConfig, allContentfulCampaign, allContentfulOneshot },
             }) => {
               const campaignEpisodes = allContentfulCampaign.edges.reduce(
                 (acc, edge) =>
                   acc.concat(
-                    edge.node.episodes.map(episode =>
+                    edge.node.episodes.map(episode => {
+                      const url = makeStorageUrl(storageRootConfig.config.storageRootConfig, episode.filename)
                       Object.assign({}, edge.node.frontmatter, {
                         title: `${edge.node.title} - Avsnitt ${episode.number} - ${episode.title}`,
                         description: episode.description.description,
@@ -144,7 +147,7 @@ module.exports = {
                         guid:
                           site.siteMetadata.siteUrl + '/episodes/' + episode.id,
                         enclosure: {
-                          url: episode.filename,
+                          url: url,
                           type: 'mp3',
                         },
                         custom_elements: [
@@ -155,14 +158,15 @@ module.exports = {
                           },
                         ],
                       })
-                    )
+                    })
                   ),
                 []
               )
               const oneshotEpisodes = allContentfulOneshot.edges.reduce(
                 (acc, edge) =>
                   acc.concat(
-                    edge.node.episodes.map(episode =>
+                    edge.node.episodes.map(episode => {
+                      const url = makeStorageUrl(storageRootConfig.config.storageRootConfig, episode.filename)
                       Object.assign({}, edge.node.frontmatter, {
                         title: `${edge.node.title} - Avsnitt ${episode.number}`,
                         description: episode.description.description,
@@ -172,11 +176,11 @@ module.exports = {
                         guid:
                           site.siteMetadata.siteUrl + '/episodes/' + episode.id,
                         enclosure: {
-                          url: episode.filename,
+                          url: url,
                           type: 'mp3',
                         },
                       })
-                    )
+                    })
                   ),
                 []
               )
@@ -184,6 +188,9 @@ module.exports = {
             },
             query: `
               {
+                storageRootConfig: contentfulConfig(name: {eq: "StorageRoot"}) {
+                    config { storageRoot }
+                }
                 allContentfulCampaign {
                   edges{
                     node{

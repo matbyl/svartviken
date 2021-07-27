@@ -74,16 +74,18 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
 
-          node.episodes.forEach(episode => {
-            const path = '/episodes/' + episode.id
-            createPage({
-              path,
-              component: episodeTemplate,
-              context: {
-                id: episode.id,
-              },
+          if (node.episodes) {
+            node.episodes.forEach(episode => {
+              const path = '/episodes/' + episode.id
+              createPage({
+                path,
+                component: episodeTemplate,
+                context: {
+                  id: episode.id,
+                },
+              })
             })
-          })
+          }
         })
         result.data.allContentfulOneshot.edges.forEach(({ node }) => {
           const path = '/oneshots/' + node.id
@@ -95,16 +97,18 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
 
-          node.episodes.forEach(episode => {
-            const path = '/episodes/' + episode.id
-            createPage({
-              path,
-              component: episodeTemplate,
-              context: {
-                id: episode.id,
-              },
+          if (node.episodes) {
+            node.episodes.forEach(episode => {
+              const path = '/episodes/' + episode.id
+              createPage({
+                path,
+                component: episodeTemplate,
+                context: {
+                  id: episode.id,
+                },
+              })
             })
-          })
+          }
         })
       })
     )
