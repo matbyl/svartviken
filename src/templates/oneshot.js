@@ -36,7 +36,7 @@ export default ({ data }) => {
         </HeaderContent>
       </Header>
       <Episodes>
-        {data.contentfulOneshot.episodes.map(episode => (
+        {data.contentfulOneshot.episodes?.map(episode => (
           <div className="w-full md:w-5/12 my-1 md:m-1 bg-white shadow-lg rounded">
             <Episode episode={episode} />
           </div>

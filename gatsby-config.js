@@ -111,10 +111,20 @@ module.exports = {
           },
           custom_elements: [
             { 'itunes:author': 'Svartviken' },
+            { 'itunes:owner': 'Svartviken Rollspelspodd' },
+            { 'itunes:email': 'svartvikenrp@gmail.com' },
+            { 'itunes:image': site.siteMetadata.imageUrl },
             {
               'itunes:category': {
                 _attr: {
-                  text: 'Games &amp; Hobbies',
+                  text: 'Arts &amp; Entertainment',
+                },
+              },
+            },
+            {
+              'itunes:category': {
+                _attr: {
+                  text: 'Entertainment',
                 },
               },
             },
@@ -133,58 +143,72 @@ module.exports = {
             serialize: ({
               query: { site, storageRootConfig, allContentfulCampaign, allContentfulOneshot },
             }) => {
+              const storageRoot = storageRootConfig.config.storageRoot
+              const formatEpisode = (title, episode) => {
+                const url = makeStorageUrl(storageRoot, episode.filename)
+                const filename = (new URL(url)).pathname.replace(/^\//, '')
+                return {
+                  title: title,
+                  description: episode.description.description,
+                  date: episode.pubDate,
+                  url: site.siteMetadata.siteUrl + '/episodes/' + episode.id,
+                  guid: filename,
+                  enclosure: {
+                    url: url,
+                    length: episode.duration,
+                    type: 'mp3',
+                  },
+                  custom_elements: [
+                    {
+                      'itunes:explicit': 'no',
+                      'itunes:duration': episode.duration,
+                    },
+                  ],
+                }
+              }
               const campaignEpisodes = allContentfulCampaign.edges.reduce(
-                (acc, edge) =>
-                  acc.concat(
-                    edge.node.episodes.map(episode => {
-                      const url = makeStorageUrl(storageRootConfig.config.storageRootConfig, episode.filename)
-                      Object.assign({}, edge.node.frontmatter, {
-                        title: `${edge.node.title} - Avsnitt ${episode.number} - ${episode.title}`,
-                        description: episode.description.description,
-                        date: episode.pubDate,
-                        url:
-                          site.siteMetadata.siteUrl + '/episodes/' + episode.id,
-                        guid:
-                          site.siteMetadata.siteUrl + '/episodes/' + episode.id,
-                        enclosure: {
-                          url: url,
-                          type: 'mp3',
-                        },
-                        custom_elements: [
-                          {
-                            'itunes:duration': new Howl({
-                              src: [episode.filename],
-                            }).duration(),
-                          },
-                        ],
+                (acc, edge) => {
+                  if (edge.node.episodes) {
+                    return acc.concat(
+                      edge.node.episodes.map(episode => {
+                        return Object.assign(
+                          {},
+                          edge.node.frontmatter,
+                          formatEpisode(
+                            `${edge.node.title} - Avsnitt ${episode.number} - ${episode.title}`,
+                            episode
+                          )
+                        )
                       })
-                    })
-                  ),
+                    )
+                  } else { return acc }
+                },
                 []
               )
               const oneshotEpisodes = allContentfulOneshot.edges.reduce(
-                (acc, edge) =>
-                  acc.concat(
-                    edge.node.episodes.map(episode => {
-                      const url = makeStorageUrl(storageRootConfig.config.storageRootConfig, episode.filename)
-                      Object.assign({}, edge.node.frontmatter, {
-                        title: `${edge.node.title} - Avsnitt ${episode.number}`,
-                        description: episode.description.description,
-                        date: episode.pubDate,
-                        url:
-                          site.siteMetadata.siteUrl + '/episodes/' + episode.id,
-                        guid:
-                          site.siteMetadata.siteUrl + '/episodes/' + episode.id,
-                        enclosure: {
-                          url: url,
-                          type: 'mp3',
-                        },
+                (acc, edge) => {
+                  if (edge.node.episodes) {
+                    return acc.concat(
+                      edge.node.episodes.map(episode => {
+                        return Object.assign(
+                          {},
+                          edge.node.frontmatter,
+                          formatEpisode(
+                            `${edge.node.title} - Avsnitt ${episode.number}`,
+                            episode
+                          )
+                        )
                       })
-                    })
-                  ),
+                    )
+                  } else { return acc }
+                },
                 []
               )
-              return campaignEpisodes.concat(oneshotEpisodes)
+              const result = campaignEpisodes.concat(oneshotEpisodes)
+              result.sort((a, b) => {
+                return ('' + a.date).localeCompare(b.date)
+              })
+              return result
             },
             query: `
               {
@@ -205,6 +229,7 @@ module.exports = {
                           description
                         }
                         filename
+                        duration
                       }
                     }
                   }
@@ -222,6 +247,7 @@ module.exports = {
                           description
                         }
                         filename
+                        duration
                       }
                     }
                   }
