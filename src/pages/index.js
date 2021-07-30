@@ -12,6 +12,8 @@ import SearchBox from '../components/SearchBox'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Link } from 'gatsby'
 import Head from '../components/head'
+import ReactMarkdown from 'react-markdown'
+
 
 const HomeHeader = styled.header`
   ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:p-10`};
@@ -28,7 +30,7 @@ const CampaignTitle = styled(Link)`
   :hover {
     text-decoration: underline;
   }
-  ${tw`text-xl mt-5 lg:text-6xl`}
+  ${tw`text-white text-xl mt-5 lg:text-6xl`}
 `
 
 const CampaignDescription = styled.div`
@@ -38,7 +40,7 @@ const EpisodeTitle = styled.h1`
   ${tw`text-lg lg:text-2xl`}
 `
 
-const EpisodeDescription = styled.p`
+const EpisodeDescription = styled(ReactMarkdown)`
   ${tw`sm:text-base`}
 `
 
@@ -154,17 +156,11 @@ class SvartvikenIndex extends React.Component {
               </CampaignTitle>
               {latestCampaign.description ? (
                 <CampaignDescription>
-                  {documentToReactComponents(latestCampaign.description.json)}
+                  {documentToReactComponents(JSON.parse(latestCampaign.description.raw))}
                 </CampaignDescription>
               ) : null}
               <EpisodeTitle>{firstEpisodeOfLatestCampaign.title}</EpisodeTitle>
-              <EpisodeDescription
-                dangerouslySetInnerHTML={{
-                  __html:
-                    firstEpisodeOfLatestCampaign.description.childMarkdownRemark
-                      .html,
-                }}
-              ></EpisodeDescription>
+              <EpisodeDescription children={firstEpisodeOfLatestCampaign.description.description} /> 
 
               <AudioPlayerButton
                 light={true}
@@ -225,7 +221,7 @@ export const pageQuery = graphql`
           id
           title
           description {
-            json
+            raw
           }
           image {
             fluid(maxWidth: 800) {
@@ -238,9 +234,7 @@ export const pageQuery = graphql`
             number
             pubDate
             description {
-              childMarkdownRemark {
-                html
-              }
+              description
             }
             filename
           }
@@ -254,7 +248,7 @@ export const pageQuery = graphql`
           id
           title
           description {
-            json
+            raw
           }
           image {
             fluid(maxWidth: 800) {
@@ -266,9 +260,7 @@ export const pageQuery = graphql`
             number
             pubDate
             description {
-              childMarkdownRemark {
-                html
-              }
+              description
             }
             filename
           }

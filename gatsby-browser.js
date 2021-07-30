@@ -1,3 +1,3 @@
-import './src/styles/main.scss'
 import "tailwindcss/dist/base.min.css"
-import "tailwindcss/dist/tailwind.min.css"
+import './src/styles/main.scss'
+import "./src/styles/tailwind.css"

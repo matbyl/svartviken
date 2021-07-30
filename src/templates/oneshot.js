@@ -18,8 +18,7 @@ const Description = styled.div`
 const Episodes = styled.ul`
   ${tw`flex flex-wrap justify-center w-full my-12 mx-auto `};
 `
-
-export default ({ data }) => {
+const OneShot = ({ data }) => {
   return (
     <div className="min-w-full">
       <Head title={data.contentfulOneshot.title + ' | Oneshot | Svartviken Rollspelspodd'} />
@@ -29,7 +28,7 @@ export default ({ data }) => {
           {data.contentfulOneshot.description ? (
             <Description>
               {documentToReactComponents(
-                data.contentfulOneshot.description.json
+                JSON.parse(data.contentfulOneshot.description.raw)
               )}
             </Description>
           ) : null}
@@ -52,7 +51,7 @@ export const query = graphql`
       id
       title
       description {
-        json
+        raw
       }
       image {
         fluid(maxWidth: 800) {
@@ -64,12 +63,11 @@ export const query = graphql`
         title
         number
         description {
-          childMarkdownRemark {
-            html
-          }
+          description
         }
         filename
       }
     }
   }
 `
+export default OneShot;

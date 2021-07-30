@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const Promise = require('bluebird')
 const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
+const { graphql } = require('gatsby')
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
@@ -21,15 +21,13 @@ exports.createPages = ({ graphql, actions }) => {
                   id
                   title
                   description {
-                    json
+                    raw
                   }
                   episodes {
                     id
                     title
                     description {
-                      childMarkdownRemark {
-                        html
-                      }
+                      description
                     }
                     filename
                   }
@@ -42,15 +40,13 @@ exports.createPages = ({ graphql, actions }) => {
                   id
                   title
                   description {
-                    json
+                    raw
                   }
                   episodes {
                     id
                     title
                     description {
-                      childMarkdownRemark {
-                        html
-                      }
+                      description
                     }
                     filename
                   }
@@ -87,6 +83,7 @@ exports.createPages = ({ graphql, actions }) => {
             })
           }
         })
+
         result.data.allContentfulOneshot.edges.forEach(({ node }) => {
           const path = '/oneshots/' + node.id
           createPage({
@@ -117,4 +114,27 @@ exports.createPages = ({ graphql, actions }) => {
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
+}
+
+exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        path: require.resolve('path-browserify'),
+      },
+      fallback: {
+        fs: false,
+        util: require.resolve("util/"),
+        path: require.resolve('path-browserify')
+      },
+    },
+  });
+
+  if (stage === 'build-javascript' || stage === 'develop') {
+    actions.setWebpackConfig({
+      plugins: [
+        plugins.provide({ process: 'process/browser' })
+      ]
+    })
+  }
 }

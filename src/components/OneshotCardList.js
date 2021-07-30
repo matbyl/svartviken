@@ -9,7 +9,7 @@ const CardList = styled.div`
 `
 
 const Card = styled.div`
-  ${tw`w-full lg:w-1/2  md:my-10 lg:my-auto text-left flex-col lg:p-10 md:rounded`}
+  ${tw`w-full lg:w-1/2 text-left flex-col lg:p-10 md:rounded`}
 `
 
 const Header = styled.div`
@@ -22,6 +22,7 @@ const Header = styled.div`
 `
 
 const Title = styled(Link)`
+  ${tw`text-black`}
   font-family: 'Colus', Arial, Helvetica, sans-serif;
   font-size: 28px;
 
@@ -32,8 +33,6 @@ const Title = styled(Link)`
 
 const CampaignContent = styled.div`
   ${tw`relative p-6 md:p-10 md:-mt-8 border-b`}
-
-  
   z-index: 1;
 `
 
@@ -63,7 +62,7 @@ class OneshotCardList extends React.Component {
 
                     {description ? (
                       <div className="w-11/12">
-                        {documentToReactComponents(description.json)}
+                        {documentToReactComponents(JSON.parse(description.raw))}
                       </div>
                     ) : null}
                   </CampaignContent>

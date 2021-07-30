@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { render } from 'react-dom'
 import tw, { styled } from 'twin.macro'
 import { Link } from 'gatsby'
 
 import AudioPlayerButton from './AudioPlayerButton'
+import ReactMarkdown from 'react-markdown'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 export const EpisodeTitleLink = styled(Link)`
+  ${tw`text-black`}  
   font-family: 'Jost', Arial, Helvetica, sans-serif;
   font-size: 20px;
-
-  :hover {
-    text-decoration: underline;
-  }
 `
 
 export const EpisodeNumber = styled.h2`
@@ -20,7 +20,7 @@ export const EpisodeNumber = styled.h2`
 `
 
 export const Episode = props => {
-  const { episode } = props
+  const { episode } = props;
 
   return (
     <EpisodeContent>
@@ -37,33 +37,15 @@ export const Episode = props => {
         }
         
         <div className="flex flex-col md:flex-row w-full">
-          <div
-            className="flex-1"
-            dangerouslySetInnerHTML={{
-              __html: episode.description.childMarkdownRemark.html,
-            }}
-          ></div>
-
+            
+            <ReactMarkdown className="flex-1" children={episode.description.description}></ReactMarkdown>
+          
 
           <EpisodePlayButtonWrapper>
             <AudioPlayerButton episode={episode} />
           </EpisodePlayButtonWrapper>
 
         </div>
-{/* 
-        <div className="flex mt-10 bottom-0">
-          <FacebookShareButton
-            url={'https://asd.asd/test/' + episode.id}
-            quote={'asd'}
-            className="m-1"
-          >
-            <FacebookIcon size={32} round />
-          </FacebookShareButton>
-
-          <TwitterShareButton url={'as'} title={'as'} className="m-1  ">
-            <TwitterIcon size={32} round />
-          </TwitterShareButton>
-        </div> */}
       </EpisodeDescription>
     </EpisodeContent>
   )

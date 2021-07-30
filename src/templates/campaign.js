@@ -19,7 +19,7 @@ const Episodes = styled.ul`
   ${tw`flex flex-wrap justify-center w-full my-12 mx-auto `};
 `
 
-export default ({ data }) => {
+const Campaign = ({ data }) => {
   return (
     <div className="min-w-full">
       <Head title={data.contentfulCampaign.title + ' | Kampanj | Svartviken Rollspelspodd'} />
@@ -29,7 +29,7 @@ export default ({ data }) => {
           {data.contentfulCampaign.description ? (
             <Description>
               {documentToReactComponents(
-                data.contentfulCampaign.description.json
+                JSON.parse(data.contentfulCampaign.description.raw)
               )}
             </Description>
           ) : null}
@@ -52,7 +52,7 @@ export const query = graphql`
       id
       title
       description {
-        json
+        raw
       }
       image {
         fluid(maxWidth: 800) {
@@ -64,12 +64,11 @@ export const query = graphql`
         title
         number
         description {
-          childMarkdownRemark {
-            html
-          }
+          description
         }
         filename
       } 
     }
   }
 `
+export default Campaign;

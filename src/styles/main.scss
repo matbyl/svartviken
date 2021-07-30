@@ -1,4 +1,3 @@
-// @import './reset.scss';
 @import './fonts.scss';
 @import './shadows.scss';
 
@@ -19,7 +18,6 @@ h3 {
 
 html, body, p {
   font-family: 'Jost', Arial, Helvetica, sans-serif;
-  font-size: 15px;
 }
 
 
@@ -49,4 +47,8 @@ div[role="group"][tabindex] {
 @keyframes wave {
   from { transform: translateX(0); }
   to { transform: translateX(100%); }
+}
+
+a {
+  color: blue;
 }

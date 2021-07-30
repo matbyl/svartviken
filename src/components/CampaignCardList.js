@@ -9,9 +9,7 @@ const CardList = styled.div`
 `
 
 const Card = styled.div`
-  ${tw`lg:w-1/2 w-full md:my-10 lg:my-auto text-left flex-col lg:p-10 md:rounded`}
-
-
+  ${tw`lg:w-1/2 w-full text-left flex-col lg:p-10 md:rounded`}
 `
 
 const Header = styled.div`
@@ -24,6 +22,7 @@ const Header = styled.div`
 `
 
 const Title = styled(Link)`
+  ${tw`text-black`}
   font-family: 'Colus', Arial, Helvetica, sans-serif;
   font-size: 28px;
 
@@ -67,7 +66,7 @@ class CampaignCardList extends React.Component {
 
                     {description ? (
                       <div className="w-11/12">
-                        {documentToReactComponents(description.json)}
+                        {documentToReactComponents(JSON.parse(description.raw))}
                       </div>
                     ) : null}
                   </CampaignContent>

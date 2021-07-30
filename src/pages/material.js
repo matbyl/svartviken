@@ -18,7 +18,7 @@ export default class MaterialPage extends React.Component {
                 {this.props.data.allContentfulMedia.edges.map(({ node }) => (<div className="container mx-auto my-12 px-64">
                     <h1>{node.name}</h1>
                     <p>
-                        {documentToReactComponents(node.description.json)}
+                        {documentToReactComponents(JSON.parse(node.description.raw))}
                     </p>
 
                     <a href={node.media.file.url} >Ladda ner</a>
@@ -34,7 +34,7 @@ export const pageQuery = graphql`
       edges {
         node {
           name
-          description { json }
+          description { raw }
           media {
               file {
                   url
