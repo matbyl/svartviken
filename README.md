@@ -1,4 +1,6 @@
 # Svartviken website
+[![Netlify Status](https://api.netlify.com/api/v1/badges/63ec1053-931f-4174-95ca-606de991d8e2/deploy-status)](https://app.netlify.com/sites/svartviken/deploys)
+
 [nix on ubuntu or debian]: https://ariya.io/2020/05/nix-package-manager-on-ubuntu-or-debian
 
 
