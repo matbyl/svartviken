@@ -112,10 +112,6 @@ exports.createPages = ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
-}
-
 exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
   actions.setWebpackConfig({
     resolve: {

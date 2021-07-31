@@ -10,6 +10,8 @@ import forward30IconWhite from './../assets/icons/white-forward.svg'
 import CloseIcon from './../assets/icons/white-close.svg'
 import { useStorageRoot } from '../hooks/use-storage-root'
 import makeStorageUrl from '../utils/makeStorageUrl'
+import { ACTIONS } from '../state/createStore'
+import { connect } from 'react-redux'
 
 const Container = styled.div`
   grid-template-columns: 250px 35px 35px 35px 10px 1fr;
@@ -51,8 +53,8 @@ const MediaButton = styled.button`
   border: none;
   opacity: 0.82;
   padding: 0;
-  transition: transform .25s cubic-bezier(.5,0,.1,1);
-  -webkit-transition: transform .25s cubic-bezier(.5,0,.1,1);
+  transition: transform 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+  -webkit-transition: transform 0.25s cubic-bezier(0.5, 0, 0.1, 1);
   img {
     margin: auto;
     height: 32px;
@@ -97,8 +99,8 @@ const ProgressPointer = styled.div.attrs(({ progress }) => ({
   top: -6.5px;
   position: absolute;
   overflow: visible;
-  -webkit-transition: opacity 0.2s, transform .25s cubic-bezier(.5,0,.1,1); /* Safari */
-  transition: opacity 0.2s, transform .25s cubic-bezier(.5,0,.1,1);
+  -webkit-transition: opacity 0.2s, transform 0.25s cubic-bezier(0.5, 0, 0.1, 1); /* Safari */
+  transition: opacity 0.2s, transform 0.25s cubic-bezier(0.5, 0, 0.1, 1);
   border: 2px solid black;
 
   &:hover {
@@ -176,25 +178,35 @@ const formatTime = time => {
   return padLeft(m, '0', 2) + ':' + padLeft(s, '0', 2)
 }
 
+const mapStateToProps = ({ playingAudio }) => {
+  return { playingAudio }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    play_: () => dispatch({ type: ACTIONS.PLAY }),
+    pause_: () => dispatch({ type: ACTIONS.PAUSE }),
+  }
+}
+
 /// Couldn't figure out how to do graphql queries in class components so
 /// this just wraps [AudioPlayer] in a function component that can
 /// translate the filename (that can be an URL) into actually an URL.
 const AudioPlayerX = ({ title, filename, style, close }) => {
   const { storageRoot } = useStorageRoot()
   const url = makeStorageUrl(storageRoot, filename)
-
-  return <AudioPlayer
-    title={title}
-    url={url}
-    style={style}
-    close={close}
-  />
+  const ConnectedAudioPlayer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AudioPlayer)
+  return (
+    <ConnectedAudioPlayer title={title} url={url} style={style} close={close} />
+  )
 }
 
 class AudioPlayer extends React.Component {
   constructor(props) {
     super(props)
-
     this.loadAudio(props.url)
 
     this.state = {
@@ -250,6 +262,7 @@ class AudioPlayer extends React.Component {
   }
 
   play() {
+    this.props.play_()
     this.audio.play()
     window.requestAnimationFrame(this.step)
     this.setState({
@@ -259,6 +272,7 @@ class AudioPlayer extends React.Component {
   }
 
   pause() {
+    this.props.pause_()
     this.setState({ playing: false })
     this.audio.pause()
   }
@@ -388,10 +402,7 @@ class AudioPlayer extends React.Component {
           </div>
           <div className="flex">
             <SeekBar style={{ gridArea: 'seekBar' }}>
-              <Time
-                className="white"
-                style={{ gridArea: 'start' }}
-              >
+              <Time className="white" style={{ gridArea: 'start' }}>
                 {this.state.time}{' '}
               </Time>
 
@@ -442,10 +453,7 @@ class AudioPlayer extends React.Component {
             action={() => this.forward(30)}
           />
           <SeekBar style={{ gridArea: 'seekBar' }}>
-            <Time
-              className="white"
-              style={{ gridArea: 'start' }}
-            >
+            <Time className="white" style={{ gridArea: 'start' }}>
               {this.state.time}{' '}
             </Time>
 
@@ -482,7 +490,7 @@ class AudioPlayer extends React.Component {
 
 AudioPlayer.propTypes = {
   title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
 }
 
 export default AudioPlayerX

@@ -59,8 +59,8 @@ class CampaignCardList extends React.Component {
                     {oneShot ? (
                       <CampaignType type="one-shot">One Shot</CampaignType>
                     ) : (
-                        <CampaignType type="campaign">Kampanj</CampaignType>
-                      )}
+                      <CampaignType type="campaign">Kampanj</CampaignType>
+                    )}
 
                     <Title to={'/campaigns/' + id}>{title}</Title>
 
@@ -71,18 +71,16 @@ class CampaignCardList extends React.Component {
                     ) : null}
                   </CampaignContent>
                   <Episode
-                    episode={episodes.find(
-                      e => e.number === 1
-                    ) ? episodes.find(
-                      e => e.number === 1
-                    ) : episodes.find(
-                      e => e.number === 0
-                    ) }
+                    episode={
+                      episodes.find(e => e.number === 1)
+                        ? episodes.find(e => e.number === 1)
+                        : episodes.find(e => e.number === 0)
+                    }
                   />
                 </div>
               ) : (
-                  ''
-                )}
+                ''
+              )}
             </Card>
           )
         )}

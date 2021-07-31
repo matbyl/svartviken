@@ -21,7 +21,11 @@ const Episodes = styled.ul`
 const OneShot = ({ data }) => {
   return (
     <div className="min-w-full">
-      <Head title={data.contentfulOneshot.title + ' | Oneshot | Svartviken Rollspelspodd'} />
+      <Head
+        title={
+          data.contentfulOneshot.title + ' | Oneshot | Svartviken Rollspelspodd'
+        }
+      />
       <Header backgroundImage={data.contentfulOneshot.image.fluid.src}>
         <HeaderContent className="container">
           <Title>{data.contentfulOneshot.title}</Title>
@@ -70,4 +74,4 @@ export const query = graphql`
     }
   }
 `
-export default OneShot;
+export default OneShot

@@ -14,8 +14,12 @@ const Head = ({ description, lang, meta, title }) => {
           }
         }
 
-        discordInvite: contentfulSocialMediaLink(name: {eq: "Discord invite"}) {
-          lnkinfo { link }
+        discordInvite: contentfulSocialMediaLink(
+          name: { eq: "Discord invite" }
+        ) {
+          lnkinfo {
+            link
+          }
         }
       }
     `
@@ -29,7 +33,9 @@ const Head = ({ description, lang, meta, title }) => {
         lang,
       }}
       title={title ? title : defaultTitle}
-      titleTemplate={(title && defaultTitle) ? `%s | ${defaultTitle}` : defaultTitle}
+      titleTemplate={
+        title && defaultTitle ? `%s | ${defaultTitle}` : defaultTitle
+      }
       meta={[
         {
           name: `description`,

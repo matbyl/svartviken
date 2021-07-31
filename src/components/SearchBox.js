@@ -6,7 +6,13 @@ import SearchIcon from './../assets/icons/search.svg'
 const SearchBox = ({ searchTerm, filter, onSearchChange, onFilterChange }) => (
   <div className="flex flex-row my-4 rounded mx-auto w-full md:w-3/4 max-w-4xl focus:shadow-outline shadow-lg bg-white">
     <div className="flex flex-1 hover:bg-gray-200">
-      <img className="mx-2" width="32px" height="32px" src={SearchIcon} alt="search-button" />
+      <img
+        className="mx-2"
+        width="32px"
+        height="32px"
+        src={SearchIcon}
+        alt="search-button"
+      />
       <input
         value={searchTerm}
         onChange={onSearchChange}

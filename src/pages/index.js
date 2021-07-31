@@ -14,7 +14,6 @@ import { Link } from 'gatsby'
 import Head from '../components/head'
 import ReactMarkdown from 'react-markdown'
 
-
 const HomeHeader = styled.header`
   ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:p-10`};
 `
@@ -74,7 +73,9 @@ const orderEpisodes = (a, b) => {
     return 1
   } else if (a.episodes[0].pubDate === b.episodes[0].pubDate) {
     return 0
-  } else if (new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)) {
+  } else if (
+    new Date(a.episodes[0].pubDate) > new Date(b.episodes[0].pubDate)
+  ) {
     return -1
   } else {
     return 1
@@ -156,11 +157,15 @@ class SvartvikenIndex extends React.Component {
               </CampaignTitle>
               {latestCampaign.description ? (
                 <CampaignDescription>
-                  {documentToReactComponents(JSON.parse(latestCampaign.description.raw))}
+                  {documentToReactComponents(
+                    JSON.parse(latestCampaign.description.raw)
+                  )}
                 </CampaignDescription>
               ) : null}
               <EpisodeTitle>{firstEpisodeOfLatestCampaign.title}</EpisodeTitle>
-              <EpisodeDescription children={firstEpisodeOfLatestCampaign.description.description} /> 
+              <EpisodeDescription
+                children={firstEpisodeOfLatestCampaign.description.description}
+              />
 
               <AudioPlayerButton
                 light={true}

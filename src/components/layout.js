@@ -91,14 +91,8 @@ const menuItem = (url, name, onClick, inNewTab = false) => (
 )
 
 const externalMenuItem = (url, name) => (
-
   <li className="py-2 pl-5">
-    <a
-      href={url}
-      className="hover:text-white"
-      target='_blank'
-      rel="noopener"
-    >
+    <a href={url} className="hover:text-white" target="_blank" rel="noopener">
       {name}
     </a>
   </li>
@@ -183,8 +177,12 @@ class Template extends React.Component {
                 'https://www.instagram.com/svartviken_rollspelspodd/',
                 'instagram'
               )}
-              {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
-              <DiscordLink/>
+              {socialMediaIcon(
+                TwitterIcon,
+                'https://twitter.com/svartvikenrp',
+                'twitter'
+              )}
+              <DiscordLink />
               {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
             </li>
           </ul>
@@ -212,7 +210,7 @@ class Template extends React.Component {
           <NavBarItem to={'/collaborations'}>Våra samarbeten</NavBarItem> |{' '}
           <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
           <ExternalNavBarItem
-            href='https://shop.spreadshirt.se/svartvikenrp/all'
+            href="https://shop.spreadshirt.se/svartvikenrp/all"
             target="_blank"
           >
             Poddshop
@@ -228,8 +226,12 @@ class Template extends React.Component {
             'https://www.instagram.com/svartviken_rollspelspodd/',
             'instagram'
           )}
-          {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
-          <DiscordLink/>
+          {socialMediaIcon(
+            TwitterIcon,
+            'https://twitter.com/svartvikenrp',
+            'twitter'
+          )}
+          <DiscordLink />
           {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
         </NavBarRow>
       </NavBar>
@@ -272,8 +274,12 @@ class Template extends React.Component {
             'https://www.instagram.com/svartviken_rollspelspodd/',
             'instagram'
           )}
-          {socialMediaIcon(TwitterIcon, 'https://twitter.com/svartvikenrp', 'twitter')}
-          <DiscordLink/>
+          {socialMediaIcon(
+            TwitterIcon,
+            'https://twitter.com/svartvikenrp',
+            'twitter'
+          )}
+          <DiscordLink />
           {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
         </FooterSocialMedia>
         <p className="text-white mt-5">Crafted with 🎲</p>

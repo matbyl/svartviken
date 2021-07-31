@@ -2,7 +2,7 @@ import React from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 import { graphql, Link } from 'gatsby'
-import { ExternalLink, InternalLink} from '../components/Link'
+import { ExternalLink, InternalLink } from '../components/Link'
 import tw, { styled } from 'twin.macro'
 import Head from '../components/head'
 

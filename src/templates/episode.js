@@ -25,19 +25,21 @@ const Episode = ({ data }) => {
       <Head
         title={
           data.contentfulEpisode.title +
-          (data.contentfulEpisode.length > 0 ? ' | Kampanj ' +
-            data.contentfulEpisode.campaign[0].title : '')
+          (data.contentfulEpisode.length > 0
+            ? ' | Kampanj ' + data.contentfulEpisode.campaign[0].title
+            : '')
         }
       />
       <Header className="flex m-auto" backgroundImage={''}>
         <HeaderContent className="container">
           <EpisodeNumber>Avsnitt {data.contentfulEpisode.number}</EpisodeNumber>
           <Title>{data.contentfulEpisode.title}</Title>
-          <Description children={data.contentfulEpisode.description.description} />
+          <Description
+            children={data.contentfulEpisode.description.description}
+          />
           <AudioPlayerButton episode={data.contentfulEpisode} light={true} />
 
-          <div className="flex justify-center">
-          </div>
+          <div className="flex justify-center"></div>
         </HeaderContent>
       </Header>
     </div>
@@ -61,4 +63,4 @@ export const query = graphql`
   }
 `
 
-export default Episode;
+export default Episode

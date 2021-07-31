@@ -22,7 +22,12 @@ const Episodes = styled.ul`
 const Campaign = ({ data }) => {
   return (
     <div className="min-w-full">
-      <Head title={data.contentfulCampaign.title + ' | Kampanj | Svartviken Rollspelspodd'} />
+      <Head
+        title={
+          data.contentfulCampaign.title +
+          ' | Kampanj | Svartviken Rollspelspodd'
+        }
+      />
       <Header backgroundImage={data.contentfulCampaign.image.fluid.src}>
         <HeaderContent className="container">
           <Title>{data.contentfulCampaign.title}</Title>
@@ -67,8 +72,8 @@ export const query = graphql`
           description
         }
         filename
-      } 
+      }
     }
   }
 `
-export default Campaign;
+export default Campaign
