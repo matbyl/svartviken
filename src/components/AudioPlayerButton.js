@@ -1,5 +1,4 @@
 import React from 'react'
-import ContextConsumer from '../components/Context'
 import { styled } from 'twin.macro'
 import WhiteIcon from './../assets/icons/white-play.svg'
 import BlackIcon from './../assets/icons/black-play.svg'
@@ -61,37 +60,29 @@ const DisabledMediaButton = styled.button`
   }
 `
 
-const AudioPlayerButton = ({ light, episode, play, playingAudio }) => (
-  <ContextConsumer>
-    {({ data, set }) => {
-      return data.episode === episode && playingAudio ? (
-        <DisabledMediaButton aria-label="disabled-play-episode-button">
-          <img src={light ? WhiteIcon : BlackIcon} alt="play-icon" />
-        </DisabledMediaButton>
-      ) : (
-        <EnabledMediaButton
-          aria-label="enabled-play-episode-button"
-          onClick={() => {
-            set({
-              episode,
-            })
-          }}
-        >
-          <img src={light ? WhiteIcon : BlackIcon} alt="play-icon" />
-        </EnabledMediaButton>
-      )
-    }}
-  </ContextConsumer>
-)
+const AudioPlayerButton = ({ light, selectedEpisode, setEpisode, episode, playingAudio }) =>
+  selectedEpisode === episode && playingAudio ? (
+    <DisabledMediaButton aria-label="disabled-play-episode-button">
+      <img src={light ? WhiteIcon : BlackIcon} alt="play-icon" />
+    </DisabledMediaButton>
+  ) : (
+    <EnabledMediaButton
+      aria-label="enabled-play-episode-button"
+      onClick={setEpisode(episode)}
+    >
+      <img src={light ? WhiteIcon : BlackIcon} alt="play-icon" />
+    </EnabledMediaButton>
+  )
 
-const mapStateToProps = ({ playingAudio }) => {
-  return { playingAudio }
+const mapStateToProps = ({ playingAudio, selectedEpisode }) => {
+  return { playingAudio, selectedEpisode }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     play: () => dispatch({ type: ACTIONS.PLAY }),
     pause: () => dispatch({ type: ACTIONS.PAUSE }),
+    setEpisode: payload => () => dispatch({type: ACTIONS.SET_EPISODE, payload})
   }
 }
 

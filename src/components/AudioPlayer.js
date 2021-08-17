@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useCallback, useState, useRef, useEffect } from 'react'
 import { Howl } from 'howler'
 import tw, { styled } from 'twin.macro'
-
+import { clamp } from 'lodash'
 import PropTypes from 'prop-types'
 import playIconWhite from './../assets/icons/white-play.svg'
 import pauseIconWhite from './../assets/icons/white-pause.svg'
@@ -12,18 +12,21 @@ import { useStorageRoot } from '../hooks/use-storage-root'
 import makeStorageUrl from '../utils/makeStorageUrl'
 import { ACTIONS } from '../state/createStore'
 import { connect } from 'react-redux'
+import { useEventListener } from '../hooks/use-event-listener'
+import { normalize } from '../utils/math'
+import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player'
 
 const Container = styled.div`
-  grid-template-columns: 250px 35px 35px 35px 10px 1fr;
-  grid-template-areas: 'title backward play forward . seekBar';
+  grid-template-columns: 250px 35px 35px 35px 10px 1fr 35px;
+  grid-template-areas: 'title backward play forward . seekBar close';
 
   background: rgba(0, 0, 0, 1);
-  ${tw`h-full w-full hidden md:grid md:h-16`}
+  ${tw`h-full w-full hidden md:grid md:h-16 md:px-4`}
 `
 
 const Title = styled.h4`
   color: white;
-  margin: auto 15px;
+  margin: auto 0px;
 `
 
 const SeekBar = styled.div`
@@ -148,326 +151,161 @@ const ControllButton = ({ icon, action, size, ariaLabel }) => (
   </MediaButton>
 )
 
-const PlayPauseButton = ({ playing, playAction, pauseAction }) =>
+const PlayPauseButton = ({ playing, togglePlayPause }) =>
   playing ? (
     <ControllButton
       ariaLabel="media-player-pause-button"
       icon={pauseIconWhite}
-      action={pauseAction}
+      action={togglePlayPause}
       size="45"
     />
   ) : (
     <ControllButton
       ariaLabel="media-player-play-button"
       icon={playIconWhite}
-      action={playAction}
+      action={togglePlayPause}
       size="45"
     />
   )
 
-const minutes = time => Math.floor(time / 60)
-const seconds = (time, minutes) => Math.floor(time - minutes * 60)
+const hours = time => Math.floor(time / 3600)
+const minutes = time => Math.floor(time / 60) % 60
+const seconds = time => Math.floor(time % 60)
 
 const formatTime = time => {
+  const h = hours(time)
   const m = minutes(time)
-  const s = seconds(time, m)
+  const s = seconds(time)
 
+  console.log(h, m, s)
   const padLeft = (string, pad, length) =>
     (new Array(length + 1).join(pad) + string).slice(-length)
 
-  return padLeft(m, '0', 2) + ':' + padLeft(s, '0', 2)
-}
-
-const mapStateToProps = ({ playingAudio }) => {
-  return { playingAudio }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    play_: () => dispatch({ type: ACTIONS.PLAY }),
-    pause_: () => dispatch({ type: ACTIONS.PAUSE }),
-  }
-}
-
-/// Couldn't figure out how to do graphql queries in class components so
-/// this just wraps [AudioPlayer] in a function component that can
-/// translate the filename (that can be an URL) into actually an URL.
-const AudioPlayerX = ({ title, filename, style, close }) => {
-  const { storageRoot } = useStorageRoot()
-  const url = makeStorageUrl(storageRoot, filename)
-  const ConnectedAudioPlayer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(AudioPlayer)
   return (
-    <ConnectedAudioPlayer title={title} url={url} style={style} close={close} />
+    (h ? padLeft(h, '0', 2) + ':' : '') +
+    padLeft(m, '0', 2) +
+    ':' +
+    padLeft(s, '0', 2)
   )
 }
 
-class AudioPlayer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.loadAudio(props.url)
+const AudioPlayer = ({ title, supTitle, filename, close }) => {
+  const progressRef = useRef(null)
+  const [dirtyPosition, setDirtyPosition] = useState(null)
 
-    this.state = {
-      playing: true,
-      time: '00:00',
-      progress: 0,
-      duration: formatTime(this.audio.duration()),
-      seeking: false,
-      seekBarMouseDown: false,
-      audioPlayerOpen: true,
-    }
+  const isDirtyPositionSet = dirtyPosition !== null
 
-    this.toggleAudioPlayer = this.toggleAudioPlayer.bind(this)
-    this.play = this.play.bind(this)
-    this.pause = this.pause.bind(this)
-    this.forward = this.forward.bind(this)
-    this.backward = this.backward.bind(this)
-    this.step = this.step.bind(this)
-    this.seek = this.seek.bind(this)
-    this.seekOnMouseDown = this.seekOnMouseDown.bind(this)
-    this.getSeekValueFromMouseEvent = this.getSeekValueFromMouseEvent.bind(this)
-    this.handleMouseMove = this.handleMouseMove.bind(this)
-    this.handleMouseUp = this.handleMouseUp.bind(this)
-  }
+  const { storageRoot } = useStorageRoot()
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.url !== nextProps.url) {
-      this.pause()
-      this.loadAudio(nextProps.url)
+  const { togglePlayPause, playing } = useAudioPlayer({
+    src: makeStorageUrl(storageRoot, filename),
+    autoplay: true,
+    onend: () => console.log('sound has ended!'),
+  })
+
+  const { percentComplete, duration, seek, position } = useAudioPosition({
+    highRefreshRate: true,
+  })
+
+  const goToPosition = useCallback(
+    percentage => {
+      seek(clamp(duration * percentage, 0, duration))
+    },
+    [duration, seek]
+  )
+
+  const getNormalizedPosition = ({ current }, { pageX }) => {
+    if (current) {
+      const boundingClientRect = current.getBoundingClientRect()
+      const maxPos = boundingClientRect.right - boundingClientRect.x
+      return clamp(normalize(0, maxPos, pageX - boundingClientRect.x), 0, 1)
     }
   }
 
-  componentDidMount() {
-    document.addEventListener('mousemove', this.handleMouseMove, false)
-    document.addEventListener('mouseup', this.handleMouseUp, false)
-  }
+  const mouseMoveHandler = useCallback(
+    event =>
+      isDirtyPositionSet
+        ? setDirtyPosition(getNormalizedPosition(progressRef, event))
+        : null,
+    [isDirtyPositionSet, setDirtyPosition]
+  )
 
-  componentWillUnmount() {
-    document.addEventListener('mousemove', this.handleMouseMove, false)
-    document.addEventListener('mouseup', this.handleMouseUp, false)
-  }
+  const mouseDownHandler = useCallback(
+    event => setDirtyPosition(getNormalizedPosition(progressRef, event)),
+    [setDirtyPosition]
+  )
 
-  loadAudio(url) {
-    this.audio = new Howl({
-      src: [url],
-      audioPlayerOpen: false,
-      html5: true,
-      onload: () => {
-        this.setState({ duration: formatTime(this.audio.duration()) })
-        this.play()
-      },
-    })
-  }
-
-  play() {
-    this.props.play_()
-    this.audio.play()
-    window.requestAnimationFrame(this.step)
-    this.setState({
-      playing: true,
-      duration: formatTime(this.audio.duration()),
-    })
-  }
-
-  pause() {
-    this.props.pause_()
-    this.setState({ playing: false })
-    this.audio.pause()
-  }
-
-  forward(sec) {
-    const seek = this.audio.seek() || 0
-    const value =
-      seek + sec < this.audio.duration() ? seek + sec : this.audio.duration()
-
-    this.seek(value)
-  }
-
-  backward(sec) {
-    const seek = this.audio.seek() || 0
-    const value = seek - sec > 0 ? seek - sec : 0
-
-    this.seek(value)
-  }
-
-  seek(value) {
-    this.audio.seek(value)
-    window.requestAnimationFrame(this.step)
-  }
-
-  step() {
-    const seek = this.audio.seek() || 0
-
-    if (!isNaN(seek)) {
-      const time = formatTime(seek)
-      const progress = (seek / this.audio.duration()) * 100
-
-      this.setState({
-        time,
-        progress,
-      })
+  const mouseUpHandler = useCallback(() => {
+    if (isDirtyPositionSet) {
+      goToPosition(dirtyPosition)
+      setDirtyPosition(null)
     }
+  }, [isDirtyPositionSet, goToPosition, dirtyPosition, setDirtyPosition])
 
-    if (!this.state.seekBarMouseDown && this.state.playing) {
-      window.requestAnimationFrame(this.step)
-    }
+  useEventListener('mousemove', mouseMoveHandler)
+  useEventListener('mouseup', mouseUpHandler)
+
+  const forward = sec => {
+    const value = position + sec < duration ? position + sec : duration
+    goToPosition(value / duration)
   }
 
-  getSeekValueFromMouseEvent(screenX) {
-    const boundingClientRect = this.state.progressRect.getBoundingClientRect()
-    const currentPos = screenX - boundingClientRect.x
-    const maxPos = boundingClientRect.right - boundingClientRect.x
-    if (currentPos > 0 && currentPos < maxPos) {
-      const percentage = currentPos / maxPos
-      return this.audio.duration() * percentage
-    } else if (currentPos < 0) {
-      return 0
-    } else {
-      return this.audio.duration()
-    }
+  const backward = sec => {
+    const value = position - sec > 0 ? position - sec : 0
+    goToPosition(value / duration)
   }
 
-  seekOnMouseDown(event) {
-    event.persist()
-    this.setState({
-      seekBarMouseDown: true,
-      progressRect: event.currentTarget,
-    })
-  }
+  const progressInPercentage = isDirtyPositionSet
+    ? dirtyPosition * 100
+    : percentComplete
 
-  handleMouseMove(event) {
-    if (this.state.seekBarMouseDown) {
-      const seek = this.getSeekValueFromMouseEvent(event.clientX)
-      window.requestAnimationFrame(() => {
-        const time = formatTime(seek)
-        const progress = (seek / this.audio.duration()) * 100
+  const currentPosition = isDirtyPositionSet
+    ? dirtyPosition * duration
+    : position
 
-        this.setState({
-          time,
-          progress,
-        })
-      })
-    }
-  }
-
-  handleMouseUp(event) {
-    if (this.state.seekBarMouseDown) {
-      this.seek(this.getSeekValueFromMouseEvent(event.clientX))
-      this.setState({ seekBarMouseDown: false })
-    }
-  }
-
-  toggleAudioPlayer() {
-    this.setState({
-      audioPlayerOpen: !this.state.audioPlayerOpen,
-      playing: !this.state.audioPlayerOpen,
-    })
-  }
-
-  render() {
-    return this.state.audioPlayerOpen ? (
-      <div className="fixed bottom-0 h-full md:h-16 bg-black w-full z-50">
-        <div className="flex flex-col h-full w-3/4 m-auto  md:hidden justify-center">
-          <img
-            src={CloseIcon}
-            className="align-self-end cursor-pointer m-4 w-8 h-8"
-            onClick={() => {
-              this.pause()
-              this.props.close()
-            }}
-          />
-          <div className="flex justify-center space-x-4">
-            <ControllButton
-              className="flex-initial"
-              ariaLabel="media-player-backward-button"
-              style={{ gridArea: 'backward' }}
-              icon={replay30IconWhite}
-              action={() => this.backward(30)}
-            />
-            <PlayPauseButton
-              className="flex-initial w-32 mx-16"
-              playing={this.state.playing}
-              playAction={this.play}
-              pauseAction={this.pause}
-            />
-            <ControllButton
-              className="flex-initial"
-              ariaLabel="media-player-forward-button"
-              style={{ gridArea: 'forward' }}
-              icon={forward30IconWhite}
-              action={() => this.forward(30)}
-            />
-          </div>
-          <div className="flex">
-            <SeekBar style={{ gridArea: 'seekBar' }}>
-              <Time className="white" style={{ gridArea: 'start' }}>
-                {this.state.time}{' '}
-              </Time>
-
-              <ProgressWrapper
-                id="progress-bar"
-                className="white"
-                style={{ gridArea: 'seek' }}
-                onMouseMoveCapture={this.handleMouseMove}
-                onMouseDownCapture={this.seekOnMouseDown}
-                onMouseUp={this.handleMouseUp}
-              >
-                <Progress progress={this.state.progress}>&nbsp;</Progress>
-
-                <ProgressPointer progress={this.state.progress}>
-                  &nbsp;
-                </ProgressPointer>
-              </ProgressWrapper>
-              <Time
-                className="white"
-                style={{
-                  gridArea: 'end',
-                  textAlign: 'right',
-                  marginRight: '10px',
-                }}
-              >
-                {this.state.duration}
-              </Time>
-            </SeekBar>
-          </div>
-        </div>
-        <Container className="invisible md:visible">
-          <Title>{this.props.title}</Title>
+  return (
+    <div className="fixed bottom-0 h-full md:h-16 bg-black w-full z-50">
+      <div className="flex flex-col h-full w-3/4 m-auto  md:hidden justify-center">
+        <img
+          src={CloseIcon}
+          className="align-self-end cursor-pointer m-4 w-8 h-8"
+        />
+        <div className="flex justify-center space-x-4">
           <ControllButton
+            className="flex-initial"
+            ariaLabel="media-player-backward-button"
             style={{ gridArea: 'backward' }}
             icon={replay30IconWhite}
-            action={() => this.backward(30)}
+            action={() => backward(30)}
           />
           <PlayPauseButton
-            style={{ gridArea: 'play' }}
-            className="w-32"
-            playing={this.state.playing}
-            playAction={this.play}
-            pauseAction={this.pause}
+            className="flex-initial w-32 mx-16"
+            playing={playing}
+            togglePlayPause={togglePlayPause}
           />
           <ControllButton
+            className="flex-initial"
+            ariaLabel="media-player-forward-button"
             style={{ gridArea: 'forward' }}
             icon={forward30IconWhite}
-            action={() => this.forward(30)}
+            action={() => forward(30)}
           />
+        </div>
+        <div className="flex">
           <SeekBar style={{ gridArea: 'seekBar' }}>
             <Time className="white" style={{ gridArea: 'start' }}>
-              {this.state.time}{' '}
+              {formatTime(currentPosition)}
             </Time>
 
             <ProgressWrapper
               id="progress-bar"
               className="white"
               style={{ gridArea: 'seek' }}
-              onMouseMoveCapture={this.handleMouseMove}
-              onMouseDownCapture={this.seekOnMouseDown}
-              onMouseUp={this.handleMouseUp}
+              onMouseDownCapture={mouseDownHandler}
             >
-              <Progress progress={this.state.progress}>&nbsp;</Progress>
+              <Progress progress={progressInPercentage}>&nbsp;</Progress>
 
-              <ProgressPointer progress={this.state.progress}>
+              <ProgressPointer progress={progressInPercentage}>
                 &nbsp;
               </ProgressPointer>
             </ProgressWrapper>
@@ -479,18 +317,72 @@ class AudioPlayer extends React.Component {
                 marginRight: '10px',
               }}
             >
-              {this.state.duration}
+              {formatTime(duration)}
             </Time>
           </SeekBar>
-        </Container>
+        </div>
       </div>
-    ) : null
-  }
+      <Container className="invisible md:visible">
+        {supTitle ? (
+          <Title>
+            <small>{supTitle}</small>
+            <div>{title}</div>
+          </Title>
+        ) : (
+          <Title>{title}</Title>
+        )}
+
+        <ControllButton
+          style={{ gridArea: 'backward' }}
+          icon={replay30IconWhite}
+          action={() => backward(30)}
+        />
+        <PlayPauseButton
+          style={{ gridArea: 'play' }}
+          className="w-32"
+          playing={playing}
+          togglePlayPause={togglePlayPause}
+        />
+        <ControllButton
+          style={{ gridArea: 'forward' }}
+          icon={forward30IconWhite}
+          action={() => forward(30)}
+        />
+        <SeekBar style={{ gridArea: 'seekBar' }}>
+          <Time className="white" style={{ gridArea: 'start' }}>
+            {formatTime(currentPosition)}
+          </Time>
+
+          <ProgressWrapper
+            id="progress-bar"
+            className="white"
+            style={{ gridArea: 'seek' }}
+            ref={progressRef}
+            onMouseDownCapture={mouseDownHandler}
+          >
+            <Progress progress={progressInPercentage}>&nbsp;</Progress>
+
+            <ProgressPointer progress={progressInPercentage}>
+              &nbsp;
+            </ProgressPointer>
+          </ProgressWrapper>
+          <Time
+            className="white"
+            style={{
+              gridArea: 'end',
+              textAlign: 'right',
+              marginRight: '10px',
+            }}
+          >
+            {formatTime(duration)}
+          </Time>
+        </SeekBar>
+        <MediaButton onClick={close} style={{ gridArea: 'close' }}>
+          <img src={CloseIcon} />
+        </MediaButton>
+      </Container>
+    </div>
+  )
 }
 
-AudioPlayer.propTypes = {
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-}
-
-export default AudioPlayerX
+export default AudioPlayer

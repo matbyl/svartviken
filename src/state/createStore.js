@@ -1,17 +1,18 @@
 import { createStore as reduxCreateStore } from 'redux'
 
 const reducer = (state, action) => {
+  const setState_ = setState(state) 
   switch (action.type) {
-    case ACTIONS.PLAY:
-      return Object.assign({}, state, { playingAudio: true })
-    case ACTIONS.PAUSE:
-      return Object.assign({}, state, { playingAudio: false })
+    case ACTIONS.SET_EPISODE:
+      return setState_({ playingAudio: true, selectedEpisode: action.payload })
     default:
       return state
   }
 }
 
-const initialState = { playingAudio: false }
+const setState = currentState => newState => Object.assign({}, currentState, newState)
+
+const initialState = { playingAudio: false, selectedEpisode: null }
 
 const createStore = () =>
   reduxCreateStore(
@@ -22,6 +23,5 @@ const createStore = () =>
 export default createStore
 
 export const ACTIONS = {
-  PLAY: 'PLAY',
-  PAUSE: 'PAUSE',
+  SET_EPISODE: 'SET_EPISODE'
 }

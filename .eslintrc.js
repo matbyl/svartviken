@@ -5,6 +5,7 @@ module.exports = {
   },
   "plugins": [
     "react",
+    "react-hooks"
   ],
   "globals": {
     "graphql": false,
@@ -15,5 +16,9 @@ module.exports = {
       "experimentalObjectRestSpread": true,
       "jsx": true,
     },
+  },
+  "rules": {
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   }
 }

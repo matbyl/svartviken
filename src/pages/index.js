@@ -242,6 +242,9 @@ export const pageQuery = graphql`
               description
             }
             filename
+            campaign {
+              title
+            }
           }
         }
       }
@@ -268,6 +271,9 @@ export const pageQuery = graphql`
               description
             }
             filename
+            oneshot {
+              title
+            }
           }
         }
       }

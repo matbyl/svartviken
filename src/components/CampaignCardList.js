@@ -49,18 +49,14 @@ class CampaignCardList extends React.Component {
     return (
       <CardList>
         {this.props.campaigns.map(
-          ({ title, id, description, episodes, image, oneShot }) => (
+          ({ title, id, description, episodes, image }) => (
             <Card key={id}>
               <Header src={'https:' + image.fluid.src} rel="noopener" />
 
               {episodes && episodes.length > 0 ? (
                 <div className="md:shadow-xl md:w-11/12  w-full bg-white m-auto rounded">
                   <CampaignContent>
-                    {oneShot ? (
-                      <CampaignType type="one-shot">One Shot</CampaignType>
-                    ) : (
-                      <CampaignType type="campaign">Kampanj</CampaignType>
-                    )}
+                    <CampaignType type="campaign">Kampanj</CampaignType>
 
                     <Title to={'/campaigns/' + id}>{title}</Title>
 

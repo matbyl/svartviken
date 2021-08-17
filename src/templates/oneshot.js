@@ -70,6 +70,9 @@ export const query = graphql`
           description
         }
         filename
+        campaign {
+          title
+        }
       }
     }
   }

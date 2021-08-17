@@ -8,10 +8,12 @@ import MenuIcon from './../assets/icons/white-menu.svg'
 import RssIcon from './../assets/icons/rss-feed.svg'
 import tw, { styled } from 'twin.macro'
 
-import ContextConsumer, { ContextProviderComponent } from './Context'
+import { connect } from 'react-redux'
 import AudioPlayer from './AudioPlayer'
 import { socialMediaIcon } from './SocialIcon'
 import DiscordLink from './DiscordLink'
+import { AudioPlayerProvider } from 'react-use-audio-player'
+import { ACTIONS } from '../state/createStore'
 
 const Footer = styled.div`
   flex-shrink: 0;
@@ -138,7 +140,7 @@ class Template extends React.Component {
   }
 
   render() {
-    const { location, children } = this.props
+    const { location, children, selectedEpisode, closeEpisode } = this.props
     const rootPath = `${__PATH_PREFIX__}/`
 
     const header = (
@@ -236,30 +238,26 @@ class Template extends React.Component {
         </NavBarRow>
       </NavBar>
     )
-
-    const audioPlayer = (
-      <ContextConsumer>
-        {({ data, set }) =>
-          data.episode ? (
-            <AudioPlayer
-              title={
-                data.episode.title
-                  ? data.episode.title
-                  : 'Kampanj - Avsnitt ' + data.episode.number
-              }
-              filename={data.episode.filename}
+    
+    const audioPlayer = episode => (
+        <AudioPlayerProvider>
+          {episode.campaign ? <AudioPlayer
+              supTitle={episode.campaign[0].title}
+              title={episode.title}
+              filename={episode.filename}
               style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
-              close={() => {
-                set({
-                  episode: null,
-                })
-              }}
+              close={closeEpisode}
             />
-          ) : null
-        }
-      </ContextConsumer>
-    )
-
+           : <AudioPlayer
+           supTitle={episode.oneshot[0].title}
+           title={'Kampanj - Avsnitt ' + episode.number}
+           filename={episode.filename}
+           style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
+           close={closeEpisode}
+         /> }
+        </AudioPlayerProvider>
+    )  
+        
     const footer = (
       <Footer>
         <FooterTitle>Följ oss</FooterTitle>
@@ -290,16 +288,22 @@ class Template extends React.Component {
     )
 
     return (
-      <ContextProviderComponent>
         <div className="flex flex-col min-h-full">
           {header}
-          {audioPlayer}
+          {selectedEpisode ? audioPlayer(selectedEpisode) : null}
           <div className="flex flex-grow">{children}</div>
           {footer}
         </div>
-      </ContextProviderComponent>
     )
   }
 }
 
-export default Template
+const mapDispatchToProps = dispatch => {
+  return {
+    closeEpisode: () => dispatch({type: ACTIONS.SET_EPISODE, payload: null})
+  }
+}
+
+const ConnectedTemplate = connect(({selectedEpisode}) => ({selectedEpisode}), mapDispatchToProps)(Template)
+
+export default ConnectedTemplate
