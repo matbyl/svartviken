@@ -3,6 +3,7 @@ import { Link } from 'gatsby'
 import tw, { styled } from 'twin.macro'
 import { Episode } from './Episode'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import richText from './RichText'
 
 const CardList = styled.div`
   ${tw`flex flex-row flex-wrap w-full lg:p-10 md:pr-2`}
@@ -49,7 +50,7 @@ class OneshotCardList extends React.Component {
     return (
       <CardList>
         {this.props.oneshots.map(
-          ({ title, id, description, episodes, image }) => (
+          ({ title, id, description, episodes, image, system }) => (
             <Card key={id}>
               <Header src={'https:' + image.fluid.src} rel="noopener" />
 
@@ -58,11 +59,12 @@ class OneshotCardList extends React.Component {
                   <CampaignContent>
                     <CampaignType type="one-shot">Oneshot</CampaignType>
 
+                    <div>{system.systemName}</div>
                     <Title to={'/oneshots/' + id}>{title}</Title>
 
                     {description ? (
                       <div className="w-11/12">
-                        {documentToReactComponents(JSON.parse(description.raw))}
+                        {richText(JSON.parse(description.raw), new Map())}
                       </div>
                     ) : null}
                   </CampaignContent>

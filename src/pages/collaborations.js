@@ -1,13 +1,9 @@
 import React from 'react'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Header, HeaderContent, HeaderTitle } from '../components/Header'
-import { graphql, Link } from 'gatsby'
-import { ExternalLink, InternalLink } from '../components/Link'
+import { graphql} from 'gatsby'
 import tw, { styled } from 'twin.macro'
 import Head from '../components/head'
-
-import { INLINES } from '@contentful/rich-text-types'
-import { data } from 'autoprefixer'
+import richText from '../components/RichText'
 
 const CardList = styled.div`
   ${tw`flex flex-row flex-wrap w-full lg:p-10 md:pr-2 justify-center`}
@@ -23,27 +19,7 @@ const CardContent = styled.div`
   min-height: 400px;
 `
 
-const options = references => ({
-  renderNode: {
-    [INLINES.ENTRY_HYPERLINK]: ({ data }, children) => {
-      if (data.uri) {
-        return <a href={data.uri}>{children}</a>
-      } else {
-        const reference = references.get(data.target.sys.id)
-        switch (reference.type) {
-          case 'ContentfulCampaign':
-            return <Link to={'/campaigns/' + reference.id}>{children}</Link>
-          case 'ContentfulEpisode':
-            return <Link to={'/episodes/' + reference.id}>{children}</Link>
-          case 'ContentfulOneshot':
-            return <Link to={'/oneshots/' + reference.id}>{children}</Link>
-          default:
-            return <span>{children}</span>
-        }
-      }
-    },
-  },
-})
+
 
 export default class CollaborationsPage extends React.Component {
   render() {
@@ -75,9 +51,9 @@ export default class CollaborationsPage extends React.Component {
                       <img src={node.logo.fluid.src} />
                     </div>
                     <div className="flex-1 mt-4 md:mt-0">
-                      {documentToReactComponents(
+                      {richText(
                         JSON.parse(node.description.raw),
-                        options(references)
+                        references
                       )}
                     </div>
                   </div>
