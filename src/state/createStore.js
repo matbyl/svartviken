@@ -17,8 +17,7 @@ const initialState = { playingAudio: false, selectedEpisode: null }
 const createStore = () =>
   reduxCreateStore(
     reducer,
-    initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    initialState
   )
 export default createStore
 
