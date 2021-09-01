@@ -16,11 +16,11 @@ import ReactMarkdown from 'react-markdown'
 import richText from '../components/RichText'
 
 const HomeHeader = styled.header`
-  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:p-10`};
+  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:py-12`};
 `
 
 const LeftColumn = styled.div`
-  ${tw`sm:w-full lg:w-1/2 sm:text-lg flex sm:text-center lg:text-justify pb-5 lg:pl-20`};
+  ${tw`sm:w-full lg:w-1/2 sm:text-lg flex sm:text-center lg:text-justify lg:pl-20`};
 `
 
 const CampaignTitle = styled(Link)`

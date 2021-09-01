@@ -177,7 +177,6 @@ const formatTime = time => {
   const m = minutes(time)
   const s = seconds(time)
 
-  console.log(h, m, s)
   const padLeft = (string, pad, length) =>
     (new Array(length + 1).join(pad) + string).slice(-length)
 
@@ -264,124 +263,65 @@ const AudioPlayer = ({ title, supTitle, filename, close }) => {
     : position
 
   return (
-    <div className="fixed bottom-0 h-full md:h-16 bg-black w-full z-50">
-      <div className="flex flex-col h-full w-3/4 m-auto  md:hidden justify-center">
-        <img
-          src={CloseIcon}
-          className="align-self-end cursor-pointer m-4 w-8 h-8"
-        />
-        <div className="flex justify-center space-x-4">
-          <ControllButton
-            className="flex-initial"
-            ariaLabel="media-player-backward-button"
-            style={{ gridArea: 'backward' }}
-            icon={replay30IconWhite}
-            action={() => backward(30)}
-          />
-          <PlayPauseButton
-            className="flex-initial w-32 mx-16"
-            playing={playing}
-            togglePlayPause={togglePlayPause}
-          />
-          <ControllButton
-            className="flex-initial"
-            ariaLabel="media-player-forward-button"
-            style={{ gridArea: 'forward' }}
-            icon={forward30IconWhite}
-            action={() => forward(30)}
-          />
-        </div>
-        <div className="flex">
-          <SeekBar style={{ gridArea: 'seekBar' }}>
-            <Time className="white" style={{ gridArea: 'start' }}>
-              {formatTime(currentPosition)}
-            </Time>
+    <Container>
+      {supTitle ? (
+        <Title>
+          <small>{supTitle}</small>
+          <div>{title}</div>
+        </Title>
+      ) : (
+        <Title>{title}</Title>
+      )}
 
-            <ProgressWrapper
-              id="progress-bar"
-              className="white"
-              style={{ gridArea: 'seek' }}
-              onMouseDownCapture={mouseDownHandler}
-            >
-              <Progress progress={progressInPercentage}>&nbsp;</Progress>
+      <ControllButton
+        style={{ gridArea: 'backward' }}
+        icon={replay30IconWhite}
+        action={() => backward(30)}
+      />
+      <PlayPauseButton
+        style={{ gridArea: 'play' }}
+        className="w-32"
+        playing={playing}
+        togglePlayPause={togglePlayPause}
+      />
+      <ControllButton
+        style={{ gridArea: 'forward' }}
+        icon={forward30IconWhite}
+        action={() => forward(30)}
+      />
+      <SeekBar style={{ gridArea: 'seekBar' }}>
+        <Time className="white" style={{ gridArea: 'start' }}>
+          {formatTime(currentPosition)}
+        </Time>
 
-              <ProgressPointer progress={progressInPercentage}>
-                &nbsp;
-              </ProgressPointer>
-            </ProgressWrapper>
-            <Time
-              className="white"
-              style={{
-                gridArea: 'end',
-                textAlign: 'right',
-                marginRight: '10px',
-              }}
-            >
-              {formatTime(duration)}
-            </Time>
-          </SeekBar>
-        </div>
-      </div>
-      <Container className="invisible md:visible">
-        {supTitle ? (
-          <Title>
-            <small>{supTitle}</small>
-            <div>{title}</div>
-          </Title>
-        ) : (
-          <Title>{title}</Title>
-        )}
+        <ProgressWrapper
+          id="progress-bar"
+          className="white"
+          style={{ gridArea: 'seek' }}
+          ref={progressRef}
+          onMouseDownCapture={mouseDownHandler}
+        >
+          <Progress progress={progressInPercentage}>&nbsp;</Progress>
 
-        <ControllButton
-          style={{ gridArea: 'backward' }}
-          icon={replay30IconWhite}
-          action={() => backward(30)}
-        />
-        <PlayPauseButton
-          style={{ gridArea: 'play' }}
-          className="w-32"
-          playing={playing}
-          togglePlayPause={togglePlayPause}
-        />
-        <ControllButton
-          style={{ gridArea: 'forward' }}
-          icon={forward30IconWhite}
-          action={() => forward(30)}
-        />
-        <SeekBar style={{ gridArea: 'seekBar' }}>
-          <Time className="white" style={{ gridArea: 'start' }}>
-            {formatTime(currentPosition)}
-          </Time>
-
-          <ProgressWrapper
-            id="progress-bar"
-            className="white"
-            style={{ gridArea: 'seek' }}
-            ref={progressRef}
-            onMouseDownCapture={mouseDownHandler}
-          >
-            <Progress progress={progressInPercentage}>&nbsp;</Progress>
-
-            <ProgressPointer progress={progressInPercentage}>
-              &nbsp;
-            </ProgressPointer>
-          </ProgressWrapper>
-          <Time
-            className="white"
-            style={{
-              gridArea: 'end',
-              textAlign: 'right',
-              marginRight: '10px',
-            }}
-          >
-            {formatTime(duration)}
-          </Time>
-        </SeekBar>
-        <MediaButton onClick={close} style={{ gridArea: 'close' }}>
-          <img src={CloseIcon} />
-        </MediaButton>
-      </Container>
-    </div>
+          <ProgressPointer progress={progressInPercentage}>
+            &nbsp;
+          </ProgressPointer>
+        </ProgressWrapper>
+        <Time
+          className="white"
+          style={{
+            gridArea: 'end',
+            textAlign: 'right',
+            marginRight: '10px',
+          }}
+        >
+          {formatTime(duration)}
+        </Time>
+      </SeekBar>
+      <MediaButton onClick={close} style={{ gridArea: 'close' }}>
+        <img src={CloseIcon} />
+      </MediaButton>
+    </Container>
   )
 }
 

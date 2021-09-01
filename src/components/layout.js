@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Link } from 'gatsby'
 import FacebookIcon from './../assets/icons/facebook.svg'
 import InstagramIcon from './../assets/icons/instagram.svg'
@@ -14,6 +14,10 @@ import { socialMediaIcon } from './SocialIcon'
 import DiscordLink from './DiscordLink'
 import { AudioPlayerProvider } from 'react-use-audio-player'
 import { ACTIONS } from '../state/createStore'
+import Fullscreen from './Fullscreen'
+import FixedBottomWidget from './FixedBottomWidget'
+import { useEventListener } from '../hooks/use-event-listener'
+import useWindowDimensions from '../hooks/use-window-dimensions'
 
 const Footer = styled.div`
   flex-shrink: 0;
@@ -43,7 +47,7 @@ const NavBar = styled.nav`
   flex-wrap: wrap;
   position: fixed;
   color: white;
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0.72);
   z-index: 49;
 
   flex: 100%;
@@ -100,210 +104,180 @@ const externalMenuItem = (url, name) => (
   </li>
 )
 
-class Template extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { menuOpen: false }
-    this.toggleMenu = this.toggleMenu.bind(this)
-  }
+const Template = ({ children, selectedEpisode, closeEpisode }) => {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { width } = useWindowDimensions()
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  toggleMenu() {
-    console.log('TOGGLED MENU')
-    this.setState({ menuOpen: !this.state.menuOpen })
-  }
-
-  nav = React.createRef()
-
-  handleScroll = () => {
-    lastScrollY = window.scrollY
-
-    if (!ticking && this.nav && this.nav.current) {
-      window.requestAnimationFrame(() => {
-        if (lastScrollY > 100) {
-          this.nav.current.style.background = 'rgba(0, 0, 0, 0.72)'
-        } else {
-          this.nav.current.style.background = 'rgba(0, 0, 0, 0)'
+  const navBar = (
+    <NavBar>
+      <div
+        className={
+          menuOpen
+            ? 'md:hidden flex flex-row transition duration-500 bg-gray-900'
+            : 'md:hidden flex flex-row transition duration-500 bg-transparent h-16'
         }
-        ticking = false
-      })
+      >
+        <ul
+          className={
+            menuOpen
+              ? 'flex-1 transition duration-500 transform opacity-1 text-xl pt-6 pb-4'
+              : 'flex-1 transition duration-500 transform opacity-0 -translate-y-32 text-xl pt-6 pb-4'
+          }
+        >
+          {menuItem('/', 'Hem', () => setMenuOpen(false))}
+          {menuItem('/about', 'Om oss', () => setMenuOpen(false))}
+          {menuItem('/collaborations', 'Våra samarbeten', () =>
+            setMenuOpen(false)
+          )}
+          {menuItem('/material', 'Material', () => setMenuOpen(false))}
+          {externalMenuItem(
+            'https://shop.spreadshirt.se/svartvikenrp/all',
+            'Poddshop',
+            () => setMenuOpen(false)
+          )}
+          <li className="pl-5">
+            {socialMediaIcon(
+              FacebookIcon,
+              'https://www.facebook.com/SvartvikenRP',
+              'facebook'
+            )}
+            {socialMediaIcon(
+              InstagramIcon,
+              'https://www.instagram.com/svartviken_rollspelspodd/',
+              'instagram'
+            )}
+            {socialMediaIcon(
+              TwitterIcon,
+              'https://twitter.com/svartvikenrp',
+              'twitter'
+            )}
+            <DiscordLink />
+            {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
+          </li>
+        </ul>
 
-      ticking = true
+        {menuOpen ? (
+          <img
+            src={CloseIcon}
+            className="align-self-end cursor-pointer m-4 w-8 h-8"
+            onClick={() => setMenuOpen(false)}
+            alt="close-icon"
+          />
+        ) : (
+          <img
+            src={MenuIcon}
+            className="align-self-end cursor-pointer m-4 w-8 h-8"
+            onClick={() => setMenuOpen(false)}
+            alt="menu-icon"
+          />
+        )}
+      </div>
+
+      <NavBarRow className="hidden md:flex">
+        <NavBarItem to={'/'}>Hem</NavBarItem> |{' '}
+        <NavBarItem to={'/about'}>Om oss</NavBarItem> |{' '}
+        <NavBarItem to={'/collaborations'}>Våra samarbeten</NavBarItem> |{' '}
+        <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
+        <ExternalNavBarItem
+          href="https://shop.spreadshirt.se/svartvikenrp/all"
+          target="_blank"
+        >
+          Poddshop
+        </ExternalNavBarItem>{' '}
+        |{' '}
+        {socialMediaIcon(
+          FacebookIcon,
+          'https://www.facebook.com/SvartvikenRP',
+          'facebook'
+        )}
+        {socialMediaIcon(
+          InstagramIcon,
+          'https://www.instagram.com/svartviken_rollspelspodd/',
+          'instagram'
+        )}
+        {socialMediaIcon(
+          TwitterIcon,
+          'https://twitter.com/svartvikenrp',
+          'twitter'
+        )}
+        <DiscordLink />
+        {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
+      </NavBarRow>
+    </NavBar>
+  )
+
+  const audioPlayer = episode => {
+    const supTitle = episode.campaign
+      ? episode.campaign[0].title
+      : 'Kampanj - Avsnitt ' + episode.number
+    const player = (
+      <AudioPlayerProvider>
+        <AudioPlayer
+          supTitle={supTitle}
+          title={episode.title}
+          filename={episode.filename}
+          style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
+          close={closeEpisode}
+        />
+      </AudioPlayerProvider>
+    )
+    if (width > 980) {
+      return (
+        <div className="fixed bottom-0 h-16 bg-black w-full z-50">{player}</div>
+      )
+    } else {
+      return <div className="fixed flex flex-col h-full w-full m-auto justify-center bg-black z-50">{player}</div>
     }
   }
 
-  render() {
-    const { location, children, selectedEpisode, closeEpisode } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
+  const footer = (
+    <Footer>
+      <FooterTitle>Följ oss</FooterTitle>
+      <FooterSocialMedia>
+        {socialMediaIcon(
+          FacebookIcon,
+          'https://www.facebook.com/SvartvikenRP',
+          'facebook'
+        )}
+        {socialMediaIcon(
+          InstagramIcon,
+          'https://www.instagram.com/svartviken_rollspelspodd/',
+          'instagram'
+        )}
+        {socialMediaIcon(
+          TwitterIcon,
+          'https://twitter.com/svartvikenrp',
+          'twitter'
+        )}
+        <DiscordLink />
+        {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
+      </FooterSocialMedia>
+      <p className="text-white mt-5">Crafted with 🎲</p>
+      <p className="text-white">
+        Copyright © 2021 Svartviken, All Rights Reserved.
+      </p>
+    </Footer>
+  )
 
-    const header = (
-      <NavBar ref={this.nav}>
-        <div
-          className={
-            this.state.menuOpen
-              ? 'md:hidden flex flex-row transition duration-500 bg-gray-900'
-              : 'md:hidden flex flex-row transition duration-500 bg-transparent h-16'
-          }
-        >
-          <ul
-            className={
-              this.state.menuOpen
-                ? 'flex-1 transition duration-500 transform opacity-1 text-xl pt-6 pb-4'
-                : 'flex-1 transition duration-500 transform opacity-0 -translate-y-32 text-xl pt-6 pb-4'
-            }
-          >
-            {menuItem('/', 'Hem', this.toggleMenu)}
-            {menuItem('/about', 'Om oss', this.toggleMenu)}
-            {menuItem('/collaborations', 'Våra samarbeten', this.toggleMenu)}
-            {menuItem('/material', 'Material', this.toggleMenu)}
-            {externalMenuItem(
-              'https://shop.spreadshirt.se/svartvikenrp/all',
-              'Poddshop',
-              this.toggleMenu
-            )}
-            <li className="pl-5">
-              {socialMediaIcon(
-                FacebookIcon,
-                'https://www.facebook.com/SvartvikenRP',
-                'facebook'
-              )}
-              {socialMediaIcon(
-                InstagramIcon,
-                'https://www.instagram.com/svartviken_rollspelspodd/',
-                'instagram'
-              )}
-              {socialMediaIcon(
-                TwitterIcon,
-                'https://twitter.com/svartvikenrp',
-                'twitter'
-              )}
-              <DiscordLink />
-              {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
-            </li>
-          </ul>
-
-          {this.state.menuOpen ? (
-            <img
-              src={CloseIcon}
-              className="align-self-end cursor-pointer m-4 w-8 h-8"
-              onClick={this.toggleMenu}
-              alt="close-icon"
-            />
-          ) : (
-            <img
-              src={MenuIcon}
-              className="align-self-end cursor-pointer m-4 w-8 h-8"
-              onClick={this.toggleMenu}
-              alt="menu-icon"
-            />
-          )}
-        </div>
-
-        <NavBarRow className="hidden md:flex">
-          <NavBarItem to={'/'}>Hem</NavBarItem> |{' '}
-          <NavBarItem to={'/about'}>Om oss</NavBarItem> |{' '}
-          <NavBarItem to={'/collaborations'}>Våra samarbeten</NavBarItem> |{' '}
-          <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
-          <ExternalNavBarItem
-            href="https://shop.spreadshirt.se/svartvikenrp/all"
-            target="_blank"
-          >
-            Poddshop
-          </ExternalNavBarItem>{' '}
-          |{' '}
-          {socialMediaIcon(
-            FacebookIcon,
-            'https://www.facebook.com/SvartvikenRP',
-            'facebook'
-          )}
-          {socialMediaIcon(
-            InstagramIcon,
-            'https://www.instagram.com/svartviken_rollspelspodd/',
-            'instagram'
-          )}
-          {socialMediaIcon(
-            TwitterIcon,
-            'https://twitter.com/svartvikenrp',
-            'twitter'
-          )}
-          <DiscordLink />
-          {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
-        </NavBarRow>
-      </NavBar>
-    )
-    
-    const audioPlayer = episode => (
-        <AudioPlayerProvider>
-          {episode.campaign ? <AudioPlayer
-              supTitle={episode.campaign[0].title}
-              title={episode.title}
-              filename={episode.filename}
-              style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
-              close={closeEpisode}
-            />
-           : <AudioPlayer
-           supTitle={episode.oneshot[0].title}
-           title={'Kampanj - Avsnitt ' + episode.number}
-           filename={episode.filename}
-           style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
-           close={closeEpisode}
-         /> }
-        </AudioPlayerProvider>
-    )  
-        
-    const footer = (
-      <Footer>
-        <FooterTitle>Följ oss</FooterTitle>
-        <FooterSocialMedia>
-          {socialMediaIcon(
-            FacebookIcon,
-            'https://www.facebook.com/SvartvikenRP',
-            'facebook'
-          )}
-          {socialMediaIcon(
-            InstagramIcon,
-            'https://www.instagram.com/svartviken_rollspelspodd/',
-            'instagram'
-          )}
-          {socialMediaIcon(
-            TwitterIcon,
-            'https://twitter.com/svartvikenrp',
-            'twitter'
-          )}
-          <DiscordLink />
-          {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
-        </FooterSocialMedia>
-        <p className="text-white mt-5">Crafted with 🎲</p>
-        <p className="text-white">
-          Copyright © 2021 Svartviken, All Rights Reserved.
-        </p>
-      </Footer>
-    )
-
-    return (
-        <div className="flex flex-col min-h-full">
-          {header}
-          {selectedEpisode ? audioPlayer(selectedEpisode) : null}
-          <div className="flex flex-grow">{children}</div>
-          {footer}
-        </div>
-    )
-  }
+  return (
+    <div className="flex flex-col min-h-full">
+      {navBar}
+      {selectedEpisode ? audioPlayer(selectedEpisode) : null}
+      <div className="flex flex-grow">{children}</div>
+      {footer}
+    </div>
+  )
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    closeEpisode: () => dispatch({type: ACTIONS.SET_EPISODE, payload: null})
+    closeEpisode: () => dispatch({ type: ACTIONS.SET_EPISODE, payload: null }),
   }
 }
 
-const ConnectedTemplate = connect(({selectedEpisode}) => ({selectedEpisode}), mapDispatchToProps)(Template)
+const ConnectedTemplate = connect(
+  ({ selectedEpisode }) => ({ selectedEpisode }),
+  mapDispatchToProps
+)(Template)
 
 export default ConnectedTemplate

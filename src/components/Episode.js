@@ -19,51 +19,45 @@ export const EpisodeNumber = styled.h2`
   color: #2e2e2e;
 `
 
-export const Episode = props => {
-  const { episode } = props
-
-  return (
-    <EpisodeContent>
-      <EpisodeDescription>
-        {!episode.title ? (
-          <div>
-            <EpisodeTitleLink to={'/episodes/' + episode.id}>
-              Avsnitt {episode.number}
-            </EpisodeTitleLink>
-          </div>
-        ) : (
-          <div>
-            <EpisodeNumber>Avsnitt {episode.number}</EpisodeNumber>
-            <EpisodeTitleLink to={'/episodes/' + episode.id}>
-              {episode.title || ''}
-            </EpisodeTitleLink>
-          </div>
-        )}
-
-        <div className="flex flex-col md:flex-row w-full">
-          <ReactMarkdown
-            className="flex-1"
-            children={episode.description.description}
-          ></ReactMarkdown>
-
-          <EpisodePlayButtonWrapper>
-            <AudioPlayerButton episode={episode} />
-          </EpisodePlayButtonWrapper>
+export const Episode = ({ episode }) => (
+  <EpisodeContent>
+    <EpisodeDescription>
+      {!episode.title ? (
+          <EpisodeTitleLink to={'/episodes/' + episode.id}>
+            Avsnitt {episode.number}
+          </EpisodeTitleLink>
+      ) : (
+        <div>
+          <EpisodeNumber>Avsnitt {episode.number}</EpisodeNumber>
+          <EpisodeTitleLink to={'/episodes/' + episode.id}>
+            {episode.title || ''}
+          </EpisodeTitleLink>
         </div>
-      </EpisodeDescription>
-    </EpisodeContent>
-  )
-}
+      )}
+
+      <div className="flex flex-col md:flex-row w-full">
+        <ReactMarkdown
+          className="flex-1"
+          children={episode.description.description}
+        ></ReactMarkdown>
+      </div>
+    </EpisodeDescription>
+
+    <EpisodePlayButtonWrapper>
+      <AudioPlayerButton episode={episode} />
+    </EpisodePlayButtonWrapper>
+  </EpisodeContent>
+)
 
 const EpisodeContent = styled.div`
-  ${tw`flex h-full px-6 md:px-10`}
+  ${tw`flex w-full h-full px-6 md:px-10`}
   z-index: 1;
 `
 
 const EpisodeDescription = styled.div`
-  ${tw`flex-1 py-10 pr-5 relative`}
+  ${tw`flex-1 py-10 relative`}
 `
 
 const EpisodePlayButtonWrapper = styled.div`
-  ${tw`w-16 md:m-auto`}
+  ${tw`pl-8 float-right m-auto`}
 `

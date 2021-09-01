@@ -95,13 +95,6 @@ export const pageQuery = graphql`
                   type
                 }
               }
-              ... on ContentfulPlayer {
-                id
-                contentful_id
-                internal {
-                  type
-                }
-              }
             }
           }
         }
