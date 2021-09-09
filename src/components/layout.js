@@ -9,15 +9,13 @@ import RssIcon from './../assets/icons/rss-feed.svg'
 import tw, { styled } from 'twin.macro'
 
 import { connect } from 'react-redux'
-import AudioPlayer from './AudioPlayer'
+import StickyAudioPlayer from './StickyAudioPlayer'
 import { socialMediaIcon } from './SocialIcon'
 import DiscordLink from './DiscordLink'
 import { AudioPlayerProvider } from 'react-use-audio-player'
 import { ACTIONS } from '../state/createStore'
-import Fullscreen from './Fullscreen'
-import FixedBottomWidget from './FixedBottomWidget'
-import { useEventListener } from '../hooks/use-event-listener'
 import useWindowDimensions from '../hooks/use-window-dimensions'
+import FullscreenAudioPlayer from './FullscreenAudioPlayer'
 
 const Footer = styled.div`
   flex-shrink: 0;
@@ -210,24 +208,27 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
     const supTitle = episode.campaign
       ? episode.campaign[0].title
       : 'Kampanj - Avsnitt ' + episode.number
-    const player = (
+    return (
       <AudioPlayerProvider>
-        <AudioPlayer
-          supTitle={supTitle}
-          title={episode.title}
-          filename={episode.filename}
-          style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
-          close={closeEpisode}
-        />
+        {width > 980 ? (
+          <StickyAudioPlayer
+            supTitle={supTitle}
+            title={episode.title}
+            filename={episode.filename}
+            style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
+            close={closeEpisode}
+          />
+        ) : (
+          <FullscreenAudioPlayer
+            supTitle={supTitle}
+            title={episode.title}
+            filename={episode.filename}
+            style={{ position: 'fixed', bottom: 0, zIndex: 9001 }}
+            close={closeEpisode}
+          />
+        )}
       </AudioPlayerProvider>
     )
-    if (width > 980) {
-      return (
-        <div className="fixed bottom-0 h-16 bg-black w-full z-50">{player}</div>
-      )
-    } else {
-      return <div className="fixed flex flex-col h-full w-full m-auto justify-center bg-black z-50">{player}</div>
-    }
   }
 
   const footer = (
