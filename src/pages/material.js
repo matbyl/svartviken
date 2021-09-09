@@ -5,6 +5,8 @@ import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 import { graphql } from 'gatsby'
 import Head from '../components/head'
 
+import { CardList, Card } from '../components/CardList'
+
 export default class MaterialPage extends React.Component {
   render() {
     return (
@@ -15,14 +17,17 @@ export default class MaterialPage extends React.Component {
             <HeaderTitle>Material</HeaderTitle>
           </HeaderContent>
         </Header>
-        {this.props.data.allContentfulMedia.edges.map(({ node }) => (
-          <div className="container mx-auto my-12 px-64">
-            <h1>{node.name}</h1>
-            <p>{documentToReactComponents(JSON.parse(node.description.raw))}</p>
+        <CardList>
+          {this.props.data.allContentfulMedia.edges.map(({ node }) => (
+            <Card title={node.name} image={node.cover.fluid.src}>
+              <p>
+                {documentToReactComponents(JSON.parse(node.description.raw))}
+              </p>
 
-            <a href={node.media.file.url}>Ladda ner</a>
-          </div>
-        ))}
+              <a href={node.media.file.url}>Ladda ner</a>
+            </Card>
+          ))}
+        </CardList>
       </div>
     )
   }
@@ -36,6 +41,9 @@ export const pageQuery = graphql`
           name
           description {
             raw
+          }
+          cover {
+            fluid {src}
           }
           media {
             file {

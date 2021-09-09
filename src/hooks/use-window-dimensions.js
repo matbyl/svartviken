@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
+import { isBrowser } from '../utils/commons'
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height
-  };
+const getWindowDimensions = window_ => {
+  const { innerWidth: width, innerHeight: height } = window_
+  return { width, height }
 }
 
 export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [windowDimensions, setWindowDimensions] = useState(
+    isBrowser ? getWindowDimensions(window) : { width: 0, height: 0 }
+  )
 
   useEffect(() => {
     function handleResize() {
-      setWindowDimensions(getWindowDimensions());
+      setWindowDimensions(getWindowDimensions(window))
     }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
-  return windowDimensions;
+  return windowDimensions
 }
