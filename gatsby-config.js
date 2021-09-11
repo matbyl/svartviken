@@ -18,7 +18,7 @@ module.exports = {
     feedUrl: 'https://svartviken.netlify.com/rss.xml',
     imageUrl: 'https://svartviken.netlify.com/svartviken-podcast-cover.jpg',
     docs: 'http://example.com/rss/docs.html',
-    copyright: '2019 Svartviken',
+    copyright: '2021 Svartviken',
     language: 'se',
     categories: ['RP', 'Roleplaying'],
   },
@@ -104,13 +104,18 @@ module.exports = {
               const storageRoot = storageRootConfig.config.storageRoot
               const formatEpisode = (title, episode) => {
                 const url = makeStorageUrl(storageRoot, episode.filename)
-                const filename = (new URL(url)).pathname.replace(/^\//, '')
+                const guid = (new URL(url)).pathname.replace(/^\//, '')
+                const oldStyleGuid = 'https://www.svartvikenrp.se/?name=' + guid
+                var chosenGuid = guid
+                if (episode.pubDate && (Date.parse(episode.pubDate) < Date.parse("2021-09-15"))) {
+                  chosenGuid = oldStyleGuid // Use old style of guid for anything published before the website launch.
+                }
                 return {
                   title: title,
                   description: episode.description.description,
                   date: episode.pubDate,
                   url: site.siteMetadata.siteUrl + '/episodes/' + episode.id,
-                  guid: filename,
+                  guid: chosenGuid,
                   enclosure: {
                     url: url,
                     length: episode.duration,
