@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import tw, { styled } from 'twin.macro'
 import Head from '../components/head'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import richText from '../components/RichText'
 
 import { Header, HeaderContent } from '../components/Header'
 import { Episode } from '../components/Episode'
@@ -31,8 +31,9 @@ const OneShot = ({ data }) => {
           <Title>{data.contentfulOneshot.title}</Title>
           {data.contentfulOneshot.description ? (
             <Description>
-              {documentToReactComponents(
-                JSON.parse(data.contentfulOneshot.description.raw)
+              {richText(
+                JSON.parse(data.contentfulOneshot.description.raw),
+                new Map(data.contentfulOneshot.description.references)
               )}
             </Description>
           ) : null}
@@ -56,6 +57,18 @@ export const query = graphql`
       title
       description {
         raw
+        references {
+          contentful_id
+          internal {
+            contentDigest
+            owner
+            type
+          }
+          about_richtext {
+            raw
+          }
+          id
+        }
       }
       image {
         fluid(maxWidth: 800) {
