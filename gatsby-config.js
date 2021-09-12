@@ -70,31 +70,44 @@ module.exports = {
           },
           custom_elements: [
             { 'itunes:author': 'Svartviken' },
+            { 'itunes:explicit': 'no' },
             { 'itunes:owner': [
               { 'itunes:name': 'Svartviken Rollspelspodd' },
               { 'itunes:email': 'svartvikenrp@gmail.com' },
             ] },
             { 'itunes:image': { _attr: { href: site.siteMetadata.imageUrl } } },
             {
-              'itunes:category': {
-                _attr: {
-                  text: 'Arts &amp; Entertainment',
-                },
-              },
+              'itunes:category': [
+                { _attr: { text: 'Arts' } },
+                { 'itunes:category': { _attr: { text: 'Performing Arts' } } },
+              ]
             },
             {
-              'itunes:category': {
-                _attr: {
-                  text: 'Entertainment',
-                },
-              },
+              'itunes:category': [
+                { _attr: { text: 'Leisure' } },
+                { 'itunes:category': { _attr: { text: 'Games' } } },
+                { 'itunes:category': { _attr: { text: 'Hobbies' } } },
+              ]
+            },
+            {
+              'itunes:category': [
+                { _attr: { text: 'Fiction' } },
+                { 'itunes:category': { _attr: { text: 'Drama' } } },
+                { 'itunes:category': { _attr: { text: 'Science Fiction' } } },
+              ]
+            },
+            {
+              'itunes:category': [
+                { _attr: { text: 'International' } },
+                { 'itunes:category': { _attr: { text: 'Swedish' } } },
+              ]
             },
             { 'spotify:countryOfOrigin': 'sv' },
             { 'googleplay:author': 'Svartviken' },
             {
               'googleplay:category': {
                 _attr: {
-                  text: 'Games &amp; Hobbies',
+                  text: 'Games & Hobbies',
                 },
               },
             },
@@ -140,18 +153,14 @@ module.exports = {
                   enclosure: {
                     url: url,
                     length: totalseconds,
-                    type: 'mp3',
+                    type: 'audio/mpeg',
                   },
                   custom_elements: [
                     { 'itunes:explicit': 'no' },
                     { 'itunes:duration': totalseconds },
                     { 'itunes:episode': isNaN(parseInt(episodeNr)) ? null : episodeNr },
-                    { 'itunes:image': useImage ? {
-                      _attr: {
-                        href: 'https:' + image.file.url
-                      }
-                    } : null}
-                  ],
+                  ]
+                  + useImage ? [ { 'itunes:image': { _attr: { href: 'https:' + image.file.url } } } ] : []
                 }
               }
               const campaignEpisodes = allContentfulCampaign.edges.reduce(
