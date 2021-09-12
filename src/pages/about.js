@@ -100,7 +100,7 @@ export default class AboutPage extends React.Component {
                       <b>Debut: </b> {node.debut}
                     </li>
                     <li>
-                      <b>Favorit rollspel: </b>
+                      <b>Favoritrollspel: </b>
                       {node.favoriteRpg}
                     </li>
                     <li>
