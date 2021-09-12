@@ -273,6 +273,18 @@ export const pageQuery = graphql`
           }
           description {
             raw
+            references {
+              contentful_id
+              internal {
+                contentDigest
+                owner
+                type
+              }
+              about_richtext {
+                raw
+              }
+              id
+            }
           }
           image {
             fluid(maxWidth: 800) {
