@@ -6,8 +6,10 @@ import richText from '../components/RichText'
 
 import { CardList, Card } from '../components/CardList'
 
-export default class CollaborationsPage extends React.Component {
-  render() {
+const CollaborationsPage = ({data}) => {
+
+  const collaborations = data.allContentfulCollaboration.edges.map(({node}) => node).sort((a, b) => a.weight - b.weight);
+
     return (
       <div className="min-w-full">
         <Head title="Våra samarbeten" />
@@ -17,9 +19,9 @@ export default class CollaborationsPage extends React.Component {
           </HeaderContent>
         </Header>
         <CardList>
-          {this.props.data.allContentfulCollaboration.edges.map(({ node }) => {
+          {collaborations.map(collaboration => {
             const references = new Map(
-              node.description.references.map(x => [
+              collaboration.description.references.map(x => [
                 x.contentful_id,
                 { id: x.id, type: x.internal.type },
               ])
@@ -27,16 +29,19 @@ export default class CollaborationsPage extends React.Component {
 
             return (
               <Card
-                title={node.name}
-                image={node.logo.fluid.src}
-              >{richText(JSON.parse(node.description.raw), references)}</Card>
+                title={collaboration.name}
+                image={collaboration.logo.fluid.src}
+              >{richText(JSON.parse(collaboration.description.raw), references)}</Card>
             )
           })}
         </CardList>
       </div>
     )
-  }
+  
 }
+
+
+export default CollaborationsPage;
 
 export const pageQuery = graphql`
   query {
@@ -44,6 +49,7 @@ export const pageQuery = graphql`
       edges {
         node {
           name
+          weight
           logo {
             fluid(maxWidth: 800) {
               src

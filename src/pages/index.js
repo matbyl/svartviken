@@ -4,6 +4,7 @@ import { graphql } from 'gatsby'
 import HeaderAlpha from './../assets/images/header-alpha.svg'
 import tw, { styled } from 'twin.macro'
 import logo from './../assets/images/svartviken-logo.jpg'
+import SpotifyPodcastBadge from './../assets/icons/spotify-badge/SVG/spotify-podcast-badge-wht-blk-330x80.svg'
 
 import CampaignCardList from '../components/CampaignCardList'
 import OneshotCardList from '../components/OneshotCardList'
@@ -16,7 +17,7 @@ import ReactMarkdown from 'react-markdown'
 import richText from '../components/RichText'
 
 const HomeHeader = styled.header`
-  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:py-12`};
+  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:pt-12 md:pb-0`};
 `
 
 const LeftColumn = styled.div`
@@ -178,12 +179,19 @@ class SvartvikenIndex extends React.Component {
 
           <RightColumn>
             <Logo src={logo} alt="svartviken-logo" />
+            <a
+              href="https://open.spotify.com/show/7hJq6WolcdKx36mcxxs8ex?si=oO7PHuZeRPy_OLrJufwqMg&dl_branch=1"
+              target="_blank"
+              className="m-auto mt-16 z-50 cursor-pointer"
+            >
+              <img src={SpotifyPodcastBadge} alt="spotify-podcast-badge" />
+            </a>
           </RightColumn>
         </HomeHeader>
         <img
           src={HeaderAlpha}
           alt="hero-banner-bottom-alpha"
-          className="header-bottom -my-1"
+          className="header-bottom -my-8"
         />
 
         <MainSection>
