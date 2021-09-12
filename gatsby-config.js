@@ -18,8 +18,8 @@ module.exports = {
     feedUrl: 'https://svartviken.netlify.com/rss.xml',
     imageUrl: 'https://svartviken.netlify.com/svartviken-podcast-cover.jpg',
     docs: 'http://example.com/rss/docs.html',
-    copyright: '2019 Svartviken',
-    language: 'se',
+    copyright: '2021 Svartviken',
+    language: 'sv',
     categories: ['RP', 'Roleplaying'],
   },
   pathPrefix: '/gatsby-starter-blog',
@@ -66,31 +66,48 @@ module.exports = {
           custom_namespaces: {
             itunes: 'http://www.itunes.com/dtds/podcast-1.0.dtd',
             googleplay: 'http://www.google.com/schemas/play-podcasts/1.0',
+            spotify: 'http://www.spotify.com/ns/rss',
           },
           custom_elements: [
             { 'itunes:author': 'Svartviken' },
-            { 'itunes:owner': 'Svartviken Rollspelspodd' },
-            { 'itunes:email': 'svartvikenrp@gmail.com' },
-            { 'itunes:image': site.siteMetadata.imageUrl },
+            { 'itunes:explicit': 'no' },
+            { 'itunes:owner': [
+              { 'itunes:name': 'Svartviken Rollspelspodd' },
+              { 'itunes:email': 'svartvikenrp@gmail.com' },
+            ] },
+            { 'itunes:image': { _attr: { href: site.siteMetadata.imageUrl } } },
             {
-              'itunes:category': {
-                _attr: {
-                  text: 'Arts &amp; Entertainment',
-                },
-              },
+              'itunes:category': [
+                { _attr: { text: 'Arts' } },
+                { 'itunes:category': { _attr: { text: 'Performing Arts' } } },
+              ]
             },
             {
-              'itunes:category': {
-                _attr: {
-                  text: 'Entertainment',
-                },
-              },
+              'itunes:category': [
+                { _attr: { text: 'Leisure' } },
+                { 'itunes:category': { _attr: { text: 'Games' } } },
+                { 'itunes:category': { _attr: { text: 'Hobbies' } } },
+              ]
             },
+            {
+              'itunes:category': [
+                { _attr: { text: 'Fiction' } },
+                { 'itunes:category': { _attr: { text: 'Drama' } } },
+                { 'itunes:category': { _attr: { text: 'Science Fiction' } } },
+              ]
+            },
+            {
+              'itunes:category': [
+                { _attr: { text: 'International' } },
+                { 'itunes:category': { _attr: { text: 'Swedish' } } },
+              ]
+            },
+            { 'spotify:countryOfOrigin': 'sv' },
             { 'googleplay:author': 'Svartviken' },
             {
               'googleplay:category': {
                 _attr: {
-                  text: 'Games &amp; Hobbies',
+                  text: 'Games & Hobbies',
                 },
               },
             },
@@ -102,26 +119,48 @@ module.exports = {
               query: { site, storageRootConfig, allContentfulCampaign, allContentfulOneshot },
             }) => {
               const storageRoot = storageRootConfig.config.storageRoot
-              const formatEpisode = (title, episode) => {
+              const formatEpisode = (title, image, episode) => {
+                // Itunes only wants images larger than 1400x1400
+                const useImage = image.file.url && (image.file.details.image.width >= 1400) && (image.file.details.image.height >= 1400)
                 const url = makeStorageUrl(storageRoot, episode.filename)
                 const filename = (new URL(url)).pathname.replace(/^\//, '')
+                const episodeNr = filename.split('-', 2)[0]
+                const oldStyleGuid = 'https://www.svartvikenrp.se/?name=' + filename
+                var chosenGuid = filename
+                if (episode.pubDate && (Date.parse(episode.pubDate) < Date.parse("2021-09-15"))) {
+                  chosenGuid = oldStyleGuid // Use old style of guid for anything published before the website launch.
+                }
+                var totalseconds = 0
+                if (episode.duration) {
+                  const parts = episode.duration.split(":")
+                  if (parts.length === 2) {
+                    const minutes = parseInt(parts[0])
+                    const seconds = parseInt(parts[1])
+                    totalseconds = (isNaN(minutes) ? 0 : minutes * 60) + (isNaN(seconds) ? 0 : seconds)
+                  } else if (parts.length === 3) {
+                    const hours = parseInt(parts[0])
+                    const minutes = parseInt(parts[1])
+                    const seconds = parseInt(parts[2])
+                    totalseconds = (isNaN(hours) ? 0 : hours * 60 * 60) + (isNaN(minutes) ? 0 : minutes * 60) + (isNaN(seconds) ? 0 : seconds)
+                  }
+                }
                 return {
                   title: title,
                   description: episode.description.description,
                   date: episode.pubDate,
                   url: site.siteMetadata.siteUrl + '/episodes/' + episode.id,
-                  guid: filename,
+                  guid: chosenGuid,
                   enclosure: {
                     url: url,
-                    length: episode.duration,
-                    type: 'mp3',
+                    length: totalseconds,
+                    type: 'audio/mpeg',
                   },
                   custom_elements: [
-                    {
-                      'itunes:explicit': 'no',
-                      'itunes:duration': episode.duration,
-                    },
-                  ],
+                    { 'itunes:explicit': 'no' },
+                    { 'itunes:duration': totalseconds },
+                    { 'itunes:episode': isNaN(parseInt(episodeNr)) ? null : episodeNr },
+                  ]
+                  + useImage ? [ { 'itunes:image': { _attr: { href: 'https:' + image.file.url } } } ] : []
                 }
               }
               const campaignEpisodes = allContentfulCampaign.edges.reduce(
@@ -134,6 +173,7 @@ module.exports = {
                           edge.node.frontmatter,
                           formatEpisode(
                             `${edge.node.title} - Avsnitt ${episode.number} - ${episode.title}`,
+                            edge.node.image,
                             episode
                           )
                         )
@@ -153,6 +193,7 @@ module.exports = {
                           edge.node.frontmatter,
                           formatEpisode(
                             `${edge.node.title} - Avsnitt ${episode.number}`,
+                            edge.node.image,
                             episode
                           )
                         )
@@ -178,6 +219,17 @@ module.exports = {
                     node{
                       id
                       title
+                      image {
+                        file {
+                          url
+                          details {
+                            image {
+                              width
+                              height
+                            }
+                          }
+                        }
+                      }
                       episodes {
                         id
                         title
@@ -197,6 +249,17 @@ module.exports = {
                     node{
                       id
                       title
+                      image {
+                        file {
+                          url
+                          details {
+                            image {
+                              width
+                              height
+                            }
+                          }
+                        }
+                      }
                       episodes {
                         id
                         number
