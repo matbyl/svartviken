@@ -86,7 +86,7 @@ const menuItem = (url, name, onClick, inNewTab = false) => (
     <Link
       to={url}
       onClick={onClick}
-      className="hover:text-white"
+      className="text-white"
       target={inNewTab ? '_blank' : ''}
     >
       {name}
@@ -96,7 +96,7 @@ const menuItem = (url, name, onClick, inNewTab = false) => (
 
 const externalMenuItem = (url, name) => (
   <li className="py-2 pl-5">
-    <a href={url} className="hover:text-white" target="_blank" rel="noopener">
+    <a href={url} className="text-white" target="_blank" rel="noopener">
       {name}
     </a>
   </li>
@@ -165,7 +165,7 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
           <img
             src={MenuIcon}
             className="align-self-end cursor-pointer m-4 w-8 h-8"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => setMenuOpen(true)}
             alt="menu-icon"
           />
         )}
