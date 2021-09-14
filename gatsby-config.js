@@ -1,6 +1,8 @@
 const { Howl } = require('howler')
 
 const makeStorageUrl = require('./src/utils/makeStorageUrl')
+const baseUrl = 'https://svartviken.netlify.com'
+//const baseUrl = 'https://www.svartvikenrp.se'
 
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -14,10 +16,9 @@ module.exports = {
     title: 'Svartviken rollspelspodd',
     author: 'Mathias Frithiofsson Bylund',
     description: 'En rollspelspodd.',
-    siteUrl: 'https://svartviken.netlify.com',
-    feedUrl: 'https://svartviken.netlify.com/rss.xml',
-    imageUrl: 'https://svartviken.netlify.com/svartviken-podcast-cover.jpg',
-    docs: 'http://example.com/rss/docs.html',
+    siteUrl: baseUrl,
+    feedUrl: baseUrl + '/rss.xml',
+    imageUrl: baseUrl + '/svartviken-podcast-cover.png',
     copyright: '2021 Svartviken',
     language: 'sv',
     categories: ['RP', 'Roleplaying'],
