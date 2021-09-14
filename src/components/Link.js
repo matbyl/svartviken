@@ -1,9 +1,9 @@
 import { Link } from 'gatsby'
 import tw, { styled } from 'twin.macro'
 
-const linkStyle = component => styled(component)`
+export const ExternalLink = styled.a`
   ${tw`text-blue-500`}
 `
-
-export const ExternalLink = linkStyle(styled.a)
-export const InternalLink = linkStyle(Link)
+export const InternalLink = styled(Link)`
+  ${tw`text-blue-500`}
+`

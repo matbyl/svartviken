@@ -6,6 +6,7 @@ import TwitterIcon from './../assets/icons/twitter.svg'
 import CloseIcon from './../assets/icons/white-close.svg'
 import MenuIcon from './../assets/icons/white-menu.svg'
 import RssIcon from './../assets/icons/rss-feed.svg'
+import YoutubeIcon from './../assets/icons/yt_logo_mono_dark.svg'
 import tw, { styled } from 'twin.macro'
 
 import { connect } from 'react-redux'
@@ -149,6 +150,11 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
               'https://twitter.com/svartvikenrp',
               'twitter'
             )}
+            {socialMediaIcon(
+              YoutubeIcon,
+              'https://twitter.com/svartvikenrp',
+              'youtube'
+            )}
             <DiscordLink />
             {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
           </li>
@@ -197,6 +203,11 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
           TwitterIcon,
           'https://twitter.com/svartvikenrp',
           'twitter'
+        )}
+        {socialMediaIcon(
+          YoutubeIcon,
+          'https://twitter.com/svartvikenrp',
+          'youtube'
         )}
         <DiscordLink />
         {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}

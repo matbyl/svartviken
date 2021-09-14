@@ -22,7 +22,7 @@ export const Card = ({ title, image, children }) => (
         {title}
       </h1>
       <div className="flex flex-col md:flex-row">
-        <div className="w-64 m-auto md:flex-1 md:mr-8">
+        <div className="w-64 mx-auto md:flex-1 md:mr-8">
           <img src={image} />
         </div>
         <div className="flex-1 mt-4 md:mt-0">{children}</div>
