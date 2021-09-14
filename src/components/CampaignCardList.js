@@ -59,12 +59,17 @@ class CampaignCardList extends React.Component {
                   <CampaignContent>
                     <CampaignType type="campaign">Kampanj</CampaignType>
 
-                    {system1 !== null ? <div>{system1[0].systemName}</div> : null}
+                    {system1 !== null ? (
+                      <div>{system1[0].systemName}</div>
+                    ) : null}
                     <Title to={'/campaigns/' + id}>{title}</Title>
 
                     {description ? (
                       <div className="w-11/12">
-                        {richText(JSON.parse(description.raw), new Map(description.references))}
+                        {richText(
+                          JSON.parse(description.raw),
+                          new Map(description.references)
+                        )}
                       </div>
                     ) : null}
                   </CampaignContent>

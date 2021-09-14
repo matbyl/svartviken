@@ -35,10 +35,7 @@ const CollaborationsPage = ({ data }) => {
               title={collaboration.name}
               image={collaboration.logo.fluid.src}
             >
-                {richText(
-                  JSON.parse(collaboration.description.raw),
-                  references
-                )}
+              {richText(JSON.parse(collaboration.description.raw), references)}
               <ul className="mt-8">
                 {collaboration.link.map(l => (
                   <li key={l}>

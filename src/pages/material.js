@@ -43,7 +43,9 @@ export const pageQuery = graphql`
             raw
           }
           cover {
-            fluid {src}
+            fluid {
+              src
+            }
           }
           media {
             file {

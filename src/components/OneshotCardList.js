@@ -64,7 +64,10 @@ class OneshotCardList extends React.Component {
 
                     {description ? (
                       <div className="w-11/12">
-                        {richText(JSON.parse(description.raw), new Map(description.references))}
+                        {richText(
+                          JSON.parse(description.raw),
+                          new Map(description.references)
+                        )}
                       </div>
                     ) : null}
                   </CampaignContent>

@@ -115,19 +115,13 @@ const FullscreenAudioPlayer = ({ title, supTitle, filename, close }) => {
       )}
       <AudioSeekbar />
       <div className="m-auto">
-        <ControllButton
-          icon={replay30IconWhite}
-          action={() => backward(30)}
-        />
+        <ControllButton icon={replay30IconWhite} action={() => backward(30)} />
         <PlayPauseButton
           className="w-32"
           playing={playing}
           togglePlayPause={togglePlayPause}
         />
-        <ControllButton
-          icon={forward30IconWhite}
-          action={() => forward(30)}
-        />
+        <ControllButton icon={forward30IconWhite} action={() => forward(30)} />
       </div>
     </Container>
   )

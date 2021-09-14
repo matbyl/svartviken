@@ -1,4 +1,3 @@
-
 const hours = time => Math.floor(time / 3600)
 const minutes = time => Math.floor(time / 60) % 60
 const seconds = time => Math.floor(time % 60)

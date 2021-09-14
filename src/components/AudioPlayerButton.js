@@ -60,7 +60,13 @@ const DisabledMediaButton = styled.button`
   }
 `
 
-const AudioPlayerButton = ({ light, selectedEpisode, setEpisode, episode, playingAudio }) =>
+const AudioPlayerButton = ({
+  light,
+  selectedEpisode,
+  setEpisode,
+  episode,
+  playingAudio,
+}) =>
   selectedEpisode === episode && playingAudio ? (
     <DisabledMediaButton aria-label="disabled-play-episode-button">
       <img src={light ? WhiteIcon : BlackIcon} alt="play-icon" />
@@ -82,7 +88,8 @@ const mapDispatchToProps = dispatch => {
   return {
     play: () => dispatch({ type: ACTIONS.PLAY }),
     pause: () => dispatch({ type: ACTIONS.PAUSE }),
-    setEpisode: payload => () => dispatch({type: ACTIONS.SET_EPISODE, payload})
+    setEpisode: payload => () =>
+      dispatch({ type: ACTIONS.SET_EPISODE, payload }),
   }
 }
 

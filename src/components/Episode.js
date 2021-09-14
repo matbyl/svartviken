@@ -23,9 +23,9 @@ export const Episode = ({ episode }) => (
   <EpisodeContent>
     <EpisodeDescription>
       {!episode.title ? (
-          <EpisodeTitleLink to={'/episodes/' + episode.id}>
-            Avsnitt {episode.number}
-          </EpisodeTitleLink>
+        <EpisodeTitleLink to={'/episodes/' + episode.id}>
+          Avsnitt {episode.number}
+        </EpisodeTitleLink>
       ) : (
         <div>
           <EpisodeNumber>Avsnitt {episode.number}</EpisodeNumber>
