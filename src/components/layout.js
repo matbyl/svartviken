@@ -261,13 +261,15 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
           'https://twitter.com/svartvikenrp',
           'twitter'
         )}
+        {socialMediaIcon(
+          YoutubeIcon,
+          'https://www.youtube.com/channel/UCXQlUFfLa8N28WPbe_8GWWg',
+          'youtube'
+        )}
         <DiscordLink />
         {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
       </FooterSocialMedia>
       <p className="text-white mt-5">Crafted with 🎲</p>
-      <p className="text-white">
-        Copyright © 2021 Svartviken, All Rights Reserved.
-      </p>
     </Footer>
   )
 
