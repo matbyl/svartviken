@@ -206,7 +206,7 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
         )}
         {socialMediaIcon(
           YoutubeIcon,
-          'https://twitter.com/svartvikenrp',
+          'https://www.youtube.com/channel/UCXQlUFfLa8N28WPbe_8GWWg',
           'youtube'
         )}
         <DiscordLink />
