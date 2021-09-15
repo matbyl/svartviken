@@ -46,7 +46,7 @@ const EpisodeDescription = styled(ReactMarkdown)`
 `
 
 const RightColumn = styled.div`
-  ${tw`sm:w-full lg:w-1/2`};
+  ${tw`mt-12 sm:w-full lg:w-1/2`};
 
   height: 100%;
   flex: 50%;
@@ -182,7 +182,7 @@ class SvartvikenIndex extends React.Component {
             <a
               href="https://open.spotify.com/show/7hJq6WolcdKx36mcxxs8ex?si=oO7PHuZeRPy_OLrJufwqMg&dl_branch=1"
               target="_blank"
-              className="m-auto mt-16 z-50 cursor-pointer"
+              className="mt-4 w-48 mb-12 m-auto md:mb-0 md:mt-16 z-50 cursor-pointer"
             >
               <img src={SpotifyPodcastBadge} alt="spotify-podcast-badge" />
             </a>

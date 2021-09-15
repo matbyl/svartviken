@@ -5,10 +5,7 @@ export const CardList = styled.div`
 `
 
 const CardBox = styled.div`
-  ${tw`md:shadow-xl bg-white rounded p-4`}
-
-  width: 700px;
-  min-width: 700px;
+  ${tw`md:shadow-xl md:w-10/12 lg:w-5/12 bg-white rounded p-4`}
 `
 
 const CardContent = styled.div`
