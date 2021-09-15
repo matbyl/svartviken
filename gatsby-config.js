@@ -15,7 +15,7 @@ module.exports = {
   siteMetadata: {
     title: 'Svartviken rollspelspodd',
     author: 'Mathias Frithiofsson Bylund',
-    description: 'En rollspelspodd.',
+    description: 'En actual-play rollspelspodd från västkusten som tycker om att testa nya spel!',
     siteUrl: baseUrl,
     feedUrl: baseUrl + '/feed.xml',
     imageUrl: baseUrl + '/svartviken-podcast-cover.png',
