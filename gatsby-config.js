@@ -17,7 +17,7 @@ module.exports = {
     author: 'Mathias Frithiofsson Bylund',
     description: 'En rollspelspodd.',
     siteUrl: baseUrl,
-    feedUrl: baseUrl + '/rss.xml',
+    feedUrl: baseUrl + '/feed.xml',
     imageUrl: baseUrl + '/svartviken-podcast-cover.png',
     copyright: '2021 Svartviken',
     language: 'sv',
@@ -276,7 +276,7 @@ module.exports = {
                 }
               }
             `,
-            output: '/rss.xml',
+            output: '/feed.xml',
             title: 'Svartvikens Rollspelspodd',
           },
         ],

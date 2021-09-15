@@ -156,7 +156,7 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
               'youtube'
             )}
             <DiscordLink />
-            {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
+            {socialMediaIcon(RssIcon, '/feed.xml', 'rss')}
           </li>
         </ul>
 
@@ -210,7 +210,7 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
           'youtube'
         )}
         <DiscordLink />
-        {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
+        {socialMediaIcon(RssIcon, '/feed.xml', 'rss')}
       </NavBarRow>
     </NavBar>
   )
@@ -267,7 +267,7 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
           'youtube'
         )}
         <DiscordLink />
-        {socialMediaIcon(RssIcon, '/rss.xml', 'rss')}
+        {socialMediaIcon(RssIcon, '/feed.xml', 'rss')}
       </FooterSocialMedia>
       <p className="text-white mt-5">Crafted with 🎲</p>
     </Footer>
