@@ -1,8 +1,7 @@
 const { Howl } = require('howler')
 
 const makeStorageUrl = require('./src/utils/makeStorageUrl')
-const baseUrl = 'https://svartviken.netlify.com'
-//const baseUrl = 'https://www.svartvikenrp.se'
+const baseUrl = 'https://www.svartvikenrp.se'
 
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
