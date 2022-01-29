@@ -182,7 +182,7 @@ class SvartvikenIndex extends React.Component {
             <a
               href="https://open.spotify.com/show/7hJq6WolcdKx36mcxxs8ex?si=oO7PHuZeRPy_OLrJufwqMg&dl_branch=1"
               target="_blank"
-              className="mt-4 w-48 mb-12 m-auto md:mb-0 md:mt-16 z-50 cursor-pointer"
+              className="mt-4 w-48 mb-12 m-auto md:mb-0 md:mt-16 z-10 cursor-pointer"
             >
               <img src={SpotifyPodcastBadge} alt="spotify-podcast-badge" />
             </a>

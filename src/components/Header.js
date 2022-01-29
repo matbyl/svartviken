@@ -2,7 +2,7 @@ import tw, { styled } from 'twin.macro'
 
 export const Header = styled.div`
   ${tw`bg-cover bg-center`}
-  height: 350px;
+  min-height: 350px;
   background-color: black;
   overflow: hidden;
   background-image: ${props =>
@@ -13,7 +13,7 @@ export const Header = styled.div`
 `
 
 export const HeaderContent = styled.div`
-  ${tw`m-auto text-center`};
+  ${tw`m-auto my-48 text-center`};
 `
 
 export const HeaderTitle = styled.h1`
