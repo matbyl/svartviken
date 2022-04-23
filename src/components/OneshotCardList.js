@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import tw, { styled } from 'twin.macro'
 import { Episode } from './Episode'
+import SystemDisplay from './SystemDisplay'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import richText from './RichText'
 
@@ -59,7 +60,8 @@ class OneshotCardList extends React.Component {
                   <CampaignContent>
                     <CampaignType type="one-shot">Oneshot</CampaignType>
 
-                    <div>{system.systemName}</div>
+                    <SystemDisplay system={system} />
+
                     <Title to={'/oneshots/' + id}>{title}</Title>
 
                     {description ? (
