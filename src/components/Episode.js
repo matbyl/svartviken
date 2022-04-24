@@ -6,6 +6,7 @@ import { Link } from 'gatsby'
 import AudioPlayerButton from './AudioPlayerButton'
 import ReactMarkdown from 'react-markdown'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { episodeUrl } from '../utils/urls'
 
 export const EpisodeTitleLink = styled(Link)`
   ${tw`text-black`}
@@ -23,13 +24,13 @@ export const Episode = ({ episode }) => (
   <EpisodeContent>
     <EpisodeDescription>
       {!episode.title ? (
-        <EpisodeTitleLink to={'/episodes/' + episode.id}>
+        <EpisodeTitleLink to={ episodeUrl(episode.id) }>
           Avsnitt {episode.number}
         </EpisodeTitleLink>
       ) : (
         <div>
           <EpisodeNumber>Avsnitt {episode.number}</EpisodeNumber>
-          <EpisodeTitleLink to={'/episodes/' + episode.id}>
+          <EpisodeTitleLink to={ episodeUrl(episode.id) }>
             {episode.title || ''}
           </EpisodeTitleLink>
         </div>

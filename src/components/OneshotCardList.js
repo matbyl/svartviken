@@ -59,7 +59,7 @@ class OneshotCardList extends React.Component {
                   <CampaignContent>
                     <CampaignType type="one-shot">Oneshot</CampaignType>
 
-                    <div>{system.systemName}</div>
+                    <div>{system !== null ? system.systemName : ""}</div>
                     <Title to={'/oneshots/' + id}>{title}</Title>
 
                     {description ? (
