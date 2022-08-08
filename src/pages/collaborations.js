@@ -33,7 +33,7 @@ const CollaborationsPage = ({ data }) => {
             <Card
               key={collaboration.id}
               title={collaboration.name}
-              image={collaboration.logo.fluid ? collaboration.logo.fluid.src : collaboration.logo.publicURL}
+              image={collaboration.logo.fluid.src}
             >
               {richText(JSON.parse(collaboration.description.raw), references)}
               <ul className="mt-8">
@@ -68,7 +68,6 @@ export const pageQuery = graphql`
             fluid(maxWidth: 800) {
               src
             }
-            publicURL
           }
           description {
             raw
