@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import tw, { styled } from 'twin.macro'
 import { Episode } from './Episode'
+import SystemDisplay from './SystemDisplay'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import richText from './RichText'
 
@@ -59,9 +60,8 @@ class CampaignCardList extends React.Component {
                   <CampaignContent>
                     <CampaignType type="campaign">Kampanj</CampaignType>
 
-                    {system1 !== null ? (
-                      <div>{system1[0].systemName}</div>
-                    ) : null}
+                    <SystemDisplay firstOf={system1}/>
+
                     <Title to={'/campaigns/' + id}>{title}</Title>
 
                     {description ? (
