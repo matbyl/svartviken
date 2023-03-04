@@ -23,7 +23,6 @@
     "gatsby-source-contentful": "^5.10.0",
     "howler": "^2.2.3",
     "lodash": "^4.17.20",
-    "node-sass": "^6.0.1",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "react": "^17.0.2",
@@ -50,6 +49,7 @@
     "gatsby-plugin-purgecss": "^6.0.2",
     "gh-pages": "^1.2.0",
     "prettier": "^1.14.2",
+    "sass": "^1.58.3",
     "tailwind": "^4.0.0",
     "tailwindcss": "^2.2.7",
     "twin.macro": "^2.6.2"
