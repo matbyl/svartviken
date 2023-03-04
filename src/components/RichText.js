@@ -2,6 +2,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Link } from 'gatsby'
 import { ExternalLink, InternalLink } from '../components/Link'
 import { INLINES, BLOCKS } from '@contentful/rich-text-types'
+import { campaignUrl, episodeUrl, oneshotUrl } from '../utils/urls'
 
 const options = references => ({
   renderNode: {
@@ -15,19 +16,19 @@ const options = references => ({
         switch (reference.type) {
           case 'ContentfulCampaign':
             return (
-              <InternalLink to={'/campaigns/' + reference.id}>
+              <InternalLink to={campaignUrl(reference.id)}>
                 {children}
               </InternalLink>
             )
           case 'ContentfulEpisode':
             return (
-              <InternalLink to={'/episodes/' + reference.id}>
+              <InternalLink to={episodeUrl(reference.id)}>
                 {children}
               </InternalLink>
             )
           case 'ContentfulOneshot':
             return (
-              <InternalLink to={'/oneshots/' + reference.id}>
+              <InternalLink to={oneshotUrl(reference.id)}>
                 {children}
               </InternalLink>
             )
