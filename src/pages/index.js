@@ -14,7 +14,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Link } from 'gatsby'
 import Head from '../components/head'
 import ReactMarkdown from 'react-markdown'
-import richText from '../components/RichText'
+import {trimm, trimmedRichTextedRichText} from '../components/RichText'
 
 const HomeHeader = styled.header`
   ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:pt-12 md:pb-0`};
@@ -159,9 +159,11 @@ class SvartvikenIndex extends React.Component {
               </CampaignTitle>
               {latestCampaign.description ? (
                 <CampaignDescription>
-                  {richText(
+                  {trimmedRichText(
                     JSON.parse(latestCampaign.description.raw),
-                    new Map()
+                    new Map(),
+                    30,
+                    <a href={'/campaigns/' + latestCampaign.id}>Read more</a>
                   )}
                 </CampaignDescription>
               ) : null}
