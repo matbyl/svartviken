@@ -8,13 +8,7 @@ const SystemName = styled.div`
 class SystemDisplay extends React.Component {
     constructor(props) {
         super(props)
-        if (props.system !== null) {
-            this.displayName = props.system.systemName
-        } else if (props.firstOf !== null && props.firstOf.length > 0) {
-            this.displayName = props.firstOf[0].systemName
-        } else {
-            this.displayName = null
-        }
+        this.displayName = props.system !== null ? props.system.systemName : null
     }
 
     render() {
@@ -26,7 +20,6 @@ class SystemDisplay extends React.Component {
 
 SystemDisplay.defaultProps = {
     system: null,
-    firstOf: null,
 }
 
 export default SystemDisplay
