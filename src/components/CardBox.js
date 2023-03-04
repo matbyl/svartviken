@@ -4,7 +4,7 @@ import tw, { styled } from 'twin.macro'
 import { Episode } from './Episode'
 import SystemDisplay from './SystemDisplay'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { trimm, trimmedRichTextedRichText } from './RichText'
+import { trimmedRichText } from './RichText'
 
 const Card = styled.div`
   ${tw`lg:w-1/2 w-full text-left flex-col lg:p-10 md:rounded`}
@@ -79,7 +79,7 @@ class CardBox extends React.Component {
                   JSON.parse(description.raw),
                   new Map(description.references),
                   30,
-                  <a href={'/campaigns/' + latestCampaign.id}>Read more</a>
+                  <a href={'/campaigns/' + id}>Read more</a>
                 )}
               </div>
             ) : null}
