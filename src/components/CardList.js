@@ -12,7 +12,7 @@ const CardContent = styled.div`
   ${tw`w-full my-4 md:my-0 md:p-8 max-w-2xl`}
 `
 
-export const Card = ({ title, image, children }) => (
+export const Card = ({ title, image, children}) => (
   <CardBox>
     <CardContent>
       <h1 className="block text-xl mb-8 w-full text-center md:text-left">

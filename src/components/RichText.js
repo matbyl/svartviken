@@ -1,7 +1,7 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Link } from 'gatsby'
 import { ExternalLink, InternalLink } from '../components/Link'
-import { INLINES } from '@contentful/rich-text-types'
+import { INLINES, BLOCKS } from '@contentful/rich-text-types'
 import { campaignUrl, episodeUrl, oneshotUrl } from '../utils/urls'
 
 const options = references => ({
@@ -37,6 +37,8 @@ const options = references => ({
         }
       }
     },
+    [BLOCKS.UL_LIST]: (node, children) => (<ul className="list-disc my-4">{children}</ul>),
+    [BLOCKS.LIST_ITEM]: (node,children) => (<li>{children}</li>) 
   },
 })
 

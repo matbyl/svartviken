@@ -130,6 +130,11 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
           )}
           {menuItem('/material', 'Material', () => setMenuOpen(false))}
           {externalMenuItem(
+            'https://www.patreon.com/svartvikenrp',
+            'Patreon',
+            () => setMenuOpen(false)
+          )}
+          {externalMenuItem(
             'https://shop.spreadshirt.se/svartvikenrp/all',
             'Poddshop',
             () => setMenuOpen(false)
@@ -182,6 +187,14 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
         <NavBarItem to={'/about'}>Om oss</NavBarItem> |{' '}
         <NavBarItem to={'/collaborations'}>Våra samarbeten</NavBarItem> |{' '}
         <NavBarItem to={'/material'}>Material</NavBarItem> |{' '}
+        <NavBarItem to={'/scenarios'}>Äventyr</NavBarItem> |{' '}
+        <ExternalNavBarItem
+          href="https://www.patreon.com/svartvikenrp"
+          target="_blank"
+        >
+          Patreon
+        </ExternalNavBarItem>{' '}
+        |{' '}
         <ExternalNavBarItem
           href="https://shop.spreadshirt.se/svartvikenrp/all"
           target="_blank"
