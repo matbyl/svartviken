@@ -10,14 +10,16 @@ import CampaignCardList from '../components/CampaignCardList'
 import OneshotCardList from '../components/OneshotCardList'
 import AudioPlayerButton from '../components/AudioPlayerButton'
 import SearchBox from '../components/SearchBox'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Link } from 'gatsby'
 import Head from '../components/head'
 import ReactMarkdown from 'react-markdown'
-import {trimmedRichText} from '../components/RichText'
+import { TrimmedRichTextDescription, MarkdownDescription } from '../components/Descriptions'
+import { campaignUrl } from '../utils/urls'
 
 const HomeHeader = styled.header`
   ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:pt-12 md:pb-0`};
+  position: relative;
+  z-index: 1;
 `
 
 const LeftColumn = styled.div`
@@ -34,10 +36,7 @@ const CampaignTitle = styled(Link)`
   ${tw`text-white text-xl mt-5 lg:text-6xl`}
 `
 
-const CampaignDescription = styled.div`
-  ${tw`text-lg pb-5`}
-`
-const EpisodeTitle = styled.h1`
+const EpisodeTitle = styled.h2`
   ${tw`text-lg lg:text-2xl`}
 `
 
@@ -157,19 +156,14 @@ class SvartvikenIndex extends React.Component {
               <CampaignTitle to={'/campaigns/' + latestCampaign.id}>
                 {latestCampaign.title}
               </CampaignTitle>
-              {latestCampaign.description ? (
-                <CampaignDescription>
-                  {trimmedRichText(
-                    JSON.parse(latestCampaign.description.raw),
-                    new Map(),
-                    30,
-                    <a href={'/campaigns/' + latestCampaign.id}>Read more</a>
-                  )}
-                </CampaignDescription>
-              ) : null}
+              <TrimmedRichTextDescription
+                description={latestCampaign.description}
+                readMore={campaignUrl(latestCampaign.id)}
+              />
+              <div className="pb-5" />
               <EpisodeTitle>{firstEpisodeOfLatestCampaign.title}</EpisodeTitle>
-              <EpisodeDescription
-                children={firstEpisodeOfLatestCampaign.description.description}
+              <MarkdownDescription
+                description={firstEpisodeOfLatestCampaign.description}
               />
 
               <AudioPlayerButton

@@ -2,18 +2,11 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import tw, { styled } from 'twin.macro'
 import Head from '../components/head'
-import richText from '../components/RichText'
 
 import { Header, HeaderContent } from '../components/Header'
 import { Episode } from '../components/Episode'
-
-const Title = styled.h1`
-  ${tw`text-white text-lg xl:text-6xl`};
-`
-
-const Description = styled.div`
-  ${tw`text-white text-base xl:text-xl`};
-`
+import { Title } from '../components/SeriesCard'
+import { RichTextDescription } from '../components/Descriptions'
 
 const Episodes = styled.ul`
   ${tw`flex flex-wrap justify-center w-full my-12 mx-auto `};
@@ -29,14 +22,7 @@ const OneShot = ({ data }) => {
       <Header backgroundImage={data.contentfulOneshot.image.fluid.src}>
         <HeaderContent className="container">
           <Title>{data.contentfulOneshot.title}</Title>
-          {data.contentfulOneshot.description ? (
-            <Description>
-              {richText(
-                JSON.parse(data.contentfulOneshot.description.raw),
-                new Map(data.contentfulOneshot.description.references)
-              )}
-            </Description>
-          ) : null}
+          <RichTextDescription description={data.contentfulOneshot.description} />
         </HeaderContent>
       </Header>
       <Episodes>

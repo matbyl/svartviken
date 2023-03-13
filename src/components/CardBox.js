@@ -5,6 +5,8 @@ import { Episode } from './Episode'
 import SystemDisplay from './SystemDisplay'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { trimmedRichText } from './RichText'
+import { TrimmedRichTextCardDescription, TrimmedRichTextDescription } from './Descriptions'
+import { campaignUrl } from '../utils/urls'
 
 const Card = styled.div`
   ${tw`lg:w-1/2 w-full text-left flex-col lg:p-10 md:rounded`}
@@ -30,7 +32,7 @@ const Title = styled(Link)`
 `
 
 const CampaignContent = styled.div`
-  ${tw`relative p-6 md:p-10 md:-mt-8 border-b`}
+  ${tw`relative px-6 pt-6 md:px-10 md:pt-10 md:-mt-8 border-b`}
 
   z-index: 1;
 `
@@ -66,23 +68,14 @@ class CardBox extends React.Component {
         <ContentWithEpisode>
           <CampaignContent>
             <CampaignType type={campaignType}>
-              {campaignType === this.CT_CAMPAIGN ? 'Kampanj' : 'One-shot'}
+              {campaignType === CardBox.CT_CAMPAIGN ? 'Kampanj' : 'One-shot'}
             </CampaignType>
 
             <SystemDisplay system={system} />
 
             <Title to={link}>{title}</Title>
 
-            {description ? (
-              <div className="w-11/12">
-                {trimmedRichText(
-                  JSON.parse(description.raw),
-                  new Map(description.references),
-                  30,
-                  <a href={'/campaigns/' + id}>Read more</a>
-                )}
-              </div>
-            ) : null}
+            <TrimmedRichTextCardDescription description={description} readMore={campaignUrl(id)} />
           </CampaignContent>
           {episodes && episodes.length > 0 ? (
             <Episode
