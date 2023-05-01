@@ -24,7 +24,7 @@ const Campaign = ({ data }) => {
       <Header backgroundImage={data.contentfulCampaign.image.fluid.src}>
         <HeaderContent className="container mx-auto">
           <Title>{data.contentfulCampaign.title}</Title>
-          <RichTextDescription description={data.contentfulCampaign.description} />
+          <RichTextDescription white description={data.contentfulCampaign.description} />
         </HeaderContent>
       </Header>
       <Episodes>

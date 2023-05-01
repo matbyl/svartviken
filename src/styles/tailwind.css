@@ -10,7 +10,7 @@
       @apply text-lg;
     }
     a {
-      @apply text-white hover:underline;
+      @apply hover:underline;
     }
   }
 

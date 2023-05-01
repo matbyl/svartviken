@@ -6,6 +6,8 @@ import richText from '../components/RichText'
 
 import { CardList, Card } from '../components/CardList'
 import { ExternalLink } from '../components/Link'
+import { LinkButton } from '../components/Button'
+import { RichTextDescription } from '../components/Descriptions'
 
 const CollaborationsPage = ({ data }) => {
   const collaborations = data.allContentfulCollaboration.edges
@@ -35,16 +37,15 @@ const CollaborationsPage = ({ data }) => {
               title={collaboration.name}
               image={collaboration.logo.fluid.src}
             >
-              {richText(JSON.parse(collaboration.description.raw), references)}
-              <ul className="mt-8">
-                {collaboration.link.map(l => (
-                  <li key={l}>
-                    <ExternalLink className="block" href={l}>
-                      {l}
-                    </ExternalLink>
-                  </li>
-                ))}
-              </ul>
+              <div className="flex-1">
+                <RichTextDescription description={collaboration.description} />
+              </div>
+
+              {collaboration.link.map(l => (
+                <LinkButton key={l} className="inline-block mt-4 mb-8 self-center " href={l}>
+                  Läs mer
+                </LinkButton>
+              ))}
             </Card>
           )
         })}

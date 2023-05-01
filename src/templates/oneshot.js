@@ -22,7 +22,7 @@ const OneShot = ({ data }) => {
       <Header backgroundImage={data.contentfulOneshot.image.fluid.src}>
         <HeaderContent className="container">
           <Title>{data.contentfulOneshot.title}</Title>
-          <RichTextDescription description={data.contentfulOneshot.description} />
+          <RichTextDescription white description={data.contentfulOneshot.description} />
         </HeaderContent>
       </Header>
       <Episodes>
