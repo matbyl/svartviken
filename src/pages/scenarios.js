@@ -32,7 +32,7 @@ const ScenariosPage = ({data}) => {
 
             return (<Card key={id} title={name} image={cover.fluid.src} link={link}>
               <div className="flex-1">{richText(JSON.parse(description.raw), references)}</div>
-              {link ? link.map(url => <LinkButton className="self-center justify-end mt-4" href={url}>Läs mer</LinkButton>):''}
+              {link ? link.map(url => <LinkButton className="self-center justify-end mt-4 mb-8" href={url}>Läs mer</LinkButton>):''}
             </Card>)
           })  
         }

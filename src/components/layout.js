@@ -129,6 +129,7 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
             setMenuOpen(false)
           )}
           {menuItem('/material', 'Material', () => setMenuOpen(false))}
+          {menuItem('/scenarios', 'Äventyr', () => setMenuOpen(false))}
           {externalMenuItem(
             'https://www.patreon.com/svartvikenrp',
             'Patreon',

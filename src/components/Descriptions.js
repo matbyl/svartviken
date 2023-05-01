@@ -3,7 +3,7 @@ import tw, { styled } from 'twin.macro'
 import richText, { trimmedRichText } from "./RichText";
 
 export const Description = styled.div`
-    ${tw`text-white text-base xl:text-xl max-w-prose m-auto px-4`}
+    ${tw`text-white text-base xl:text-xl max-w-prose m-auto`}
 `
 
 export const CardDescription = styled.div`
@@ -44,21 +44,19 @@ export const TrimmedRichTextDescription = ({ description, readMore }) => (
             {trimmedRichText(
                 JSON.parse(description.raw),
                 new Map(description.references),
-                30,
-                <ContLink href={readMore}>Forts.</ContLink>
+                30
             )}
         </Description>
     ) : null
 )
 
-export const TrimmedRichTextCardDescription = ({ description, readMore }) => (
+export const TrimmedRichTextCardDescription = ({ description }) => (
     description ? (
         <CardDescription>
             {trimmedRichText(
                 JSON.parse(description.raw),
                 new Map(description.references),
-                30,
-                <CardContLink href={readMore}>Forts.</CardContLink>
+                30
             )}
         </CardDescription>
     ) : null

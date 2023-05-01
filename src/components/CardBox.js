@@ -5,8 +5,12 @@ import { Episode } from './Episode'
 import SystemDisplay from './SystemDisplay'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { trimmedRichText } from './RichText'
-import { TrimmedRichTextCardDescription, TrimmedRichTextDescription } from './Descriptions'
+import {
+  TrimmedRichTextCardDescription,
+  TrimmedRichTextDescription,
+} from './Descriptions'
 import { campaignUrl } from '../utils/urls'
+import { LinkButton } from './Button'
 
 const Card = styled.div`
   ${tw`lg:w-1/2 w-full text-left flex-col lg:p-10 md:rounded`}
@@ -37,7 +41,7 @@ const CampaignContent = styled.div`
   z-index: 1;
 `
 const CampaignType = styled.div`
-  ${tw`bg-green-600 font-bold text-white rounded-full py-1 px-2 float-right`}
+  ${tw`border border-2 border-gray-500 font-bold text-gray-500 rounded-full m-4 py-1 px-4 float-right`}
 `
 
 const ContentWithEpisode = styled.div`
@@ -58,7 +62,7 @@ class CardBox extends React.Component {
       description,
       system,
       campaignType,
-      episodes
+      episodes,
     } = this.props
 
     return (
@@ -66,16 +70,21 @@ class CardBox extends React.Component {
         <Header src={imageSrc} rel="noopener" />
 
         <ContentWithEpisode>
-          <CampaignContent>
-            <CampaignType type={campaignType}>
-              {campaignType === CardBox.CT_CAMPAIGN ? 'Kampanj' : 'One-shot'}
-            </CampaignType>
+          <CampaignType type={campaignType}>
+            {campaignType === CardBox.CT_CAMPAIGN ? 'Kampanj' : 'One-shot'}
+          </CampaignType>
 
+          <CampaignContent>
             <SystemDisplay system={system} />
 
-            <Title to={link}>{title}</Title>
+            <Title className="block" to={link}>
+              {title}
+            </Title>
 
-            <TrimmedRichTextCardDescription description={description} readMore={campaignUrl(id)} />
+            <TrimmedRichTextCardDescription description={description} />
+            <LinkButton href={campaignUrl(id)} className="mt-4 mb-8">
+              Läs mer
+            </LinkButton>
           </CampaignContent>
           {episodes && episodes.length > 0 ? (
             <Episode
@@ -94,7 +103,7 @@ class CardBox extends React.Component {
   }
 }
 
-CardBox.CT_CAMPAIGN = "campaign"
-CardBox.CT_ONESHOT = "one-shot"
+CardBox.CT_CAMPAIGN = 'campaign'
+CardBox.CT_ONESHOT = 'one-shot'
 
 export default CardBox
