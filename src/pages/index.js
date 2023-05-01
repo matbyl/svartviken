@@ -17,7 +17,7 @@ import { TrimmedRichTextDescription, MarkdownDescription } from '../components/D
 import { campaignUrl } from '../utils/urls'
 
 const HomeHeader = styled.header`
-  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:pt-12 md:pb-0`};
+  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:pt-24 md:pb-16`};
   position: relative;
   z-index: 1;
 `
@@ -184,11 +184,18 @@ class SvartvikenIndex extends React.Component {
             </a>
           </RightColumn>
         </HomeHeader>
-        <img
-          src={HeaderAlpha}
-          alt="hero-banner-bottom-alpha"
-          className="header-bottom -my-8"
-        />
+        <div className="header-bottom">
+          <img
+            src={HeaderAlpha}
+            alt="hero-banner-bottom-alpha"
+            className="header-bottom-1"
+          />
+          <img
+            src={HeaderAlpha}
+            alt="hero-banner-bottom-alpha"
+            className="header-bottom-2"
+          />
+        </div>
 
         <MainSection>
           <SearchBox

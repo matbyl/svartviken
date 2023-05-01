@@ -4,6 +4,7 @@ import { Header, HeaderContent, HeaderTitle } from '../components/Header'
 import { graphql } from 'gatsby'
 import Head from '../components/head'
 import { CardList, Card } from '../components/CardList'
+import { LinkButton } from '../components/Button'
 
 const ScenariosPage = ({data}) => {
 
@@ -30,8 +31,8 @@ const ScenariosPage = ({data}) => {
             )
 
             return (<Card key={id} title={name} image={cover.fluid.src} link={link}>
-              {richText(JSON.parse(description.raw), references)}
-              {link ? link.map(url => <a href={url}>Få tag på det här</a>):''}
+              <div className="flex-1">{richText(JSON.parse(description.raw), references)}</div>
+              {link ? link.map(url => <LinkButton className="self-center justify-end mt-4" href={url}>Läs mer</LinkButton>):''}
             </Card>)
           })  
         }
