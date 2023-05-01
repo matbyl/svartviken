@@ -2,18 +2,11 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import tw, { styled } from 'twin.macro'
 import Head from '../components/head'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import { Header, HeaderContent } from '../components/Header'
 import { Episode } from '../components/Episode'
-
-const Title = styled.h1`
-  ${tw`text-white text-lg xl:text-6xl`};
-`
-
-const Description = styled.div`
-  ${tw`text-white text-base xl:text-xl`};
-`
+import { Title } from '../components/SeriesCard'
+import { RichTextDescription } from '../components/Descriptions'
 
 const Episodes = styled.ul`
   ${tw`flex flex-wrap justify-center w-full my-12 mx-auto `};
@@ -29,15 +22,9 @@ const Campaign = ({ data }) => {
         }
       />
       <Header backgroundImage={data.contentfulCampaign.image.fluid.src}>
-        <HeaderContent className="container">
+        <HeaderContent className="container mx-auto">
           <Title>{data.contentfulCampaign.title}</Title>
-          {data.contentfulCampaign.description ? (
-            <Description>
-              {documentToReactComponents(
-                JSON.parse(data.contentfulCampaign.description.raw)
-              )}
-            </Description>
-          ) : null}
+          <RichTextDescription description={data.contentfulCampaign.description} />
         </HeaderContent>
       </Header>
       <Episodes>

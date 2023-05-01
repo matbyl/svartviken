@@ -5,8 +5,9 @@ import Head from '../components/head'
 
 import AudioPlayerButton from '../components/AudioPlayerButton'
 import { Header, HeaderContent } from '../components/Header'
-import ReactMarkdown from 'react-markdown'
 import { episodeUrl } from '../utils/urls'
+import { Title } from '../components/SeriesCard'
+import { MarkdownDescription } from '../components/Descriptions'
 
 const PreTitle = styled.div`
   display: block;
@@ -21,20 +22,16 @@ const EpisodeNumber = styled.div`
 `
 
 const NavigationButton = styled(Link)`
-  ${tw`text-white text-lg`};
-  display: inline;
+  ${tw`text-white font-bold text-lg w-8`};
+  margin: auto 0
+`
+
+const NavigationButtonPlaceholder = styled.div`
+  ${tw`w-8`}
 `
 
 const CampaignLink = styled(Link)`
   ${tw`text-white`};
-`
-
-const Title = styled.h1`
-  ${tw`text-white text-lg xl:text-6xl`};
-`
-
-const Description = styled(ReactMarkdown)`
-  ${tw`text-white text-base xl:text-xl`};
 `
 
 function EpisodeNavButton({ episode, children }) {
@@ -42,7 +39,7 @@ function EpisodeNavButton({ episode, children }) {
     <NavigationButton to={episodeUrl(episode.id)}>
       {children}
     </NavigationButton>
-  ) : null
+  ) : <NavigationButtonPlaceholder />
 }
 
 function campaignInfo(campaignData, oneshotData) {
@@ -68,8 +65,7 @@ const Episode = ({ data }) => {
   episodes.sort((a, b) => (a.number > b.number ? 1 : -1))
 
   const nextEpisode = episodes.find(episode => episode.number > number) || null
-  const prevEpisode =
-    episodes.reverse().find(episode => episode.number < number) || null
+  const prevEpisode = episodes.reverse().find(episode => episode.number < number) || null
 
   // console.log(JSON.stringify({next: nextEpisode, prev: prevEpisode}))
 
@@ -84,17 +80,17 @@ const Episode = ({ data }) => {
         }
       />
       <Header className="flex m-auto" backgroundImage={''}>
+        <EpisodeNavButton episode={prevEpisode}>&lt;</EpisodeNavButton>
         <HeaderContent className="container">
           <PreTitle>
-            <EpisodeNavButton episode={prevEpisode}>&lt;</EpisodeNavButton>
             <EpisodeNumber>Avsnitt {number} av <CampaignLink to={campaignURL}>{campaignName}</CampaignLink></EpisodeNumber>
-            <EpisodeNavButton episode={nextEpisode}>&gt;</EpisodeNavButton>
           </PreTitle>
           <Title>{title}</Title>
-          <Description children={description.description} />
+          <MarkdownDescription description={description} />
           <AudioPlayerButton episode={data.contentfulEpisode} light={true} />
           <div className="flex justify-center"></div>
         </HeaderContent>
+        <EpisodeNavButton episode={nextEpisode}>&gt;</EpisodeNavButton>
       </Header>
     </div>
   )
