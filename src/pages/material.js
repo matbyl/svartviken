@@ -6,6 +6,7 @@ import { graphql } from 'gatsby'
 import Head from '../components/head'
 
 import { CardList, Card } from '../components/CardList'
+import { LinkButton } from '../components/Button'
 
 export default class MaterialPage extends React.Component {
   render() {
@@ -20,11 +21,11 @@ export default class MaterialPage extends React.Component {
         <CardList>
           {this.props.data.allContentfulMedia.edges.map(({ node }) => (
             <Card title={node.name} image={node.cover.fluid.src}>
-              <p>
+              <p className="flex-1">
                 {documentToReactComponents(JSON.parse(node.description.raw))}
               </p>
 
-              <a href={node.media.file.url}>Ladda ner</a>
+              <LinkButton className="self-center justify-end mt-4"href={node.media.file.url}>Ladda ner</LinkButton>
             </Card>
           ))}
         </CardList>

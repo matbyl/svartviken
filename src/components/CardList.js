@@ -9,21 +9,15 @@ const CardBox = styled.div`
 `
 
 const CardContent = styled.div`
-  ${tw`w-full my-4 md:my-0 md:p-8 max-w-2xl`}
+  ${tw`w-full h-full flex flex-col my-4 md:my-0 md:p-8 max-w-2xl`}
 `
 
-export const Card = ({ title, image, children}) => (
+export const Card = ({ title, image, children }) => (
   <CardBox>
     <CardContent>
-      <h1 className="block text-xl mb-8 w-full text-center md:text-left">
-        {title}
-      </h1>
-      <div className="flex flex-col md:flex-row">
-        <div className="w-64 mx-auto md:flex-1 md:mr-8">
-          <img src={image} />
-        </div>
-        <div className="flex-1 mt-4 md:mt-0">{children}</div>
-      </div>
+      <img src={image} className="h-48 mb-8 mx-auto" />
+      <h1 className="block text-xl w-full text-center mt-8 mb-4">{title}</h1>
+      <div className="flex flex-col flex-1 mt-4 md:mt-0">{children}</div>
     </CardContent>
   </CardBox>
 )

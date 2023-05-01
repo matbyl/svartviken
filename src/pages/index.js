@@ -14,10 +14,11 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Link } from 'gatsby'
 import Head from '../components/head'
 import ReactMarkdown from 'react-markdown'
-import {trimmedRichText} from '../components/RichText'
+import { trimmedRichText } from '../components/RichText'
+import { WhiteLinkButton } from '../components/Button'
 
 const HomeHeader = styled.header`
-  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:pt-12 md:pb-0`};
+  ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:pt-24 md:pb-16`};
 `
 
 const LeftColumn = styled.div`
@@ -163,7 +164,12 @@ class SvartvikenIndex extends React.Component {
                     JSON.parse(latestCampaign.description.raw),
                     new Map(),
                     30,
-                    <a href={'/campaigns/' + latestCampaign.id}>Read more</a>
+                    <WhiteLinkButton
+                      href={'/campaigns/' + latestCampaign.id}
+                      className="my-4"
+                    >
+                      Läs mer
+                    </WhiteLinkButton>
                   )}
                 </CampaignDescription>
               ) : null}
@@ -190,11 +196,18 @@ class SvartvikenIndex extends React.Component {
             </a>
           </RightColumn>
         </HomeHeader>
-        <img
-          src={HeaderAlpha}
-          alt="hero-banner-bottom-alpha"
-          className="header-bottom -my-8"
-        />
+        <div className="header-bottom">
+          <img
+            src={HeaderAlpha}
+            alt="hero-banner-bottom-alpha"
+            className="header-bottom-1"
+          />
+          <img
+            src={HeaderAlpha}
+            alt="hero-banner-bottom-alpha"
+            className="header-bottom-2"
+          />
+        </div>
 
         <MainSection>
           <SearchBox
