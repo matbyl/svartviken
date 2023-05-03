@@ -24,7 +24,7 @@ export const CardContLink = styled.a`
 
 export const MarkdownDescription = ({ description }) =>
   description ? (
-    <Description>
+    <Description className="text-white m-auto">
       <ReactMarkdown children={description.description} />
     </Description>
   ) : null

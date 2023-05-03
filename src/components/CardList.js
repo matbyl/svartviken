@@ -14,7 +14,7 @@ const CardContent = styled.div`
 
 export const Card = ({ title, image, children }) => (
   <CardBox>
-    <CardContent>
+    <CardContent className="m-auto">
       <img src={image} className="h-48 mb-8 mx-auto" />
       <h1 className="block text-xl w-full text-center mt-8 mb-4">{title}</h1>
       <div className="flex flex-col flex-1 mt-4 md:mt-0">{children}</div>

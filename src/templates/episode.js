@@ -86,7 +86,7 @@ const Episode = ({ data }) => {
             <EpisodeNumber>Avsnitt {number} av <CampaignLink to={campaignURL}>{campaignName}</CampaignLink></EpisodeNumber>
           </PreTitle>
           <Title>{title}</Title>
-          <MarkdownDescription description={description} />
+          <MarkdownDescription className="text-white m-auto text-center" description={description} />
           <AudioPlayerButton episode={data.contentfulEpisode} light={true} />
           <div className="flex justify-center"></div>
         </HeaderContent>
