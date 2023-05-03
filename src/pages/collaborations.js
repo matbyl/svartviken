@@ -42,7 +42,7 @@ const CollaborationsPage = ({ data }) => {
               </div>
 
               {collaboration.link.map(l => (
-                <LinkButton key={l} className="inline-block mt-4 mb-8 self-center " href={l}>
+                <LinkButton key={l} className="inline-block mt-4 mb-8 self-center" href={l}>
                   Läs mer
                 </LinkButton>
               ))}

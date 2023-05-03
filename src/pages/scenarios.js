@@ -5,6 +5,7 @@ import { graphql } from 'gatsby'
 import Head from '../components/head'
 import { CardList, Card } from '../components/CardList'
 import { LinkButton } from '../components/Button'
+import { RichTextDescription } from '../components/Descriptions'
 
 const ScenariosPage = ({data}) => {
 
