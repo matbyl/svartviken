@@ -12,11 +12,11 @@ import AudioSeekbar from './AudioSeekbar'
 import { clamp } from 'lodash'
 
 const Container = styled.div`
-  grid-template-columns: 250px 35px 35px 35px 10px 1fr 35px;
-  grid-template-areas: 'title backward play forward . seekBar close';
+  grid-template-columns: 250px 35px 35px 35px 10px 1fr 10px 35px;
+  grid-template-areas: 'title backward play forward . seekBar . close';
 
   background: rgba(0, 0, 0, 1);
-  ${tw`fixed bottom-0 h-16 bg-black z-50 w-full hidden md:grid md:h-16 md:px-4`}
+  ${tw`fixed bottom-0 h-16 bg-black z-50 w-full hidden md:grid md:h-24 md:px-4`}
 `
 
 const Title = styled.h4`
