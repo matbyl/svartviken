@@ -31,7 +31,7 @@ export const MarkdownDescription = ({ description }) =>
 
 export const RichTextDescription = ({ description, white = false }) =>
   description ? (
-    <Description className={white ? 'text-white' : 'text-black'}>
+    <Description className={(white ? 'text-white' : 'text-black') + ' mx-auto'}>
       {richText(JSON.parse(description.raw), new Map(description.references))}
     </Description>
   ) : null
