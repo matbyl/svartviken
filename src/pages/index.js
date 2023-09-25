@@ -17,7 +17,7 @@ import {
   TrimmedRichTextDescription,
   MarkdownDescription,
 } from '../components/Descriptions'
-import { campaignUrl } from '../utils/urls'
+import { campaignUrl, oneshotUrl } from '../utils/urls'
 import { WhiteLinkButton } from '../components/Button'
 
 const HomeHeader = styled.header`
@@ -148,39 +148,66 @@ class SvartvikenIndex extends React.Component {
         ? this.state.campaigns[0]
         : this.getCampaigns()[0]
 
+    const latestOneshot = this.state.oneshots.length > 0 ? this.state.oneshots[0] : null;
+
     const firstEpisodeOfLatestCampaign = latestCampaign.episodes.find(
       e => e.number === 1 || e.number === 0
     )
+
+    const firstEpisodeOfLatestOneshot = latestOneshot.episodes.find(
+      e => e.number === 1 || e.number === 0
+    )
+
     return (
       <div className="w-full">
         <Head title="" />
         <HomeHeader className="z-depth-3">
-          <LeftColumn>
-            <LatestEpisode className="container text-center md:text-left">
-              <CampaignTitle to={'/campaigns/' + latestCampaign.id}>
-                {latestCampaign.title}
-              </CampaignTitle>
-              <TrimmedRichTextDescription
-                description={latestCampaign.description}
-              />
-              <WhiteLinkButton
-                className="mt-4 mb-8"
-                href={campaignUrl(latestCampaign.id)}
-              >
-                Läs mer
-              </WhiteLinkButton>
-              <div className="pb-5" />
-              <EpisodeTitle>{firstEpisodeOfLatestCampaign.title}</EpisodeTitle>
-              <MarkdownDescription
-                description={firstEpisodeOfLatestCampaign.description}
-              />
+          
+            { Date(latestCampaign.episodes[latestCampaign.episodes.length - 1].pubDate) > Date(latestOneshot.episodes[latestOneshot.episodes.length - 1].pubDate) ?
+                <LeftColumn>
+                <LatestEpisode className="container text-center md:text-left">
+                <CampaignTitle to={'/campaigns/' + latestCampaign.id}>
+                  {latestCampaign.title}
+                </CampaignTitle>
+                <TrimmedRichTextDescription
+                  description={latestCampaign.description}
+                />
+                <WhiteLinkButton
+                  className="mt-4 mb-8"
+                  href={campaignUrl(latestCampaign.id)}
+                >
+                  Läs mer
+                </WhiteLinkButton>
+                <div className="pb-5" />
+                <EpisodeTitle>{firstEpisodeOfLatestCampaign.title}</EpisodeTitle>
+                <MarkdownDescription
+                  description={firstEpisodeOfLatestCampaign.description}
+                />
+  
+                <AudioPlayerButton
+                  light={true}
+                  episode={latestCampaign.episodes[0]}
+                />
+              </LatestEpisode>
 
-              <AudioPlayerButton
-                light={true}
-                episode={latestCampaign.episodes[0]}
-              />
-            </LatestEpisode>
-          </LeftColumn>
+              </LeftColumn>
+              : (<LeftColumn>
+                  <LatestEpisode className="container text-center md:text-left">
+                <CampaignTitle to={'/oneshots/' + latestOneshot.id}>
+                  {latestOneshot.title}
+                </CampaignTitle>
+                <TrimmedRichTextDescription
+                  description={latestOneshot.description}
+                />
+                <WhiteLinkButton className="mt-4 mb-8" href={oneshotUrl(latestOneshot.id)}> Läs mer</WhiteLinkButton>
+                <div className="pb-5" />
+                <EpisodeTitle>{firstEpisodeOfLatestOneshot.title}</EpisodeTitle>
+                <MarkdownDescription  description={firstEpisodeOfLatestOneshot.description} />
+                <AudioPlayerButton light={true} episode={latestOneshot.episodes[0]} />
+                </LatestEpisode>
+                </LeftColumn>)
+            }
+            
 
           <RightColumn>
             <Logo src={logo} alt="svartviken-logo" />

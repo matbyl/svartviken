@@ -232,7 +232,7 @@ const Template = ({ children, selectedEpisode, closeEpisode }) => {
   const audioPlayer = episode => {
     const supTitle = episode.campaign
       ? episode.campaign[0].title
-      : 'Kampanj - Avsnitt ' + episode.number
+      : episode.oneshot ? episode.oneshot[0].title : 'Avsnitt ' + episode.number
     return (
       <AudioPlayerProvider>
         {width > 980 ? (
