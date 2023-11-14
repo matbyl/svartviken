@@ -27,7 +27,7 @@ const HomeHeader = styled.header`
 `
 
 const LeftColumn = styled.div`
-  ${tw`sm:w-full lg:w-1/2 sm:text-lg flex sm:text-center lg:text-justify lg:pl-20`};
+  ${tw`sm:w-full lg:w-1/2 sm:text-lg flex md:text-left lg:text-justify lg:pl-20`};
 `
 
 const CampaignTitle = styled(Link)`
@@ -158,14 +158,15 @@ class SvartvikenIndex extends React.Component {
       e => e.number === 1 || e.number === 0
     )
 
+
     return (
       <div className="w-full">
         <Head title="" />
         <HomeHeader className="z-depth-3">
           
-            { Date(latestCampaign.episodes[latestCampaign.episodes.length - 1].pubDate) > Date(latestOneshot.episodes[latestOneshot.episodes.length - 1].pubDate) ?
+            { new Date(latestCampaign.episodes[latestCampaign.episodes.length - 1].pubDate) >  new Date(latestOneshot.episodes[latestOneshot.episodes.length - 1].pubDate) ?
                 <LeftColumn>
-                <LatestEpisode className="container text-center md:text-left">
+                <LatestEpisode className="container text-left">
                 <CampaignTitle to={'/campaigns/' + latestCampaign.id}>
                   {latestCampaign.title}
                 </CampaignTitle>
@@ -192,7 +193,7 @@ class SvartvikenIndex extends React.Component {
 
               </LeftColumn>
               : (<LeftColumn>
-                  <LatestEpisode className="container text-center md:text-left">
+                  <LatestEpisode className="container text-left">
                 <CampaignTitle to={'/oneshots/' + latestOneshot.id}>
                   {latestOneshot.title}
                 </CampaignTitle>
