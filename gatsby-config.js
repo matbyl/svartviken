@@ -308,7 +308,7 @@ module.exports = {
       options: {
         spaceId: `93broy6zhdtc`,
         // Learn about environment variables
-        accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
+        accessToken: "GAJN4zsSS8KI30q5Vg2PN83Y2oFpbMoqcaWB_Gdl6So"
       },
     },
     `gatsby-plugin-sharp`,

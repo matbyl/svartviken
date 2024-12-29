@@ -71,7 +71,7 @@ class CardBox extends React.Component {
 
         <ContentWithEpisode>
           <CampaignType type={campaignType}>
-            {campaignType === CardBox.CT_CAMPAIGN ? 'Kampanj' : 'One-shot'}
+            {campaignTypeToString(campaignType)}
           </CampaignType>
 
           <CampaignContent>
@@ -82,7 +82,10 @@ class CardBox extends React.Component {
             </Title>
 
             <TrimmedRichTextCardDescription description={description} />
-            <LinkButton href={campaignUrl(id)} className="mt-4 mb-8">
+            <LinkButton
+              href={campaignTypeToUrl(id, campaignType)}
+              className="mt-4 mb-8"
+            >
               Läs mer
             </LinkButton>
           </CampaignContent>
@@ -103,7 +106,34 @@ class CardBox extends React.Component {
   }
 }
 
-CardBox.CT_CAMPAIGN = 'campaign'
-CardBox.CT_ONESHOT = 'one-shot'
+CardBox.CT_CAMPAIGN = 'ContentfulCampaign'
+CardBox.CT_ONESHOT = 'ContentfulOneshot'
+CardBox.CT_ARCH = 'ContenfulArch'
+
+const campaignTypeToString = x => {
+  switch (x) {
+    case CardBox.CT_ARCH:
+      return 'Arch'
+    case CardBox.CT_CAMPAIGN:
+      return 'Kampanj'
+    case CardBox.CT_ONESHOT:
+      return 'One-shot'
+    default:
+      return 'N/A'
+  }
+}
+
+const campaignTypeToUrl = (id, x) => {
+  if (id !== null) {
+    switch (x) {
+      case CardBox.CT_ARCH:
+        return '/archs/' + id
+      case CardBox.CT_ONESHOT:
+        return '/oneshots/' + id
+      case CardBox.CT_CAMPAIGN:
+        return '/campaigns/' + id
+    }
+  }
+}
 
 export default CardBox

@@ -19,6 +19,7 @@ import {
 } from '../components/Descriptions'
 import { campaignUrl, oneshotUrl } from '../utils/urls'
 import { WhiteLinkButton } from '../components/Button'
+import ArchCardList from '../components/ArchCardList'
 
 const HomeHeader = styled.header`
   ${tw`bg-black text-white flex flex-row flex-wrap-reverse w-full p-4 md:px-10 md:pt-24 md:pb-16`};
@@ -95,9 +96,12 @@ class SvartvikenIndex extends React.Component {
 
     const oneshots = this.getOneshots()
 
+    const archs = this.getArchs()
+
     this.state = {
       campaigns,
       oneshots,
+      archs,
       searchFilter: 'all',
       searchTerm: '',
     }
@@ -116,6 +120,12 @@ class SvartvikenIndex extends React.Component {
     return this.props.data.allContentfulOneshot.edges
       .map(e => e.node)
       .sort(orderEpisodes)
+  }
+
+  getArchs () {
+    return this.props.data.allContentfulArch.edges
+      .map(e => e.node)
+      .sort((a,b) => a.createdAt > b.createdAt ? -1 : 1)
   }
 
   handleSearchChange(event) {
@@ -243,6 +253,7 @@ class SvartvikenIndex extends React.Component {
             {
               all: (
                 <div className="w-full">
+                  <ArchCardList archs={this.state.archs}></ArchCardList>
                   <CampaignCardList campaigns={this.state.campaigns} />
                   <OneshotCardList oneshots={this.state.oneshots} />
                 </div>
@@ -296,6 +307,27 @@ export const pageQuery = graphql`
             campaign {
               title
             }
+          }
+        }
+      }
+    }
+    
+  allContentfulArch {
+      edges {
+        node {
+          id
+          createdAt
+          titel
+          coverImage {
+            fluid(maxWidth: 800) {
+              src
+            }
+          }
+          gameSystem {
+            systemName
+          }
+          description {
+            raw
           }
         }
       }
