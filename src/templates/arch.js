@@ -17,7 +17,9 @@ const Arch = ({ data }) => {
   return (
     <div className="min-w-full">
       <Head
-        title={data.contentfulArch.titel + ' | Arch | Svartviken Rollspelspodd'}
+        title={
+          data.contentfulArch.titel + ' | Kampanj | Svartviken Rollspelspodd'
+        }
       />
       <Header backgroundImage={data.contentfulArch.coverImage.fluid.src}>
         <HeaderContent className="container mx-auto">

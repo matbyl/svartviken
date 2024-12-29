@@ -113,7 +113,7 @@ CardBox.CT_ARCH = 'ContenfulArch'
 const campaignTypeToString = x => {
   switch (x) {
     case CardBox.CT_ARCH:
-      return 'Arch'
+      return 'Kampanj'
     case CardBox.CT_CAMPAIGN:
       return 'Kampanj'
     case CardBox.CT_ONESHOT:
